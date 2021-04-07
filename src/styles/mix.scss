@@ -1,0 +1,93 @@
+label {
+  font-size: 14px;
+}
+
+.main {
+  margin: 20px 0 40px 0;
+
+}
+
+/* 在全局CSS里引用: */
+/* 滚动条宽度 */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 10px;
+}
+
+.el-form-item-label {
+  line-height: 40px;
+}
+
+/* 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #a1a3a9;
+  border-radius: 3px;
+}
+
+.required {
+  color: red;
+  margin: 4px;
+}
+
+.search-patient-info /deep/ .el-form-item__error {
+  margin-top: -4px;
+}
+
+.req {
+  border: solid 2px red;
+  border-radius: 4px;
+}
+
+.search-patient-info {
+  margin: 20px 0 10px 0;
+}
+
+.confirm-patient-info {
+  float: left;
+  margin-left: 10px;
+}
+
+.el-input-short {
+  width: 160px;
+  margin-left: 4px;
+  margin-right: 10px;
+}
+
+.el-input-middle {
+  width: 210px;
+  margin-left: 4px;
+  margin-right: 10px;
+}
+
+.menu_button {
+  font-size: 12px;
+}
+
+.el-tabs-header {
+  margin: 0 0 2px 0;
+}
+
+.el-header, .el-main, .el-aside {
+  margin-top: 2px;
+}
+
+.el-header, .el-main, .el-aside {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.el-input-long {
+  width: 260px;
+  margin-left: 4px;
+  margin-right: 10px;
+}
+
+.left {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+}
+
+.el-form-item {
+  margin-bottom: 5px;
+}

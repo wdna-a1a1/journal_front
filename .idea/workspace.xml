@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="41357dcc-6186-44bc-a3ed-ba6331ad4d91" name="Default Changelist" comment="修复在门诊确诊刷新后病历首页无法输入的bug">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChildTemplate/CheckTheApplication.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChildTemplate/CheckTheApplication.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChildTemplate/MedicalRecordHomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChildTemplate/MedicalRecordHomePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChildTemplate/OutpatientConfirm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChildTemplate/OutpatientConfirm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/getters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/getters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/modules/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/modules/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/validate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/login/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/outpatientdoctor/doctor-home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/outpatientdoctor/doctor-home.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="SCSS File" />
+        <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="修复Loading界面遮罩的透明度问题" />
+        <option name="rewordedMessage" value="修复Loading界面遮罩的透明度问题&#10;&#10;&#10;修复Loading界面遮罩的透明度问题" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="293021488de3baedff61103f4494c433e97250cc" />
+  </component>
+  <component name="ProjectId" id="1lAqpY8SA0vGBrcSCQ5z0XaMZ7y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/views" />
+    <property name="list.type.of.created.stylesheet" value="SCSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="I:\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Project\Web\HIS\src\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Project\Web\HIS\src\components" />
+      <recent name="E:\Project\Web\HIS\src\assets\408_images" />
+      <recent name="E:\Project\Web\HIS\src\utils\adaptive" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.npm serve">
+    <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:8080">
+      <method v="2" />
+    </configuration>
+    <configuration name="JS Debug" type="JavascriptDebugType" uri="http://localhost:9528/">
+      <method v="2" />
+    </configuration>
+    <configuration name="npm serve" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.JS Debug" />
+      <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="npm.npm serve" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41357dcc-6186-44bc-a3ed-ba6331ad4d91" name="Default Changelist" comment="" />
+      <created>1607050427115</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607050427115</updated>
+      <workItem from="1607050428361" duration="2344000" />
+      <workItem from="1607059890245" duration="4310000" />
+      <workItem from="1607064298937" duration="84000" />
+      <workItem from="1607064400842" duration="593000" />
+      <workItem from="1607065015500" duration="269000" />
+      <workItem from="1607173831705" duration="3691000" />
+      <workItem from="1607257999355" duration="8787000" />
+      <workItem from="1607769838898" duration="11023000" />
+      <workItem from="1607833133846" duration="747000" />
+      <workItem from="1607911689310" duration="15346000" />
+      <workItem from="1607953709940" duration="37375000" />
+      <workItem from="1608079620849" duration="23368000" />
+      <workItem from="1608176419164" duration="147000" />
+      <workItem from="1608176608357" duration="334000" />
+      <workItem from="1608176971635" duration="14904000" />
+      <workItem from="1608254850530" duration="24411000" />
+      <workItem from="1608346803761" duration="23124000" />
+      <workItem from="1608471467422" duration="1642000" />
+      <workItem from="1608475414525" duration="959000" />
+      <workItem from="1608511590760" duration="5877000" />
+      <workItem from="1608618868310" duration="4799000" />
+      <workItem from="1608638338222" duration="8347000" />
+      <workItem from="1608689567471" duration="11000" />
+      <workItem from="1608690351267" duration="2052000" />
+      <workItem from="1608725755182" duration="7119000" />
+      <workItem from="1608856827701" duration="6946000" />
+      <workItem from="1608961459252" duration="185000" />
+      <workItem from="1608961680042" duration="27762000" />
+      <workItem from="1609038904686" duration="28304000" />
+      <workItem from="1609116854985" duration="27497000" />
+      <workItem from="1609214681413" duration="28000" />
+      <workItem from="1609527998368" duration="350000" />
+      <workItem from="1609529353055" duration="74000" />
+      <workItem from="1609529477628" duration="610000" />
+      <workItem from="1609895468608" duration="19640000" />
+      <workItem from="1609950870171" duration="16000" />
+      <workItem from="1609951009183" duration="1451000" />
+      <workItem from="1609984771092" duration="44883000" />
+    </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <created>1607052559341</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1607052559341</updated>
+    </task>
+    <task id="LOCAL-00002" summary="重构所有涉及表单的页面,页面微调,添加了退号界面(未完成)">
+      <created>1607613216786</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607613216786</updated>
+    </task>
+    <task id="LOCAL-00003" summary="页面微调">
+      <created>1607833276731</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607833276731</updated>
+    </task>
+    <task id="LOCAL-00004" summary="修复缴费退费无法缓存的bug T T&#10;科室查询(TODO:添加科室)">
+      <created>1607936685930</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607936685930</updated>
+    </task>
+    <task id="LOCAL-00005" summary="完成科室,用户相关功能">
+      <created>1608045073906</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608045073907</updated>
+    </task>
+    <task id="LOCAL-00006" summary="完成科室,用户全部功能">
+      <created>1608109389467</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608109389467</updated>
+    </task>
+    <task id="LOCAL-00007" summary="优化科室,用户查询功能相关项目的显示,完成挂号等级功能">
+      <created>1608217032871</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1608217032871</updated>
+    </task>
+    <task id="LOCAL-00008" summary="优化科室,用户功能,优化挂号等级功能,完成注册部分功能">
+      <created>1608301894109</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608301894109</updated>
+    </task>
+    <task id="LOCAL-00009" summary="完成注册部分验证功能">
+      <created>1608390091106</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1608390091106</updated>
+    </task>
+    <task id="LOCAL-00010" summary="注册基本完成,一些优化.太累了不想写了">
+      <created>1608457357326</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1608457357326</updated>
+    </task>
+    <task id="LOCAL-00011" summary="一点点修改">
+      <created>1608522051327</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1608522051327</updated>
+    </task>
+    <task id="LOCAL-00012" summary="修复就诊日期错误">
+      <created>1608537900653</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1608537900653</updated>
+    </task>
+    <task id="LOCAL-00013" summary="修改病历号生成长度,完成退号(未完成选择退号)">
+      <created>1608647998919</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1608647998920</updated>
+    </task>
+    <task id="LOCAL-00014" summary="修改删除逻辑,修改loading逻辑">
+      <created>1608733812614</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1608733812614</updated>
+    </task>
+    <task id="LOCAL-00015" summary="添加超时界面,完成退号功能">
+      <created>1608868956534</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1608868956534</updated>
+    </task>
+    <task id="LOCAL-00016" summary="封装axios,loading,message,添加响应失败重试功能,添加重复提交拒绝功能">
+      <created>1608985315782</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1608985315782</updated>
+    </task>
+    <task id="LOCAL-00017" summary="修复挂号等级界面删除按钮过大的问题">
+      <created>1608985601978</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1608985601978</updated>
+    </task>
+    <task id="LOCAL-00018" summary="修复Loading界面遮罩的透明度问题">
+      <created>1608986118160</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1608986118160</updated>
+    </task>
+    <task id="LOCAL-00019" summary="修复Loading界面遮罩的透明度问题">
+      <created>1608993363948</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1608993363948</updated>
+    </task>
+    <task id="LOCAL-00020" summary="修复Loading界面遮罩的透明度问题">
+      <created>1608993380593</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1608993380593</updated>
+    </task>
+    <task id="LOCAL-00021" summary="更新axios到0.21.1&#10;修改界面Loading的逻辑,直接调用全局Loading&#10;为注册功能的科室医生列表添加节流&#10;删除一些没必要的代码">
+      <created>1609052272872</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1609052272872</updated>
+    </task>
+    <task id="LOCAL-00022" summary="更新axios到0.21.1&#10;修改界面Loading的逻辑,直接调用全局Loading&#10;为注册功能的科室医生列表添加节流&#10;删除一些没必要的代码">
+      <created>1609052359618</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1609052359618</updated>
+    </task>
+    <task id="LOCAL-00023" summary="axios稍微修改">
+      <created>1609052666979</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1609052666979</updated>
+    </task>
+    <task id="LOCAL-00024" summary="修改Dialog出现时间,与Loading匹配">
+      <created>1609052985851</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1609052985851</updated>
+    </task>
+    <task id="LOCAL-00025" summary="修复超时重试次数达上限,Loading不关闭的问题">
+      <created>1609053400033</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1609053400033</updated>
+    </task>
+    <task id="LOCAL-00026" summary="完成门诊病历的界面设计">
+      <created>1609081074989</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1609081074989</updated>
+    </task>
+    <task id="LOCAL-00027" summary="病历修改,其他修改">
+      <created>1609951251778</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1609951251778</updated>
+    </task>
+    <task id="LOCAL-00028" summary="基本完成门诊病历">
+      <created>1610034682180</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1610034682180</updated>
+    </task>
+    <task id="LOCAL-00029" summary="修复在门诊确诊刷新后病历首页无法输入的bug">
+      <created>1610035439014</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1610035439014</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="重构所有涉及表单的页面,页面微调,添加了退号界面(未完成)" />
+    <MESSAGE value="页面微调" />
+    <MESSAGE value="修复缴费退费无法缓存的bug T T&#10;科室查询(TODO:添加科室)" />
+    <MESSAGE value="完成科室,用户相关功能" />
+    <MESSAGE value="完成科室,用户全部功能" />
+    <MESSAGE value="优化科室,用户查询功能相关项目的显示,完成挂号等级功能" />
+    <MESSAGE value="优化科室,用户功能,优化挂号等级功能,完成注册部分功能" />
+    <MESSAGE value="完成注册部分验证功能" />
+    <MESSAGE value="注册基本完成,一些优化.太累了不想写了" />
+    <MESSAGE value="一点点修改" />
+    <MESSAGE value="修复就诊日期错误" />
+    <MESSAGE value="修改病历号生成长度,完成退号(未完成选择退号)" />
+    <MESSAGE value="修改删除逻辑,修改loading逻辑" />
+    <MESSAGE value="添加超时界面,完成退号功能" />
+    <MESSAGE value="封装axios,loading,message,添加响应失败重试功能,添加重复提交拒绝功能" />
+    <MESSAGE value="修复挂号等级界面删除按钮过大的问题" />
+    <MESSAGE value="修复Loading界面遮罩的透明度问题" />
+    <MESSAGE value="更新axios到0.21.1&#10;修改界面Loading的逻辑,直接调用全局Loading&#10;为注册功能的科室医生列表添加节流&#10;删除一些没必要的代码" />
+    <MESSAGE value="axios稍微修改" />
+    <MESSAGE value="修改Dialog出现时间,与Loading匹配" />
+    <MESSAGE value="修复超时重试次数达上限,Loading不关闭的问题" />
+    <MESSAGE value="完成门诊病历的界面设计" />
+    <MESSAGE value="病历修改,其他修改" />
+    <MESSAGE value="基本完成门诊病历" />
+    <MESSAGE value="修复在门诊确诊刷新后病历首页无法输入的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复在门诊确诊刷新后病历首页无法输入的bug" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/views/system-information/department-management.vue</url>
+          <line>349</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
