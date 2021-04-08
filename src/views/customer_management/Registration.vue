@@ -17,152 +17,122 @@
         @selection-change="selectionChangeHandle"
         stripe
         fit
+        max-height="640px"
         tooltip-effect="dark"
         :header-cell-style="{'text-align':'center'}"
         :cell-style="{'text-align':'center','height':'60px'}"
-        style="width: 100%;margin-top:40px;margin-bottom: 20px"
+        style="margin-top:40px;margin-bottom: 20px"
       >
         <el-table-column
           prop="id"
           header-align="center"
           align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="isDeleted"
-          header-align="center"
-          align="center"
-          label="">
+          width="80px"
+          label="序号">
         </el-table-column>
         <el-table-column
           prop="customerName"
           header-align="center"
           align="center"
-          label="">
+          width="120px"
+          label="客户姓名">
         </el-table-column>
         <el-table-column
           prop="customerAge"
           header-align="center"
           align="center"
-          label="">
+          width="60px"
+          label="年龄">
         </el-table-column>
         <el-table-column
           prop="customerSex"
           header-align="center"
           align="center"
-          label="">
+          width="60px"
+          label="性别">
         </el-table-column>
         <el-table-column
           prop="idcard"
           header-align="center"
           align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="roomNumber"
-          header-align="center"
-          align="center"
-          label="">
+          width="180px"
+          label="身份证号">
         </el-table-column>
         <el-table-column
           prop="buildingId"
           header-align="center"
           align="center"
-          label="">
+          width="120"
+          label="所属楼房">
         </el-table-column>
         <el-table-column
-          prop="recordId"
+          prop="roomNumber"
           header-align="center"
           align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="elderType"
-          header-align="center"
-          align="center"
-          label="活力老人">
-        </el-table-column>
-        <el-table-column
-          prop="checkinDate"
-          header-align="center"
-          align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="expirationDate"
-          header-align="center"
-          align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="contactTel"
-          header-align="center"
-          align="center"
-          label="">
+          width="80px"
+          label="房间号">
         </el-table-column>
         <el-table-column
           prop="bedId"
           header-align="center"
           align="center"
-          label="">
+          width="80px"
+          label="床位号">
         </el-table-column>
         <el-table-column
-          prop="psychosomaticState"
+          prop="recordId"
           header-align="center"
           align="center"
-          label="精神状况">
+          label="档案号">
+        </el-table-column>
+        <el-table-column
+          prop="elderType"
+          label="老人类型"
+          header-align="center"
+          align="center"
+          width="100"
+          :filters="[{ text: '活力老人', value: '活力老人' }, { text: '自理老人', value: '自理老人' },{ text: '护理老人', value: '护理老人' }]"
+          :filter-method="filterTag"
+          filter-placement="bottom-end">
+          <template slot-scope="scope">
+            {{ scope.row.elderType }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="checkinDate"
+          header-align="center"
+          align="center"
+          label="入住时间">
+        </el-table-column>
+        <el-table-column
+          prop="expirationDate"
+          header-align="center"
+          align="center"
+          label="合同到期时间">
+        </el-table-column>
+        <el-table-column
+          prop="contactTel"
+          header-align="center"
+          align="center"
+          label="联系电话">
         </el-table-column>
         <el-table-column
           prop="attention"
           header-align="center"
           align="center"
-          label="">
+          label="注意事项:">
         </el-table-column>
         <el-table-column
-          prop="birthday"
           header-align="center"
           align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="height"
-          header-align="center"
-          align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="maritalStatus"
-          header-align="center"
-          align="center"
-          label="婚姻状况">
-        </el-table-column>
-        <el-table-column
-          prop="weight"
-          header-align="center"
-          align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="bloodType"
-          header-align="center"
-          align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
-          prop="filepath"
-          header-align="center"
-          align="center"
-          label="">
-        </el-table-column>
-        <el-table-column
+          width="100"
           fixed="right"
-          header-align="center"
-          align="center"
-          width="150"
           label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-            <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            <el-button type="primary" size="mini" @click="addOrUpdateHandle(scope.row.id)"
+                       style="position: relative;left: 5px">修改
+            </el-button>
+            <el-button type="warning" size="mini" @click="deleteHandle(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -170,7 +140,7 @@
         @size-change="sizeChangeHandle"
         @current-change="currentChangeHandle"
         :current-page="pageIndex"
-        :page-sizes="[10, 20, 50, 100]"
+        :page-sizes="[5, 10, 20, 50]"
         :page-size="pageSize"
         :total="totalPage"
         layout="total,  prev, pager, next,sizes">
@@ -203,22 +173,27 @@ export default {
   components: {
     AddOrUpdate
   },
-  activated() {
-    //this.getDataList()
+  mounted() {
+    this.getDataList()
   },
   methods: {
+    filterTag(value, row) {
+      return row.elderType === value;
+    },
     // 获取数据列表
     getDataList() {
-      this.dataListLoading = true
-      this.$axios.post('', this.$qs.stringify({})).then(({data}) => {
-        if (data && data.code === 0) {
-          this.dataList = data.page.list
-          this.totalPage = data.page.totalCount
+      this.$axios.post('/customer/query', {
+        currentPage: this.pageIndex,
+        pageSize: this.pageSize,
+        name: this.dataForm.key,
+      }).then(({data}) => {
+        if (data) {
+          this.dataList = data.list
+          this.totalPage = data.totalCount
         } else {
           this.dataList = []
           this.totalPage = 0
         }
-        this.dataListLoading = false
       })
     },
     // 每页数
@@ -251,15 +226,13 @@ export default {
       this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
       }).then(() => {
-        this.$axios.post('', this.$qs.stringify({}))
+        this.$axios.post('/customer/del', {id})
           .then(({data}) => {
-            if (data && data.code === 0) {
-              this.$message({
+            if (data) {
+              this.$message.success({
                 message: '操作成功',
-                type: 'success',
-                duration: 1500,
+                duration: 500,
                 onClose: () => {
                   this.getDataList()
                 }

@@ -3,7 +3,7 @@ import {MessageBox} from "element-ui";
 import {showScreenLoading, hideScreenLoading} from "./loading"
 import msg from './message'
 import qs from 'qs'
-
+import store from "@/store";
 //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 let pending = [];
 let cancelToken = axios.CancelToken;
@@ -25,7 +25,7 @@ let removePending = (config, type) => {
 
 const ax = axios.create({
   timeout: 20000,
-  baseURL: "http://localhost:8123/"
+  baseURL: "http://localhost:8181/"
 
 })
 
@@ -37,7 +37,9 @@ ax.interceptors.request.use(
     if (config.headers.showLoading !== false) {
       showScreenLoading();
     }
-
+    if (store.state.user.token) {
+      config.headers.token = store.state.user.token;
+    }
     config.data = qs.stringify(config.data)
     removePending(config, "req"); //在一个ajax发送前执行一下取消操作
     config.cancelToken = new cancelToken((cancel) => {
@@ -89,7 +91,7 @@ ax.interceptors.response.use(
       MessageBox.alert("重试次数已达上限,请检查网络或联系管理员!", '提示', {
         center: true,
         type: "error",
-        f:hideScreenLoading()
+        f: hideScreenLoading()
       }).then(r => {
         return r;
       });

@@ -59,6 +59,16 @@ label {
   margin-right: 10px;
 }
 
+.el-input-long {
+  width: 260px;
+  margin-left: 4px;
+  margin-right: 10px;
+}
+.el-input-longer {
+  width: 360px;
+  margin-left: 4px;
+  margin-right: 10px;
+}
 .menu_button {
   font-size: 12px;
 }
@@ -76,11 +86,6 @@ label {
   padding-right: 2px;
 }
 
-.el-input-long {
-  width: 260px;
-  margin-left: 4px;
-  margin-right: 10px;
-}
 
 .left {
   position: absolute;
@@ -89,5 +94,5 @@ label {
 }
 
 .el-form-item {
-  margin-bottom: 5px;
+  margin-bottom: 24px;
 }
