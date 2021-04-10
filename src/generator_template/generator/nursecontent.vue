@@ -62,7 +62,7 @@
         prop="idDeleted"
         header-align="center"
         align="center"
-        label="1-已删除 0未删除">
+        label="0-已删除 1未删除">
       </el-table-column>
       <el-table-column
         fixed="right"

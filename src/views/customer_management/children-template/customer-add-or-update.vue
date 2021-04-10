@@ -62,7 +62,8 @@
 
         <el-col :span="12">
           <el-form-item label="房间号:" prop="roomNumber">
-            <el-select v-model="dataForm.roomNumber" placeholder="请选择">
+            <el-select v-model="dataForm.roomNumber" :loading="loading" placeholder="请选择"
+                       @visible-change="getBedOptions">
               <el-option
                 v-for="item in roomOptions"
                 :key="item.value"
@@ -75,7 +76,7 @@
 
         <el-col :span="12">
           <el-form-item label="床位号:" prop="buildingId">
-            <el-select v-model="dataForm.bedId" placeholder="请选择">
+            <el-select v-model="dataForm.bedId" :loading="loading" placeholder="请选择">
               <el-option
                 v-for="item in bedOptions"
                 :key="item.value"
@@ -164,6 +165,7 @@
 export default {
   data() {
     return {
+      loading: false,
       visible: false,
       sexOptions: [{
         value: '男',
@@ -174,7 +176,7 @@ export default {
       }],
       roomOptions: [],
       buildingOptions: [],
-      bedOptions: [{label: '1', value: '1'}, {label: '2', value: '2'}, {label: '3', value: '3'}],
+      bedOptions: [],
       elderTypeOption: [{label: '活力老人', value: '活力老人'}, {label: '自理老人', value: '自理老人'}, {label: '护理老人', value: '护理老人'}],
       dataForm: {
         id: 0,
@@ -183,7 +185,7 @@ export default {
         customerAge: '',
         customerSex: '',
         idcard: '',
-        roomNumber: '1',
+        roomNumber: '',
         buildingId: '1',
         recordId: '',
         elderType: '',
@@ -267,9 +269,12 @@ export default {
       }
     }
   },
+  mounted() {
+    this.getRoomOptions()
+  },
   methods: {
-    init(id) {
-      this.dataForm.id = id || 0
+    init(info) {
+      this.dataForm.id = info !== undefined ? info.id : ''
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
@@ -299,6 +304,8 @@ export default {
               this.dataForm.filepath = data.customer.filepath
             }
           })
+        }else {
+          this.getRecordId()
         }
       })
     },
@@ -330,7 +337,6 @@ export default {
               'weight': this.dataForm.weight,
               'bloodType': this.dataForm.bloodType,
               'filepath': this.dataForm.filepath
-
             }).then(({data}) => {
             if (data === true) {
               this.$message.success({
@@ -347,7 +353,58 @@ export default {
           })
         }
       })
+    },
+    getRecordId() {
+      if (!this.dataForm.id) {
+        this.$axios.post("/customer/get-record-id").then(res => {
+
+          this.dataForm.recordId = res.data
+        }).catch()
+      }
+
+    },
+    getRoomOptions() {
+      if (!this.roomOptions.length > 0) {
+        this.loading = true
+        this.$axios.post('/bed/get-room-number', '', {headers: {'showLoading': false, 'noRetry': false}}).then(
+          res => {
+            this.loading = false
+            this.roomOptions = res.data
+          }
+        ).catch(err => {
+
+        })
+      }
+
+    },
+    getBedOptions() {
+
+      if (this.dataForm.roomNumber > 0) {
+        this.loading = true
+        this.$axios.post('/bed/get-bed-number', {roomNumber: this.dataForm.roomNumber}, {
+          headers: {
+            'showLoading': false,
+            'noRetry': false
+          }
+        }).then(
+          res => {
+            this.loading = false
+            this.bedOptions = res.data
+          }
+        ).catch(err => {
+
+        })
+      }
+
     }
+  }, watch: {
+    /*'dataForm.roomNumber': function (newValue, oldValue) {
+      let self = this
+      setTimeout(() => {
+        self.getBedOptions()
+      }, 500);
+
+    }*/
   }
 }
 </script>

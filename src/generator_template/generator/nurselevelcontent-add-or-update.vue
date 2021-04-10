@@ -10,8 +10,8 @@
     <el-form-item label="" prop="nurseContentId">
       <el-input v-model="dataForm.nurseContentId" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="1-已删除 0未删除" prop="isDeleted">
-      <el-input v-model="dataForm.isDeleted" placeholder="1-已删除 0未删除"></el-input>
+    <el-form-item label="0-已删除 1未删除" prop="isDeleted">
+      <el-input v-model="dataForm.isDeleted" placeholder="0-已删除 1未删除"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -40,7 +40,7 @@
             { required: true, message: '不能为空', trigger: 'blur' }
           ],
           isDeleted: [
-            { required: true, message: '1-已删除 0未删除不能为空', trigger: 'blur' }
+            { required: true, message: '0-已删除 1未删除不能为空', trigger: 'blur' }
           ]
         }
       }

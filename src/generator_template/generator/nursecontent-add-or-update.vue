@@ -19,8 +19,8 @@
     <el-form-item label="1-启用 0-不启用" prop="status">
       <el-input v-model="dataForm.status" placeholder="1-启用 0-不启用"></el-input>
     </el-form-item>
-    <el-form-item label="1-已删除 0未删除" prop="idDeleted">
-      <el-input v-model="dataForm.idDeleted" placeholder="1-已删除 0未删除"></el-input>
+    <el-form-item label="0-已删除 1未删除" prop="idDeleted">
+      <el-input v-model="dataForm.idDeleted" placeholder="0-已删除 1未删除"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -61,7 +61,7 @@
             { required: true, message: '1-启用 0-不启用不能为空', trigger: 'blur' }
           ],
           idDeleted: [
-            { required: true, message: '1-已删除 0未删除不能为空', trigger: 'blur' }
+            { required: true, message: '0-已删除 1未删除不能为空', trigger: 'blur' }
           ]
         }
       }

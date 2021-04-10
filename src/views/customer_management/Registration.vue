@@ -31,21 +31,21 @@
           label="序号">
         </el-table-column>
         <el-table-column
-          prop="customerName"
+          prop="customer_name"
           header-align="center"
           align="center"
           width="120px"
           label="客户姓名">
         </el-table-column>
         <el-table-column
-          prop="customerAge"
+          prop="customer_age"
           header-align="center"
           align="center"
           width="60px"
           label="年龄">
         </el-table-column>
         <el-table-column
-          prop="customerSex"
+          prop="customer_sex"
           header-align="center"
           align="center"
           width="60px"
@@ -59,59 +59,59 @@
           label="身份证号">
         </el-table-column>
         <el-table-column
-          prop="buildingId"
+          prop="building_id"
           header-align="center"
           align="center"
           width="120"
           label="所属楼房">
         </el-table-column>
         <el-table-column
-          prop="roomNumber"
+          prop="room_number"
           header-align="center"
           align="center"
           width="80px"
           label="房间号">
         </el-table-column>
         <el-table-column
-          prop="bedId"
+          prop="bed_id_name"
           header-align="center"
           align="center"
           width="80px"
           label="床位号">
         </el-table-column>
         <el-table-column
-          prop="recordId"
+          prop="record_id"
           header-align="center"
           align="center"
           label="档案号">
         </el-table-column>
         <el-table-column
-          prop="elderType"
+          prop="elder_type"
           label="老人类型"
           header-align="center"
           align="center"
           width="100"
           :filters="[{ text: '活力老人', value: '活力老人' }, { text: '自理老人', value: '自理老人' },{ text: '护理老人', value: '护理老人' }]"
-          :filter-method="filterTag"
+          :filter-method="filter"
           filter-placement="bottom-end">
           <template slot-scope="scope">
-            {{ scope.row.elderType }}
+            {{ scope.row.elder_type }}
           </template>
         </el-table-column>
         <el-table-column
-          prop="checkinDate"
+          prop="checkin_date"
           header-align="center"
           align="center"
           label="入住时间">
         </el-table-column>
         <el-table-column
-          prop="expirationDate"
+          prop="expiration_date"
           header-align="center"
           align="center"
           label="合同到期时间">
         </el-table-column>
         <el-table-column
-          prop="contactTel"
+          prop="contact_tel"
           header-align="center"
           align="center"
           label="联系电话">
@@ -129,7 +129,7 @@
           fixed="right"
           label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="addOrUpdateHandle(scope.row.id)"
+            <el-button type="primary" size="mini" @click="addOrUpdateHandle(scope.row)"
                        style="position: relative;left: 5px">修改
             </el-button>
             <el-button type="warning" size="mini" @click="deleteHandle(scope.row.id)">删除</el-button>
@@ -177,8 +177,8 @@ export default {
     this.getDataList()
   },
   methods: {
-    filterTag(value, row) {
-      return row.elderType === value;
+    filter(value, row) {
+      return row.elder_type === value;
     },
     // 获取数据列表
     getDataList() {
@@ -188,6 +188,7 @@ export default {
         name: this.dataForm.key,
       }).then(({data}) => {
         if (data) {
+          console.log(data);
           this.dataList = data.list
           this.totalPage = data.totalCount
         } else {
@@ -212,10 +213,10 @@ export default {
       this.dataListSelections = val
     },
     // 新增 / 修改
-    addOrUpdateHandle(id) {
+    addOrUpdateHandle(row) {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
-        this.$refs.addOrUpdate.init(id)
+        this.$refs.addOrUpdate.init(row)
       })
     },
     // 删除

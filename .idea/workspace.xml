@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41357dcc-6186-44bc-a3ed-ba6331ad4d91" name="Default Changelist" comment="修复在门诊确诊刷新后病历首页无法输入的bug">
-      <change beforePath="$PROJECT_DIR$/.idea/his.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/siic.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,6 +145,7 @@
       <workItem from="1609984771092" duration="44883000" />
       <workItem from="1617791559158" duration="228000" />
       <workItem from="1617791854968" duration="149000" />
+      <workItem from="1617931075673" duration="652000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1607052559341</created>
