@@ -10,7 +10,7 @@
               <el-col :span="12"></el-col>
 
             </el-row>-->
-      <el-row :gutter="15">
+      <el-row :gutter="15" >
         <el-col :span="12">
           <el-form-item label="客户姓名:" prop="customerName">
             <el-input class="el-input-middle" v-model="dataForm.customerName" placeholder=""></el-input>
@@ -19,7 +19,7 @@
 
 
       </el-row>
-      <el-row :gutter="15">
+      <el-row :gutter="15" flex>
         <el-col :span="12">
           <el-form-item label="年龄:" prop="customerAge">
             <el-input class="el-input-short" v-model="dataForm.customerAge" placeholder=""></el-input>

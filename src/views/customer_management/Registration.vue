@@ -31,21 +31,21 @@
           label="序号">
         </el-table-column>
         <el-table-column
-          prop="customer_name"
+          prop="customerName"
           header-align="center"
           align="center"
           width="120px"
           label="客户姓名">
         </el-table-column>
         <el-table-column
-          prop="customer_age"
+          prop="customerAge"
           header-align="center"
           align="center"
           width="60px"
           label="年龄">
         </el-table-column>
         <el-table-column
-          prop="customer_sex"
+          prop="customerSex"
           header-align="center"
           align="center"
           width="60px"
@@ -59,34 +59,34 @@
           label="身份证号">
         </el-table-column>
         <el-table-column
-          prop="building_id"
+          prop="buildingId"
           header-align="center"
           align="center"
           width="120"
           label="所属楼房">
         </el-table-column>
         <el-table-column
-          prop="room_number"
+          prop="roomNumber"
           header-align="center"
           align="center"
           width="80px"
           label="房间号">
         </el-table-column>
         <el-table-column
-          prop="bed_id_name"
+          prop="bedIdName"
           header-align="center"
           align="center"
           width="80px"
           label="床位号">
         </el-table-column>
         <el-table-column
-          prop="record_id"
+          prop="recordId"
           header-align="center"
           align="center"
           label="档案号">
         </el-table-column>
         <el-table-column
-          prop="elder_type"
+          prop="elderType"
           label="老人类型"
           header-align="center"
           align="center"
@@ -95,23 +95,23 @@
           :filter-method="filter"
           filter-placement="bottom-end">
           <template slot-scope="scope">
-            {{ scope.row.elder_type }}
+            {{ scope.row.elderType }}
           </template>
         </el-table-column>
         <el-table-column
-          prop="checkin_date"
+          prop="checkinDate"
           header-align="center"
           align="center"
           label="入住时间">
         </el-table-column>
         <el-table-column
-          prop="expiration_date"
+          prop="expirationDate"
           header-align="center"
           align="center"
           label="合同到期时间">
         </el-table-column>
         <el-table-column
-          prop="contact_tel"
+          prop="contactTel"
           header-align="center"
           align="center"
           label="联系电话">
