@@ -2,25 +2,18 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="120px">
-      <!--      <el-row :gutter="15">
-              <el-col :span="12"></el-col>
-              <el-col :span="12"></el-col>
-
-            </el-row>-->
-      <el-row :gutter="15" >
+    :visible.sync="visible" center
+    :width="dialogWidthCal">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()">
+      <el-row :gutter="15">
         <el-col :span="12">
           <el-form-item label="客户姓名:" prop="customerName">
-            <el-input class="el-input-middle" v-model="dataForm.customerName" placeholder=""></el-input>
+            <el-input class="el-input-short" v-model="dataForm.customerName" placeholder=""></el-input>
           </el-form-item>
         </el-col>
-
-
       </el-row>
-      <el-row :gutter="15" flex>
-        <el-col :span="12">
+      <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
+        <el-col :span="10">
           <el-form-item label="年龄:" prop="customerAge">
             <el-input class="el-input-short" v-model="dataForm.customerAge" placeholder=""></el-input>
           </el-form-item>
@@ -38,14 +31,13 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="15">
-
-        <el-col :span="12">
+      <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
+        <el-col :span="14">
           <el-form-item label="身份证号:" prop="idcard">
-            <el-input class="el-input-longer" v-model="dataForm.idcard" placeholder=""></el-input>
+            <el-input style="width: 80%" v-model="dataForm.idcard" placeholder=""></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <el-form-item label="所属楼房:" prop="buildingId">
             <el-select v-model="dataForm.buildingId" placeholder="请选择">
               <el-option
@@ -58,7 +50,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="15">
+      <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
 
         <el-col :span="12">
           <el-form-item label="房间号:" prop="roomNumber">
@@ -88,13 +80,13 @@
         </el-col>
       </el-row>
 
-      <el-row :gutter="15">
+      <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="档案号:" prop="recordId">
-            <el-input class="el-input-long" v-model="dataForm.recordId" placeholder=""></el-input>
+            <el-input style="width: 80%" v-model="dataForm.recordId" placeholder=""></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="10">
           <el-form-item label="老人类型:" prop="elderType">
             <el-select v-model="dataForm.elderType" placeholder="请选择">
               <el-option
@@ -107,13 +99,12 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="15">
-        <el-col :span="12">
+      <el-row :gutter="20" style="flex-wrap: wrap;display: flex">
+        <el-col :span="10">
           <el-form-item label="入住时间:" prop="checkinDate">
             <template slot-scope="scope">
               <el-date-picker
                 type="datetime"
-                style="width:200px"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="选择日期"
                 v-model="dataForm.checkinDate"
@@ -126,7 +117,6 @@
             <template slot-scope="scope">
               <el-date-picker
                 type="datetime"
-                style="width:200px"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="选择日期"
                 v-model="dataForm.expirationDate"
@@ -135,22 +125,20 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="15">
+      <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="联系电话:" prop="contactTel">
-            <el-input class="el-input-long" v-model="dataForm.contactTel" placeholder=""></el-input>
+            <el-input style="width: 70%" v-model="dataForm.contactTel" placeholder=""></el-input>
           </el-form-item>
         </el-col>
 
       </el-row>
-      <el-row :gutter="15">
+      <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="18">
           <el-form-item label="注意事项:" prop="attention">
-            <el-input class="el-input-longer" v-model="dataForm.attention" type="textarea" placeholder=""></el-input>
+            <el-input v-model="dataForm.attention" type="textarea" placeholder=""></el-input>
           </el-form-item>
         </el-col>
-
-
       </el-row>
 
     </el-form>
@@ -165,6 +153,7 @@
 export default {
   data() {
     return {
+      dialogWidth: '50%',
       loading: false,
       visible: false,
       sexOptions: [{
@@ -275,6 +264,7 @@ export default {
   methods: {
     init(info) {
       this.dataForm.id = info !== undefined ? info.id : ''
+      this.bedOptions =info !== undefined ? [{label: info.bedIdName, value: info.bedId}] : []
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
@@ -304,7 +294,7 @@ export default {
               this.dataForm.filepath = data.customer.filepath
             }
           })
-        }else {
+        } else {
           this.getRecordId()
         }
       })
@@ -405,6 +395,11 @@ export default {
       }, 500);
 
     }*/
+  }, computed: {
+    dialogWidthCal() {
+      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 50 + '%';
+      return this.dialogWidth;
+    }
   }
 }
 </script>

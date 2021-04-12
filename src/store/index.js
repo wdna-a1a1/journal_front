@@ -24,7 +24,10 @@ const store = new Vuex.Store({
   getters,
   state() {
     return {
-
+      innerWH: {
+        innerWidth: '',
+        innerHeight: '',
+      },
     }
   }, mounted() {
 
