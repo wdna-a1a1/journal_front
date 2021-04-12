@@ -23,7 +23,7 @@
           </div>
           <div class="food_info">
             <el-tag size="small">是否清真:</el-tag>
-            {{ item.isMuslim === 1 ? '是' : '否' }}
+            {{ item.isMuslim === "1" ? '是' : '否' }}
           </div>
         </div>
       </div>
