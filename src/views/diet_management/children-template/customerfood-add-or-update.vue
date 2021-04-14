@@ -184,13 +184,11 @@ export default {
         let customerFoods = []
 
         for (let i = 0; i < this.checkList.length; i++) {
-
-
           console.log(this.checkList[i])
           let temp = formData
           temp.foodid = this.checkList[i]
           console.log(temp)
-          customerFoods.push(temp)
+          customerFoods.push(JSON.parse(JSON.stringify(temp)))
         }
         if (valid) {
           this.$axios.post(`/customer-food/${!this.dataForm.id ? 'add' : 'update'}`, customerFoods, { headers: { stringify: false } }).then(({ data }) => {
@@ -200,7 +198,7 @@ export default {
                 duration: 1500,
                 onClose: () => {
                   this.visible = false
-                  this.$emit('refreshDataList')
+                  this.$emit('refreshDataList',1)
                 }
               })
               this.foodList = []

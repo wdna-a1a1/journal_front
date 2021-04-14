@@ -313,7 +313,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        this.$axios.post('/customer/del', { id })
+        this.$axios.post('/customer-food/del', { id })
           .then(({ data }) => {
             if (data) {
               this.$message.success({
