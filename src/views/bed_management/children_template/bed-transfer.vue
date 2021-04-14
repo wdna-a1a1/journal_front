@@ -1,10 +1,11 @@
 <template>
   <el-dialog
-    title='床位调换'
+    title="床位调换"
     :close-on-click-modal="false"
     :visible.sync="visible"
     center
-    :width="dialogWidthCal">
+    :width="dialogWidthCal"
+  >
     <el-form :model="dataForm">
       <el-form-item>
         <el-row>
@@ -15,8 +16,8 @@
                 v-for="item1 in dataList"
                 :key="item1.id"
                 :label="item1.customerName+'-'+item1.roomNumber+'-'+item1.bedId"
-                :value="item1.id">
-              </el-option>
+                :value="item1.id"
+              />
             </el-select>
           </el-col>
           <el-col :span="12">
@@ -26,12 +27,11 @@
                 v-for="item2 in dataList"
                 :key="item2.id"
                 :label="item2.customerName+'-'+item2.roomNumber+'-'+item2.bedId"
-                :value="item2.id">
-              </el-option>
+                :value="item2.id"
+              />
             </el-select>
           </el-col>
         </el-row>
-
 
       </el-form-item>
     </el-form>
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: "bed-transfer",
+  name: 'BedTransfer',
   data() {
     return {
       dialogWidth: '35%',
@@ -52,15 +52,20 @@ export default {
 
       dataForm: {
         v1: '',
-        v2: '',
+        v2: ''
       },
-      dataList: [],
+      dataList: []
+    }
+  }, computed: {
+    dialogWidthCal() {
+      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 35 + '%'
+      return this.dialogWidth
     }
   },
   methods: {
     init() {
       this.visible = true
-      this.$axios.post("customer/get-bed-info").then(res => {
+      this.$axios.post('customer/get-bed-info').then(res => {
         if (res.data) {
           this.dataList = res.data
         }
@@ -69,35 +74,29 @@ export default {
     },
     dataFormSubmit() {
       if (this.dataForm.v1 !== this.dataForm.v2) {
-        this.$axios.post("customer/transfer-bed",
+        this.$axios.post('customer/transfer-bed',
           {
             v1: this.dataForm.v1,
             v2: this.dataForm.v2
           }).then(res => {
-            console.log(res)
+          console.log(res)
           if (res.data) {
-               this.$message.success({
-                message: '操作成功',
-                duration: 500,
-                onClose: () => {
-                  this.visible = false
-                  this.$emit('refreshDataList')
-                }
-              })
+            this.$message.success({
+              message: '操作成功',
+              duration: 500,
+              onClose: () => {
+                this.visible = false
+                this.$emit('refreshDataList')
+              }
+            })
           }
         }).catch(err => {
         })
       } else {
-        this.$message.error("不允许调换同一个人的床位!")
+        this.$message.error('不允许调换同一个人的床位!')
       }
-
     }
 
-  }, computed: {
-    dialogWidthCal() {
-      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 35 + '%';
-      return this.dialogWidth;
-    }
   }
 }
 </script>

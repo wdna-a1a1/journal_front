@@ -7,11 +7,10 @@ const encryptor = new JSEncrypt() // 新建JSEncrypt对象
 encryptor.setPublicKey(PUBLIC_KEY)
 
 export function encrypt(arg) {
-	
-	let rsaContent = encryptor.encrypt(arg)
-	return rsaContent
+  const rsaContent = encryptor.encrypt(arg)
+  return rsaContent
 }
 export function decrypt(arg) {
-	let rsaContent = encryptor.decrypt(arg)
-	return rsaContent
+  const rsaContent = encryptor.decrypt(arg)
+  return rsaContent
 }

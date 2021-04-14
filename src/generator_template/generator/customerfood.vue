@@ -38,13 +38,13 @@
         prop="customerid"
         header-align="center"
         align="center"
-        label="">
+        label="客户ID">
       </el-table-column>
       <el-table-column
         prop="foodid"
         header-align="center"
         align="center"
-        label="">
+        label="膳食ID">
       </el-table-column>
       <el-table-column
         prop="fooddate"
@@ -171,7 +171,7 @@
               this.$message({
                 message: '操作成功',
                 type: 'success',
-                duration: 500,
+                duration: 1500,
                 onClose: () => {
                   this.getDataList()
                 }

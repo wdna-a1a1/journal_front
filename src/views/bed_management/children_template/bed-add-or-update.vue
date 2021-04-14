@@ -3,14 +3,21 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible"    center
-    :width="dialogWidthCal">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-position="top">
+    :visible.sync="visible"
+    center
+    :width="dialogWidthCal"
+  >
+    <el-form
+      ref="dataForm"
+      :model="dataForm"
+      :rules="dataRule"
+      label-position="top"
+      @keyup.enter.native="dataFormSubmit()"
+    >
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="房间号:" prop="roomNumber">
-            <el-input v-model="dataForm.roomNumber" placeholder=""></el-input>
+            <el-input v-model="dataForm.roomNumber" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -20,8 +27,8 @@
                 v-for="item in bedStatusOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -29,7 +36,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="床位号:" prop="name">
-            <el-input v-model="dataForm.name" placeholder=""></el-input>
+            <el-input v-model="dataForm.name" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -39,8 +46,8 @@
                 v-for="item in positionTypeOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -53,8 +60,8 @@
                 v-for="item in sortOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -79,30 +86,35 @@ export default {
         bedStatus: '',
         positionType: '',
         name: '',
-        sort: '',
+        sort: ''
       }, bedStatusOptions: [
-        {label: '有人', value: '有人'},
-        {label: '空闲', value: '空闲'},
-        {label: '外出', value: '外出'}],
-      positionTypeOptions: [ {label: '0', value: '0'}, {label: '1', value: '1'}, {label: '2', value: '2'}],
-      sortOptions:[ {label: '0', value: '0'}, {label: '1', value: '1'}, {label: '2', value: '2'}],
+        { label: '有人', value: '有人' },
+        { label: '空闲', value: '空闲' },
+        { label: '外出', value: '外出' }],
+      positionTypeOptions: [{ label: '0', value: '0' }, { label: '1', value: '1' }, { label: '2', value: '2' }],
+      sortOptions: [{ label: '0', value: '0' }, { label: '1', value: '1' }, { label: '2', value: '2' }],
       dataRule: {
         roomNumber: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         bedStatus: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         positionType: [
-          {message: '不能为空', trigger: 'blur'}
+          { message: '不能为空', trigger: 'blur' }
         ],
         name: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         sort: [
-          {message: '不能为空', trigger: 'blur'}
+          { message: '不能为空', trigger: 'blur' }
         ]
       }
+    }
+  }, computed: {
+    dialogWidthCal() {
+      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 30 + '%'
+      return this.dialogWidth
     }
   },
   methods: {
@@ -112,7 +124,7 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
-          this.$axios.post('/bed/get-by-id', {id: this.dataForm.id}).then(({data}) => {
+          this.$axios.post('/bed/get-by-id', { id: this.dataForm.id }).then(({ data }) => {
             if (data) {
               this.dataForm.roomNumber = data.bed.roomNumber
               this.dataForm.bedStatus = data.bed.bedStatus
@@ -135,7 +147,7 @@ export default {
             'positionType': this.dataForm.positionType,
             'name': this.dataForm.name,
             'sort': this.dataForm.sort
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data === true) {
               this.$message.success({
                 message: '操作成功',
@@ -151,11 +163,6 @@ export default {
           })
         }
       })
-    }
-  }, computed: {
-    dialogWidthCal() {
-      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 30 + '%';
-      return this.dialogWidth;
     }
   }
 }

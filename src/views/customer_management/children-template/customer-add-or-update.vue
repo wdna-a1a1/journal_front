@@ -2,20 +2,22 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible" center
-    :width="dialogWidthCal">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()">
+    :visible.sync="visible"
+    center
+    :width="dialogWidthCal"
+  >
+    <el-form ref="dataForm" :model="dataForm" :rules="dataRule" @keyup.enter.native="dataFormSubmit()">
       <el-row :gutter="15">
         <el-col :span="12">
           <el-form-item label="客户姓名:" prop="customerName">
-            <el-input class="el-input-short" v-model="dataForm.customerName" placeholder=""></el-input>
+            <el-input v-model="dataForm.customerName" class="el-input-short" placeholder="" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="10">
           <el-form-item label="年龄:" prop="customerAge">
-            <el-input class="el-input-short" v-model="dataForm.customerAge" placeholder=""></el-input>
+            <el-input v-model="dataForm.customerAge" class="el-input-short" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -25,8 +27,8 @@
                 v-for="item in sexOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -34,7 +36,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="身份证号:" prop="idcard">
-            <el-input style="width: 80%" v-model="dataForm.idcard" placeholder=""></el-input>
+            <el-input v-model="dataForm.idcard" style="width: 80%" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -44,8 +46,8 @@
                 v-for="item in buildingOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -54,14 +56,18 @@
 
         <el-col :span="12">
           <el-form-item label="房间号:" prop="roomNumber">
-            <el-select v-model="dataForm.roomNumber" :loading="loading" placeholder="请选择"
-                       @visible-change="getBedOptions">
+            <el-select
+              v-model="dataForm.roomNumber"
+              :loading="loading"
+              placeholder="请选择"
+              @visible-change="getBedOptions"
+            >
               <el-option
                 v-for="item in roomOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -73,8 +79,8 @@
                 v-for="item in bedOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -83,7 +89,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="档案号:" prop="recordId">
-            <el-input style="width: 80%" v-model="dataForm.recordId" placeholder=""></el-input>
+            <el-input v-model="dataForm.recordId" style="width: 80%" placeholder="" />
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -93,8 +99,8 @@
                 v-for="item in elderTypeOption"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -104,11 +110,11 @@
           <el-form-item label="入住时间:" prop="checkinDate">
             <template slot-scope="scope">
               <el-date-picker
+                v-model="dataForm.checkinDate"
                 type="datetime"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="选择日期"
-                v-model="dataForm.checkinDate"
-              ></el-date-picker>
+              />
             </template>
           </el-form-item>
         </el-col>
@@ -116,11 +122,11 @@
           <el-form-item label="合同到期时间:" prop="expirationDate">
             <template slot-scope="scope">
               <el-date-picker
+                v-model="dataForm.expirationDate"
                 type="datetime"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="选择日期"
-                v-model="dataForm.expirationDate"
-              ></el-date-picker>
+              />
             </template>
           </el-form-item>
         </el-col>
@@ -128,7 +134,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="联系电话:" prop="contactTel">
-            <el-input style="width: 70%" v-model="dataForm.contactTel" placeholder=""></el-input>
+            <el-input v-model="dataForm.contactTel" style="width: 70%" placeholder="" />
           </el-form-item>
         </el-col>
 
@@ -136,7 +142,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="18">
           <el-form-item label="注意事项:" prop="attention">
-            <el-input v-model="dataForm.attention" type="textarea" placeholder=""></el-input>
+            <el-input v-model="dataForm.attention" type="textarea" placeholder="" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -166,7 +172,10 @@ export default {
       roomOptions: [],
       buildingOptions: [],
       bedOptions: [],
-      elderTypeOption: [{label: '活力老人', value: '活力老人'}, {label: '自理老人', value: '自理老人'}, {label: '护理老人', value: '护理老人'}],
+      elderTypeOption: [
+        { label: '活力老人', value: '活力老人' },
+        { label: '自理老人', value: '自理老人' },
+        { label: '护理老人', value: '护理老人' }],
       dataForm: {
         id: 0,
         isDeleted: '',
@@ -193,70 +202,84 @@ export default {
       },
       dataRule: {
         isDeleted: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         customerName: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         customerAge: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         customerSex: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         idcard: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         roomNumber: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         buildingId: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         recordId: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         elderType: [
-          {required: true, message: '活力老人不能为空', trigger: 'blur'}
+          { required: true, message: '活力老人不能为空', trigger: 'blur' }
         ],
         checkinDate: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         expirationDate: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         contactTel: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         bedId: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         psychosomaticState: [
-          {required: true, message: '精神状况不能为空', trigger: 'blur'}
+          { required: true, message: '精神状况不能为空', trigger: 'blur' }
         ],
         attention: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         birthday: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         height: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         maritalStatus: [
-          {required: true, message: '婚姻状况不能为空', trigger: 'blur'}
+          { required: true, message: '婚姻状况不能为空', trigger: 'blur' }
         ],
         weight: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         bloodType: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ],
         filepath: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          { required: true, message: '不能为空', trigger: 'blur' }
         ]
       }
     }
+  }, computed: {
+    dialogWidthCal() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 50 + '%'
+      return this.dialogWidth
+    }
+  }, watch: {
+    /* 'dataForm.roomNumber': function (newValue, oldValue) {
+      let self = this
+      setTimeout(() => {
+        self.getBedOptions()
+      }, 500);
+
+    }*/
   },
   mounted() {
     this.getRoomOptions()
@@ -264,12 +287,12 @@ export default {
   methods: {
     init(info) {
       this.dataForm.id = info !== undefined ? info.id : ''
-      this.bedOptions =info !== undefined ? [{label: info.bedIdName, value: info.bedId}] : []
+      this.bedOptions = info !== undefined ? [{ label: info.bedIdName, value: info.bedId }] : []
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
-          this.$axios.post('/customer/get-by-id', {id: this.dataForm.id}).then(({data}) => {
+          this.$axios.post('/customer/get-by-id', { id: this.dataForm.id }).then(({ data }) => {
             if (data) {
               this.dataForm.isDeleted = data.customer.isDeleted
               this.dataForm.customerName = data.customer.customerName
@@ -327,7 +350,7 @@ export default {
               'weight': this.dataForm.weight,
               'bloodType': this.dataForm.bloodType,
               'filepath': this.dataForm.filepath
-            }).then(({data}) => {
+            }).then(({ data }) => {
             if (data === true) {
               this.$message.success({
                 message: '操作成功',
@@ -346,32 +369,29 @@ export default {
     },
     getRecordId() {
       if (!this.dataForm.id) {
-        this.$axios.post("/customer/get-record-id").then(res => {
-
+        this.$axios.post('/customer/get-record-id').then(res => {
           this.dataForm.recordId = res.data
         }).catch()
       }
-
     },
     getRoomOptions() {
       if (!this.roomOptions.length > 0) {
         this.loading = true
-        this.$axios.post('/bed/get-room-number', '', {headers: {'showLoading': false, 'noRetry': false}}).then(
+        this.$axios.post('/bed/get-room-number', '', { headers: { 'showLoading': false, 'noRetry': false }}).then(
           res => {
             this.loading = false
             this.roomOptions = res.data
           }
+          // eslint-disable-next-line handle-callback-err
         ).catch(err => {
 
         })
       }
-
     },
     getBedOptions() {
-
       if (this.dataForm.roomNumber > 0) {
         this.loading = true
-        this.$axios.post('/bed/get-bed-number', {roomNumber: this.dataForm.roomNumber}, {
+        this.$axios.post('/bed/get-bed-number', { roomNumber: this.dataForm.roomNumber }, {
           headers: {
             'showLoading': false,
             'noRetry': false
@@ -381,24 +401,11 @@ export default {
             this.loading = false
             this.bedOptions = res.data
           }
+          // eslint-disable-next-line handle-callback-err
         ).catch(err => {
 
         })
       }
-
-    }
-  }, watch: {
-    /*'dataForm.roomNumber': function (newValue, oldValue) {
-      let self = this
-      setTimeout(() => {
-        self.getBedOptions()
-      }, 500);
-
-    }*/
-  }, computed: {
-    dialogWidthCal() {
-      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 50 + '%';
-      return this.dialogWidth;
     }
   }
 }

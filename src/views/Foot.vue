@@ -1,15 +1,15 @@
 <template>
-	<div id="app">Copyright © 2020-2021 Hwwwww</div>
+  <div id="app">Copyright © 2020-2021 Hwwwww</div>
 </template>
 
 <script>
 export default {
-	name: 'Foot',
-	data: () => {
-		return {};
-	},
-	methods: {}
-};
+  name: 'Foot',
+  data: () => {
+    return {}
+  },
+  methods: {}
+}
 </script>
 
 <style scoped="scoped">

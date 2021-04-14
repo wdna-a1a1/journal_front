@@ -1,5 +1,5 @@
 // 为了实现Class的私有属性
-import {Message} from "element-ui";
+import { Message } from 'element-ui'
 
 const showMessage = Symbol('showMessage')
 
@@ -25,12 +25,11 @@ class DomMessage {
   }
 
   [showMessage](type, options, single) {
-
     // 判断是否已存在Message
     if (document.getElementsByClassName('el-message').length === 0) {
       Message[type](options)
     } else {
-      //先关闭所有的在弹出新的
+      // 先关闭所有的在弹出新的
       Message.closeAll()
       Message[type](options)
     }

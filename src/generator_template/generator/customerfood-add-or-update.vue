@@ -7,11 +7,11 @@
     <el-form-item label="" prop="isDeleted">
       <el-input v-model="dataForm.isDeleted" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="" prop="customerid">
-      <el-input v-model="dataForm.customerid" placeholder=""></el-input>
+    <el-form-item label="客户ID" prop="customerid">
+      <el-input v-model="dataForm.customerid" placeholder="客户ID"></el-input>
     </el-form-item>
-    <el-form-item label="" prop="foodid">
-      <el-input v-model="dataForm.foodid" placeholder=""></el-input>
+    <el-form-item label="膳食ID" prop="foodid">
+      <el-input v-model="dataForm.foodid" placeholder="膳食ID"></el-input>
     </el-form-item>
     <el-form-item label="膳食日期" prop="fooddate">
       <el-input v-model="dataForm.fooddate" placeholder="膳食日期"></el-input>
@@ -45,10 +45,10 @@
             { required: true, message: '不能为空', trigger: 'blur' }
           ],
           customerid: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '客户ID不能为空', trigger: 'blur' }
           ],
           foodid: [
-            { required: true, message: '不能为空', trigger: 'blur' }
+            { required: true, message: '膳食ID不能为空', trigger: 'blur' }
           ],
           fooddate: [
             { required: true, message: '膳食日期不能为空', trigger: 'blur' }
@@ -102,7 +102,7 @@
                 this.$message({
                   message: '操作成功',
                   type: 'success',
-                  duration: 500,
+                  duration: 1500,
                   onClose: () => {
                     this.visible = false
                     this.$emit('refreshDataList')
