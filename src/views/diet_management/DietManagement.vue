@@ -67,6 +67,7 @@
           prop="foodid"
           header-align="center"
           align="center"
+          width="240px"
           label="膳食ID (点击查看详细)">
           <template slot-scope="scope">
             <el-popover
@@ -91,9 +92,21 @@
               </el-table>
 
               <div slot="reference">
-                <div class="text">{{ scope.row.foodid }}</div>
+                <div class="text">{{ '[' + scope.row.foodid + ']'}}</div>
               </div>
             </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="supplyType"
+          header-align="center"
+          align="center"
+          label="膳食类型">
+          <template scope="scope">
+            <el-tag :type=" supplyTypeOptions[scope.row.supplyType - 1].tag ">
+              {{ supplyTypeOptions[scope.row.supplyType - 1].label }}
+            </el-tag>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -182,7 +195,7 @@ export default {
       },
       dataRule: {
         key: [
-          { required: true, message: '不能为空', trigger: 'blur' }
+          { message: '不能为空', trigger: 'blur' }
         ],
       },
       dataList: [],
@@ -213,13 +226,16 @@ export default {
       }],
       supplyTypeOptions: [{
         'label': '早餐',
-        'value': 1
+        'value': 1,
+        'tag': 'success',
       }, {
         'label': '午餐',
-        'value': 2
+        'value': 2,
+        'tag': 'primary'
       }, {
         'label': '晚餐',
-        'value': 3
+        'value': 3,
+        'tag': 'warning'
       }],
       pageIndex: 1,
       pageSize: 10,
@@ -254,7 +270,6 @@ export default {
         type: this.dataForm.type
       }).then(({ data }) => {
         if (data) {
-          console.log(data)
           this.dataList = data.list
           this.totalPage = data.totalCount
         } else {
@@ -266,17 +281,25 @@ export default {
     getFoodInfo (id) {
       this.vloading = true
       this.foodInfo = []
-      this.$axios.post('food/get-by-id', { id: id }, { headers: { showLoading: false } }).then(res => {
+
+      this.$axios.post('food/get-by-id-list', id.split(','), {
+        headers: {
+          showLoading: false,
+          stringify: false
+        }
+      }).then(res => {
         if (res.data) {
-          let temp = res.data.food
-          temp.isMuslim = '1' ? '是' : '否'
-          temp.supplyDate = this.weekDay[temp.supplyDate - 1]
-          temp.supplyType = this.type[temp.supplyType - 1]
+          let temp = res.data
+          for (let i = 0; i < temp.length; i++) {
+            temp[i].isMuslim = '1' ? '是' : '否'
+            temp[i].supplyDate = this.weekDay[temp[i].supplyDate - 1]
+            temp[i].supplyType = this.type[temp[i].supplyType - 1]
+          }
 
           let self = this
           setTimeout(() => {
             self.vloading = false
-            self.foodInfo.push(temp)
+            self.foodInfo = temp
           }, 500)
 
         }

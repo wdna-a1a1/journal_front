@@ -10,7 +10,7 @@
       <el-container>
         <el-aside width="45%">
           <el-form-item label="客户姓名:" prop="customerid">
-            <el-select v-model="dataForm.customerid" placeholder="客户姓名" filterable clearable :disabled="updateDisabled">
+            <el-select v-model="dataForm.customerid" placeholder="客户姓名" filterable clearable >
               <el-option v-for="(item, index) in customerList" :key="index" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
@@ -26,18 +26,18 @@
               value-format="yyyy-MM-dd"
               placeholder="选择日期"
               @change="fooddateChangeHandle"
-              :disabled="updateDisabled"
+
             />
           </el-form-item>
           <el-form-item label="膳食星期:" prop="foodweek">
-            <el-select v-model="dataForm.foodweek" placeholder="供应星期" clearable :disabled="updateDisabled">
+            <el-select v-model="dataForm.foodweek" placeholder="供应星期" clearable >
               <el-option v-for="(item, index) in weekOptions" disabled :key="index" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="膳食类型:">
             <el-select v-model="foodtype" placeholder="供应类型" clearable @change="foodtypeSelectHandle"
-                       :disabled="updateDisabled">
+                       >
               <el-option v-for="(item, index) in typeOptions" :key="index" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
@@ -95,7 +95,6 @@ export default {
     return {
       dialogWidth: '45%',
       visible: false,
-      updateDisabled: true,
       dataForm: {
         id: 0,
         isDeleted: '',
@@ -143,11 +142,9 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
-          this.maxChoose = 1
           this.$axios.post(`/customer-food/get-by-id`, { id: this.dataForm.id }
           ).then(({ data }) => {
             if (data) {
-              this.updateDisabled = true
               this.dataForm.isDeleted = data.customerFood.isDeleted
               this.dataForm.customerid = data.customerFood.customerid
               this.dataForm.foodid = data.customerFood.foodid
@@ -157,13 +154,10 @@ export default {
               this.dataForm.attention = data.customerFood.attention
               this.dataForm.remarks = data.customerFood.remarks
               this.foodtype = data.customerFood.supplyType
-              this.checkList.push(data.customerFood.foodid)
               this.getFoodList()
+              this.checkList = data.customerFood.foodid.split(',').map(item => parseInt(item))
             }
           })
-        } else {
-          this.updateDisabled = false
-          this.maxChoose = 5
         }
       })
     },
@@ -183,13 +177,17 @@ export default {
         }
         let customerFoods = []
 
-        for (let i = 0; i < this.checkList.length; i++) {
-          console.log(this.checkList[i])
-          let temp = formData
-          temp.foodid = this.checkList[i]
-          console.log(temp)
-          customerFoods.push(JSON.parse(JSON.stringify(temp)))
-        }
+        /*   for (let i = 0; i < this.checkList.length; i++) {
+             console.log(this.checkList[i])
+             let temp = formData
+             temp.foodid = this.checkList[i]
+             console.log(temp)
+             customerFoods.push(JSON.parse(JSON.stringify(temp)))
+           }*/
+        let temp = formData
+        temp.foodid = this.checkList.toString()
+        customerFoods.push(JSON.parse(JSON.stringify(temp)))
+
         if (valid) {
           this.$axios.post(`/customer-food/${!this.dataForm.id ? 'add' : 'update'}`, customerFoods, { headers: { stringify: false } }).then(({ data }) => {
             if (data) {
@@ -198,7 +196,7 @@ export default {
                 duration: 1500,
                 onClose: () => {
                   this.visible = false
-                  this.$emit('refreshDataList',1)
+                  this.$emit('refreshDataList', 1)
                 }
               })
               this.foodList = []
@@ -254,7 +252,6 @@ export default {
   }, watch: {
 
     checkList: function (newVal, oldVal) {
-      console.log(newVal)
       this.dataForm.foodid = this.checkList.toString()
       if (newVal.length === this.maxChoose) {
         this.$message.warning({
