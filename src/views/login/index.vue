@@ -28,7 +28,7 @@
           <div class="right-info">
             <img width="150px" height="150px" src="../../assets/logo.png" style="border-radius: 50%;">
             <h2 style="font-size:28px;">欢迎使用</h2>
-            <h2 style="font-family: Lexend-B;font-size:32px;">上实颐养中心管理系统</h2>
+            <h2 style="font-family: Lexend-B,serif;font-size:32px;">上实颐养中心管理系统</h2>
           </div>
           <el-form ref="loginForm" :model="loginForm" status-icon :rules="loginRules" label-width="80px" class="form-style">
             <el-form-item label="用户名:" prop="username">

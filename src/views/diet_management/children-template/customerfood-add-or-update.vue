@@ -10,13 +10,13 @@
       <el-container>
         <el-aside width="45%">
           <el-form-item label="客户姓名:" prop="customerid">
-            <el-select v-model="dataForm.customerid" placeholder="客户姓名" filterable clearable >
+            <el-select v-model="dataForm.customerid" placeholder="客户姓名" filterable clearable :disabled="updateDisabled">
               <el-option v-for="(item, index) in customerList" :key="index" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="膳食名称:" prop="foodid">
-            <el-input v-model="dataForm.foodid" disabled placeholder="膳食名称"></el-input>
+          <el-form-item label="膳食编号:" prop="foodid">
+            <el-input v-model="dataForm.foodid" disabled placeholder="膳食编号"></el-input>
           </el-form-item>
           <el-form-item label="膳食日期:" prop="fooddate">
             <el-date-picker
@@ -26,18 +26,18 @@
               value-format="yyyy-MM-dd"
               placeholder="选择日期"
               @change="fooddateChangeHandle"
-
+              :disabled="updateDisabled"
             />
           </el-form-item>
           <el-form-item label="膳食星期:" prop="foodweek">
-            <el-select v-model="dataForm.foodweek" placeholder="供应星期" clearable >
+            <el-select v-model="dataForm.foodweek" placeholder="供应星期" clearable :disabled="updateDisabled">
               <el-option v-for="(item, index) in weekOptions" disabled :key="index" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="膳食类型:">
             <el-select v-model="foodtype" placeholder="供应类型" clearable @change="foodtypeSelectHandle"
-                       >
+                       :disabled="updateDisabled">
               <el-option v-for="(item, index) in typeOptions" :key="index" :label="item.label"
                          :value="item.value"></el-option>
             </el-select>
@@ -95,6 +95,7 @@ export default {
     return {
       dialogWidth: '45%',
       visible: false,
+      updateDisabled: true,
       dataForm: {
         id: 0,
         isDeleted: '',
@@ -102,9 +103,9 @@ export default {
         foodid: '',
         fooddate: '',
         foodweek: '',
-        likes: '',
-        attention: '',
-        remarks: '',
+        likes: '无',
+        attention: '无',
+        remarks: '无',
       },
       foodtype: '',
       maxChoose: 5,
@@ -133,6 +134,7 @@ export default {
   methods: {
     init (id) {
       //初始化数据
+      this.checkList = []
       this.getCustomerList()
       this.foodtype = ''
       this.foodList = []
@@ -142,9 +144,11 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
+          this.maxChoose = 1
           this.$axios.post(`/customer-food/get-by-id`, { id: this.dataForm.id }
           ).then(({ data }) => {
             if (data) {
+              this.updateDisabled = true
               this.dataForm.isDeleted = data.customerFood.isDeleted
               this.dataForm.customerid = data.customerFood.customerid
               this.dataForm.foodid = data.customerFood.foodid
@@ -154,10 +158,13 @@ export default {
               this.dataForm.attention = data.customerFood.attention
               this.dataForm.remarks = data.customerFood.remarks
               this.foodtype = data.customerFood.supplyType
+              this.checkList.push(parseInt(data.customerFood.foodid))
               this.getFoodList()
-              this.checkList = data.customerFood.foodid.split(',').map(item => parseInt(item))
             }
           })
+        } else {
+          this.updateDisabled = false
+          this.maxChoose = 5
         }
       })
     },
@@ -177,26 +184,26 @@ export default {
         }
         let customerFoods = []
 
-        /*   for (let i = 0; i < this.checkList.length; i++) {
-             console.log(this.checkList[i])
-             let temp = formData
-             temp.foodid = this.checkList[i]
-             console.log(temp)
-             customerFoods.push(JSON.parse(JSON.stringify(temp)))
-           }*/
-        let temp = formData
+        for (let i = 0; i < this.checkList.length; i++) {
+          console.log(this.checkList[i])
+          let temp = formData
+          temp.foodid = this.checkList[i]
+          console.log(temp)
+          customerFoods.push(JSON.parse(JSON.stringify(temp)))
+        }
+       /* let temp = formData
         temp.foodid = this.checkList.toString()
-        customerFoods.push(JSON.parse(JSON.stringify(temp)))
+        customerFoods.push(JSON.parse(JSON.stringify(temp)))*/
 
         if (valid) {
           this.$axios.post(`/customer-food/${!this.dataForm.id ? 'add' : 'update'}`, customerFoods, { headers: { stringify: false } }).then(({ data }) => {
             if (data) {
               this.$message.success({
                 message: '操作成功',
-                duration: 1500,
+                duration: 500,
                 onClose: () => {
                   this.visible = false
-                  this.$emit('refreshDataList', 1)
+                  this.$emit('refreshDataList',1)
                 }
               })
               this.foodList = []
@@ -250,10 +257,9 @@ export default {
       return this.dialogWidth
     }
   }, watch: {
-
     checkList: function (newVal, oldVal) {
       this.dataForm.foodid = this.checkList.toString()
-      if (newVal.length === this.maxChoose) {
+      if (oldVal.length === this.maxChoose-1) {
         this.$message.warning({
           message: '最多可选择' + this.maxChoose + '项',
           center: true

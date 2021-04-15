@@ -9,7 +9,7 @@
           <div v-for="item in i.val" >
             <div class="item">
               <el-tag class="food_tag" size="mini">{{ item.foodlabel }}</el-tag>
-              <el-image fit='cover' class="food_img" :src="item.foodpic"/>
+              <el-image fit='cover' class="food_img" :src="item.foodpic" :preview-src-list="[item.foodpic]"/>
               <div class="food_control">
                 <i class="el-icon-edit-outline " @click="mod(item.id)"/>
                 <i class="el-icon-delete " @click="del(item.id)"/></div>
@@ -119,20 +119,20 @@ export default {
   margin: 5px 14px 5px 5px;
   border-radius: 4px;
   border: 1px solid #efefef;
-  /*box-shadow: 5px 6px 4px #aaaaaa;*/
+  box-shadow: 5px 6px 4px #aaaaaa;
 }
 
 .food_control {
   float: right;
   margin: 4px;
-  z-index: 3;
+
 }
 
 .food_tag {
   font-size: 12px;
   margin: 4px;
   position: absolute;
-  z-index: 2;
+
 }
 
 .food_info {
@@ -140,7 +140,7 @@ export default {
   top: 20px;
   left: 30px;
   margin-top: 2px;
-  z-index: 3;
+
 }
 
 .food_info .el-tag {
@@ -158,6 +158,6 @@ export default {
   position: relative;
   left: 45px;
   top: 20px;
-  z-index: 1;
+
 }
 </style>

@@ -52,185 +52,211 @@ export const constantRoutes = [{
   component: () => import('@/views/login/index'),
   hidden: true
 },
-{
-  path: '/404',
-  component: () => import('@/views/404'),
-  hidden: true
-}, {
-  path: '/408',
-  component: () => import('@/views/408'),
-  hidden: true
-},
-{
-  path: '/',
-  component: Layout,
-  redirect: '/index',
-  children: [{
-    path: 'index',
-    name: 'Dashboard',
-    component: () => import('@/views/dashboard/index'),
-    meta: {
-      title: '主页',
-      icon: 'dashboard',
-      affix: true
-    }
-  }]
-}, {
-  path: '/bed-management',
-  component: Layout,
-  name: '床位管理',
-  redirect: '/bed-management/bed-plan',
-  meta: {
-    title: '床位管理',
-    icon: 'el-icon-notebook-2'
-  },
-  children: [{
-    path: 'bed-plan',
-    name: 'BedPlan',
-    component: () => import('@/views/bed_management/BedPlan'),
-    meta: {
-      title: '床位示意图',
-      icon: 'dashboard'
-    }
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
   }, {
-    path: 'bed-management',
-    name: 'BedManagement',
-    component: () => import('@/views/bed_management/BedManagement'),
+    path: '/408',
+    component: () => import('@/views/408'),
+    hidden: true
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/index',
+    children: [{
+      path: 'index',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: {
+        title: '主页',
+        icon: 'dashboard',
+        affix: true
+      }
+    }]
+  }, {
+    path: '/bed-management',
+    component: Layout,
+    name: '床位管理',
+    redirect: '/bed-management/bed-plan',
     meta: {
       title: '床位管理',
-      icon: 'dashboard'
-    }
-  }]
-},
-{
-  path: '/customer_management',
-  component: Layout,
-  name: '客户管理',
-  redirect: '/customer_management/registration',
-  meta: {
-    title: '客户管理',
-    icon: 'el-icon-notebook-2'
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'bed-plan',
+      name: 'BedPlan',
+      component: () => import('@/views/bed_management/BedPlan'),
+      meta: {
+        title: '床位示意图',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'bed-management',
+      name: 'BedManagement',
+      component: () => import('@/views/bed_management/BedManagement'),
+      meta: {
+        title: '床位管理',
+        icon: 'dashboard'
+      }
+    }]
   },
-  children: [{
-    path: 'registration',
-    name: 'Registration',
-    component: () => import('@/views/customer_management/Registration'),
+  {
+    path: '/customer_management',
+    component: Layout,
+    name: '客户管理',
+    redirect: '/customer_management/registration',
     meta: {
-      title: '入住登记',
-      icon: 'dashboard'
-    }
+      title: '客户管理',
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'registration',
+      name: 'Registration',
+      component: () => import('@/views/customer_management/Registration'),
+      meta: {
+        title: '入住登记',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'customer-info',
+      name: 'CustomerInfo',
+      component: () => import('@/views/customer_management/CustomerInfo'),
+      meta: {
+        title: '客户信息',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'unregistration',
+      name: 'unRegistration',
+      component: () => import('@/views/customer_management/unRegistration'),
+      meta: {
+        title: '退住登记',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'out-registration',
+      name: 'OutRegistration',
+      component: () => import('@/views/customer_management/OutRegistration'),
+      meta: {
+        title: '外出登记',
+        icon: 'dashboard'
+      }
+    }]
   }, {
-    path: 'customer-info',
-    name: 'CustomerInfo',
-    component: () => import('@/views/customer_management/CustomerInfo'),
-    meta: {
-      title: '客户信息',
-      icon: 'dashboard'
-    }
-  }, {
-    path: 'unregistration',
-    name: 'unRegistration',
-    component: () => import('@/views/customer_management/unRegistration'),
-    meta: {
-      title: '退住登记',
-      icon: 'dashboard'
-    }
-  }, {
-    path: 'out-registration',
-    name: 'OutRegistration',
-    component: () => import('@/views/customer_management/OutRegistration'),
-    meta: {
-      title: '外出登记',
-      icon: 'dashboard'
-    }
-  }]
-}, {
-  path: '/diet-management',
-  component: Layout,
-  name: '膳食管理',
-  redirect: 'diet_management/basic-data-maintenance',
-  meta: {
-    title: '膳食管理',
-    icon: 'el-icon-notebook-2'
-  },
-  children: [{
-    path: 'diet-calendar',
-    name: 'DietCalendar',
-    component: () => import('@/views/diet_management/DietCalendar'),
-    meta: {
-      title: '膳食日历',
-      icon: 'dashboard'
-    }
-  }, {
-    path: 'diet-management',
-    name: 'DietManagement',
-    component: () => import('@/views/diet_management/DietManagement'),
+    path: '/diet-management',
+    component: Layout,
+    name: '膳食管理',
+    redirect: 'diet_management/basic-data-maintenance',
     meta: {
       title: '膳食管理',
-      icon: 'dashboard'
-    }
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'diet-calendar',
+      name: 'DietCalendar',
+      component: () => import('@/views/diet_management/DietCalendar'),
+      meta: {
+        title: '膳食日历',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'diet-management',
+      name: 'DietManagement',
+      component: () => import('@/views/diet_management/DietManagement'),
+      meta: {
+        title: '膳食管理',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'diet-statistics',
+      name: 'DietStatistics',
+      component: () => import('@/views/diet_management/DietStatistics'),
+      meta: {
+        title: '膳食统计',
+        icon: 'dashboard'
+      }
+    }]
   }, {
-    path: 'diet-statistics',
-    name: 'DietStatistics',
-    component: () => import('@/views/diet_management/DietStatistics'),
+    path: '/nurse_content',
+    component: Layout,
+    name: '护理管理',
+    redirect: '/system_setting/nurse-content',
     meta: {
-      title: '膳食统计',
-      icon: 'dashboard'
-    }
-  }]
-}, {
-  path: '/system-setting',
-  component: Layout,
-  name: '系统信息',
-  redirect: '/system_setting/basic-data-maintenance',
-  meta: {
-    title: '系统信息',
-    icon: 'el-icon-notebook-2'
+      title: '护理管理',
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'nurse-level',
+      name: 'NurseLevel',
+      component: () => import('@/views/nurse_management/NurseLevel'),
+      meta: {
+        title: '护理级别',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'nurse-content',
+      name: 'NurseContent.vue',
+      component: () => import('@/views/nurse_management/NurseContent'),
+      meta: {
+        title: '护理内容',
+        icon: 'dashboard'
+      }
+    },]
+  }, {
+    path: '/system-setting',
+    component: Layout,
+    name: '系统信息',
+    redirect: '/system_setting/basic-data-maintenance',
+    meta: {
+      title: '系统信息',
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'basic-data-maintenance',
+      name: 'BasicDataMaintenance',
+      component: () => import('@/views/system_setting/BasicDataMaintenance'),
+      meta: {
+        title: '基本数据维护',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'staff-management',
+      name: 'StaffManagement',
+      component: () => import('@/views/system_setting/StaffManagement'),
+      meta: {
+        title: '工作人员管理',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'dailylife-care-program',
+      name: 'DailyLifeCareProgram',
+      component: () => import('@/views/system_setting/DailyLifeCareProgram'),
+      meta: {
+        title: '日常生活照料方案',
+        icon: 'dashboard'
+      }
+    }]
   },
-  children: [{
-    path: 'basic-data-maintenance',
-    name: 'BasicDataMaintenance',
-    component: () => import('@/views/system_setting/BasicDataMaintenance'),
-    meta: {
-      title: '基本数据维护',
-      icon: 'dashboard'
-    }
-  }, {
-    path: 'staff-management',
-    name: 'StaffManagement',
-    component: () => import('@/views/system_setting/StaffManagement'),
-    meta: {
-      title: '工作人员管理',
-      icon: 'dashboard'
-    }
-  }, {
-    path: 'dailylife-care-program',
-    name: 'DailyLifeCareProgram',
-    component: () => import('@/views/system_setting/DailyLifeCareProgram'),
-    meta: {
-      title: '日常生活照料方案',
-      icon: 'dashboard'
-    }
-  }]
-},
-{
-  path: 'Hwwwww',
-  component: Layout,
-  children: [{
-    path: '',
-    meta: {
-      title: 'Hwwwww',
-      icon: 'link'
-    }
-  }]
-},
+  {
+    path: 'Hwwwww',
+    component: Layout,
+    children: [{
+      path: '',
+      meta: {
+        title: 'Hwwwww',
+        icon: 'link'
+      }
+    }]
+  },
 
 // 404 page must be placed at the end !!!
-{
-  path: '*',
-  redirect: '/404',
-  hidden: true
-}
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  }
 ]
 
 const createRouter = () => new Router({
@@ -244,7 +270,7 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
+export function resetRouter () {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }

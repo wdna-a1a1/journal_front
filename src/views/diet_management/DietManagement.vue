@@ -7,12 +7,16 @@
           <el-input v-model="dataForm.key" @keyup.enter.native="getDataList(0)" class="el-input-middle"
                     placeholder="输入客户名搜索"/>
         </el-form-item>
+        <el-tag style="font-size: 18px;margin-right: 5px" type="warning">可选属性:</el-tag>
         <el-form-item>
-          <el-tag style="font-size: 18px;margin-right: 5px" type="warning">可选属性:</el-tag>
-          <el-select v-model="dataForm.date" placeholder="供应星期" clearable :style="{width: '30%'}">
-            <el-option v-for="(item, index) in supplyDateOptions" :key="index" :label="item.label"
-                       :value="item.value"></el-option>
-          </el-select>
+
+          <el-date-picker
+            v-model="dataForm.date"
+            type="date"
+            :style="{width: '50%'}"
+            value-format="yyyy-MM-dd"
+            placeholder="选择日期"
+          />
           <el-select v-model="dataForm.type" placeholder="供应类型" clearable
                      :style="{width: '30%',marginLeft:'5px'}">
             <el-option v-for="(item, index) in supplyTypeOptions" :key="index" :label="item.label"
@@ -86,13 +90,13 @@
                 <el-table-column width="100" property="supplyType" label="供应类型"></el-table-column>
                 <el-table-column width="200" property="foodpic" label="膳食图片">
                   <template scope="r">
-                    <el-image :src="r.row.foodpic" style="width: 80px;height: 80px" fit="cover"></el-image>
+                    <el-image :src="r.row.foodpic" style="width: 80px;height: 80px" fit="cover" :preview-src-list="[r.row.foodpic]"></el-image>
                   </template>
                 </el-table-column>
               </el-table>
 
               <div slot="reference">
-                <div class="text">{{ '[' + scope.row.foodid + ']'}}</div>
+                <div class="text">{{ '[' + scope.row.foodid + '] - '+ scope.row.foodname }}</div>
               </div>
             </el-popover>
           </template>
@@ -135,7 +139,7 @@
           prop="attention"
           header-align="center"
           align="center"
-          label="注意事项:"
+          label="注意事项"
         />
         <el-table-column
           prop="remarks"
@@ -352,6 +356,8 @@ export default {
           })
       })
     }
+  }, watch: {
+
   }
 }
 </script>
