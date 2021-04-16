@@ -51,7 +51,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.attributeName = data.springSessionAttributes.attributeName
               this.dataForm.attributeBytes = data.springSessionAttributes.attributeBytes
             }
@@ -72,7 +72,7 @@ export default {
               'attributeBytes': this.dataForm.attributeBytes
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

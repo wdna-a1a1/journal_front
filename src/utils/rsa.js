@@ -1,16 +1,25 @@
-import JSEncrypt from 'jsencrypt/bin/jsencrypt'
+/* 产引入jsencrypt实现数据RSA加密 */
+import JSEncrypt from 'jsencrypt' // 处理长文本数据时报错 jsencrypt.js Message too long for RSA
+/* 产引入encryptlong实现数据RSA加密 */
+import Encrypt from 'encryptlong' // encryptlong是基于jsencrypt扩展的长文本分段加解密功能。
 
-const PUBLIC_KEY =
-	'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIUgR9/zBvzksH5H6bCGKlyX5iDgxgBhuvDv1r5DZ5qdPoA4jFPumtDcmm0tJlfnWCDRCYWFx8jAktJ9ANrWPotH6MD5N7Nmi5RXb0k6VXp/4an4sVDY4yLbvMaKdeMpiCFLvigrYuH5qF7vCdgBLNmlWA/3hAg3icnt2FQHP3vwIDAQAB'
+const publicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCEkh/gkEANgXmtP+vLsFkZckak9A7zWnUEEie7Ji3uAOmuMP0Bcqa/9dQWpHEOUDuxX/T+rwLinC6ZiMvKyOi360kopXRefu/Oz+39i70JCmQBQEvHpbqL7eifqxlsNgSGvYmTR5GfMOVpJNI57fLRI2aC8fmLXCFGMfdjxeHo3wIDAQAB'
 
-const encryptor = new JSEncrypt() // 新建JSEncrypt对象
-encryptor.setPublicKey(PUBLIC_KEY)
+export default {
+  /* JSEncrypt加密 */
+  rsaPublicData(data) {
+    var jsencrypt = new JSEncrypt()
+    jsencrypt.setPublicKey(publicKey)
+    // 如果是对象/数组的话，需要先JSON.stringify转换成字符串
+    return jsencrypt.encrypt(data)
+  },
+  /* 加密 */
+  encrypt(data) {
+    const PUBLIC_KEY = publicKey
+    var encryptor = new Encrypt()
+    encryptor.setPublicKey(PUBLIC_KEY)
+    // 如果是对象/数组的话，需要先JSON.stringify转换成字符串
+    return encryptor.encryptLong(data)
+  },
 
-export function encrypt(arg) {
-  const rsaContent = encryptor.encrypt(arg)
-  return rsaContent
-}
-export function decrypt(arg) {
-  const rsaContent = encryptor.decrypt(arg)
-  return rsaContent
 }

@@ -121,7 +121,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.isDeleted = data.outgoing.isDeleted
               this.dataForm.customerid = data.outgoing.customerid
               this.dataForm.outgoingReason = data.outgoing.outgoingReason
@@ -162,7 +162,7 @@ export default {
               'auditTine': this.dataForm.auditTine
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

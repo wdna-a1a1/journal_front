@@ -100,7 +100,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.isDeleted = data.food.isDeleted
               this.dataForm.foodname = data.food.foodname
               this.dataForm.foodtype = data.food.foodtype
@@ -135,7 +135,7 @@ export default {
               'foodpic': this.dataForm.foodpic
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

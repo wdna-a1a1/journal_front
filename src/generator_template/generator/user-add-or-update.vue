@@ -121,7 +121,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.createTime = data.user.createTime
               this.dataForm.createBy = data.user.createBy
               this.dataForm.updateTime = data.user.updateTime
@@ -162,7 +162,7 @@ export default {
               'userCode': this.dataForm.userCode
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

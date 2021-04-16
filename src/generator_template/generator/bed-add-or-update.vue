@@ -79,7 +79,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.isDeleted = data.bed.isDeleted
               this.dataForm.roomNumber = data.bed.roomNumber
               this.dataForm.bedStatus = data.bed.bedStatus
@@ -108,7 +108,7 @@ export default {
               'sort': this.dataForm.sort
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

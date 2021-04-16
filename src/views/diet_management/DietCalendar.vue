@@ -2,8 +2,7 @@
   <div id="app">
     <el-container class="main">
       <el-main class="left">
-        <el-button type="primary" style="position: relative;bottom: 20px" @click="addOrUpdateHandle()"><i
-          class="el-icon-circle-plus"/> 添加
+        <el-button type="primary" style="position: relative;bottom: 20px" @click="addOrUpdateHandle()"><i class="el-icon-circle-plus"></i> 新增
         </el-button>
         <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"/>
         <el-tabs v-model="activeName" @tab-click="getDataList()">

@@ -179,7 +179,7 @@ export const constantRoutes = [{
       }
     }]
   }, {
-    path: '/nurse_content',
+    path: '/nurse_management',
     component: Layout,
     name: '护理管理',
     redirect: '/system_setting/nurse-content',
@@ -197,23 +197,35 @@ export const constantRoutes = [{
       }
     }, {
       path: 'nurse-content',
-      name: 'NurseContent.vue',
+      name: 'NurseContent',
       component: () => import('@/views/nurse_management/NurseContent'),
       meta: {
         title: '护理内容',
         icon: 'dashboard'
       }
-    },]
+    },
+      {
+        path: 'nurse-configuration',
+        name: 'NurseConfiguration',
+        component: () => import('@/views/nurse_management/NurseLevelContent'),
+        hidden: true,
+        meta: {
+          title: '护理配置',
+          icon: 'dashboard',
+
+        }
+      }]
   }, {
     path: '/system-setting',
     component: Layout,
     name: '系统信息',
     redirect: '/system_setting/basic-data-maintenance',
+    alwaysShow: true,
     meta: {
       title: '系统信息',
       icon: 'el-icon-notebook-2'
     },
-    children: [{
+    children: [/*{
       path: 'basic-data-maintenance',
       name: 'BasicDataMaintenance',
       component: () => import('@/views/system_setting/BasicDataMaintenance'),
@@ -221,7 +233,7 @@ export const constantRoutes = [{
         title: '基本数据维护',
         icon: 'dashboard'
       }
-    }, {
+    },*/ {
       path: 'staff-management',
       name: 'StaffManagement',
       component: () => import('@/views/system_setting/StaffManagement'),
@@ -229,7 +241,7 @@ export const constantRoutes = [{
         title: '工作人员管理',
         icon: 'dashboard'
       }
-    }, {
+    }, /*{
       path: 'dailylife-care-program',
       name: 'DailyLifeCareProgram',
       component: () => import('@/views/system_setting/DailyLifeCareProgram'),
@@ -237,7 +249,7 @@ export const constantRoutes = [{
         title: '日常生活照料方案',
         icon: 'dashboard'
       }
-    }]
+    }*/]
   },
   {
     path: 'Hwwwww',

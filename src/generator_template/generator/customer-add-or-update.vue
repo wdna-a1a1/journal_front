@@ -184,7 +184,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.isDeleted = data.customer.isDeleted
               this.dataForm.customerName = data.customer.customerName
               this.dataForm.customerAge = data.customer.customerAge
@@ -243,7 +243,7 @@ export default {
               'filepath': this.dataForm.filepath
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

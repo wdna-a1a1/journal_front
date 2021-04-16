@@ -100,7 +100,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.isDeleted = data.retreat.isDeleted
               this.dataForm.customerid = data.retreat.customerid
               this.dataForm.retreatTime = data.retreat.retreatTime
@@ -135,7 +135,7 @@ export default {
               'auditTine': this.dataForm.auditTine
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

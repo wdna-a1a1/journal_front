@@ -20,7 +20,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button @click="getData()">查询</el-button>
+            <el-button @click="getData()"><i class="el-icon-search"></i> 查询</el-button>
           </el-form-item>
 
         </el-form>

@@ -2,13 +2,13 @@
   <div id="app">
     <div class="main">
       <div class="left">
-        <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+        <el-form :inline="true" :model="dataForm"  @submit.native.prevent>
           <el-form-item>
-            <el-input v-model="dataForm.key" placeholder="护理级别" clearable/>
+            <el-input v-model="dataForm.key" @keyup.enter.native="getDataList()" placeholder="护理级别" clearable/>
           </el-form-item>
           <el-form-item>
-            <el-button @click="getDataList()">查询</el-button>
-            <el-button type="primary" @click="addOrUpdateHandle()">新增
+            <el-button @click="getDataList()"><i class="el-icon-search"></i> 查询</el-button>
+            <el-button type="primary" @click="addOrUpdateHandle()"><i class="el-icon-circle-plus"></i> 新增
             </el-button>
           </el-form-item>
         </el-form>
@@ -50,6 +50,12 @@
             </template>
           </el-table-column>
           <el-table-column
+            prop="remarks"
+            header-align="center"
+            align="center"
+            label="备注"
+          />
+          <el-table-column
             fixed="right"
             header-align="center"
             align="center"
@@ -57,9 +63,9 @@
             label="操作"
           >
             <template slot-scope="scope">
-              <el-button type="warning" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-              <el-button type="danger" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-              <el-button type="success" size="small" >护理内容配置</el-button>
+              <el-button type="warning" size="small" @click="addOrUpdateHandle(scope.row.id)"><i class="el-icon-edit"></i> 修改</el-button>
+              <el-button type="danger" size="small" @click="deleteHandle(scope.row.id)"><i class="el-icon-delete"></i> 删除</el-button>
+              <el-button type="success" size="small" @click="nurseLevelConfig(scope.row)"><i class="el-icon-setting"></i> 护理内容配置</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -84,6 +90,7 @@
 
 
 import AddOrUpdate from './children-template/nurselevel-add-or-update'
+
 
 export default {
   components: {
@@ -116,7 +123,6 @@ export default {
         level_name: this.dataForm.key
       }).then(({ data }) => {
         if (data) {
-          console.log(data)
           this.dataList = data.list
           this.totalPage = data.totalCount
         } else {
@@ -156,7 +162,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        this.$axios.post('/customer/del', { id })
+        this.$axios.post('/nurse-level/del', { id })
           .then(({ data }) => {
             if (data) {
               this.$message.success({
@@ -170,6 +176,14 @@ export default {
               this.$message.error(data.msg)
             }
           })
+      })
+    }, nurseLevelConfig (row) {
+      this.$router.push({
+        name: 'NurseConfiguration',
+        params: {
+          id: row.id,
+          name:row.levelName
+        }
       })
     }
   }

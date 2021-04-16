@@ -24,8 +24,8 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button @click="getDataList()">查询</el-button>
-          <el-button type="primary" @click="addOrUpdateHandle()">新增
+          <el-button @click="getDataList()"><i class="el-icon-search"></i> 查询</el-button>
+          <el-button type="primary" @click="addOrUpdateHandle()"><i class="el-icon-circle-plus"></i> 新增
           </el-button>
         </el-form-item>
 
@@ -160,9 +160,9 @@
               size="mini"
               style="position: relative;left: 5px"
               @click="addOrUpdateHandle(scope.row.id)"
-            >修改
+            ><i class="el-icon-edit"></i> 修改
             </el-button>
-            <el-button type="warning" size="mini" @click="deleteHandle(scope.row.id)">删除</el-button>
+            <el-button type="warning" size="mini" @click="deleteHandle(scope.row.id)"><i class="el-icon-delete"></i> 删除</el-button>
           </template>
         </el-table-column>
       </el-table>

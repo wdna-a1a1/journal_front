@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('generator:bed:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('generator:bed:save')" type="primary" @click="addOrUpdateHandle()"><i class="el-icon-circle-plus"></i> 新增</el-button>
         <el-button v-if="isAuth('generator:bed:delete')" type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
       </el-form-item>
     </el-form>
@@ -128,7 +128,7 @@ export default {
           'key': this.dataForm.key
         })
       }).then(({ data }) => {
-        if (data && data.code === 0) {
+        if (data) {
           this.dataList = data.page.list
           this.totalPage = data.page.totalCount
         } else {
@@ -175,7 +175,7 @@ export default {
           method: 'post',
           data: this.$http.adornData(ids, false)
         }).then(({ data }) => {
-          if (data && data.code === 0) {
+          if (data) {
             this.$message({
               message: '操作成功',
               type: 'success',

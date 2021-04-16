@@ -51,7 +51,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.name = data.foodlabel.name
               this.dataForm.isDeleted = data.foodlabel.isDeleted
             }
@@ -72,7 +72,7 @@ export default {
               'isDeleted': this.dataForm.isDeleted
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

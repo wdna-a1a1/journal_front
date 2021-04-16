@@ -58,7 +58,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.idDeleted = data.nurseLevel.idDeleted
               this.dataForm.levelName = data.nurseLevel.levelName
               this.dataForm.levelStatus = data.nurseLevel.levelStatus
@@ -81,7 +81,7 @@ export default {
               'levelStatus': this.dataForm.levelStatus
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

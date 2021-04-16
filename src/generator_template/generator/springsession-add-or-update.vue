@@ -79,7 +79,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.dataForm.sessionId = data.springSession.sessionId
               this.dataForm.creationTime = data.springSession.creationTime
               this.dataForm.lastAccessTime = data.springSession.lastAccessTime
@@ -108,7 +108,7 @@ export default {
               'principalName': this.dataForm.principalName
             })
           }).then(({ data }) => {
-            if (data && data.code === 0) {
+            if (data) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

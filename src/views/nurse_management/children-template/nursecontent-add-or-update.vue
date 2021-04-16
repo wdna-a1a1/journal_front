@@ -4,25 +4,47 @@
     :close-on-click-modal="false"
     :visible.sync="visible"
   >
-    <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="80px" @keyup.enter.native="dataFormSubmit()">
-      <el-form-item label="" prop="name">
-        <el-input v-model="dataForm.name" placeholder="" />
-      </el-form-item>
-      <el-form-item label="" prop="price">
-        <el-input v-model="dataForm.price" placeholder="" />
-      </el-form-item>
-      <el-form-item label="" prop="desc">
-        <el-input v-model="dataForm.desc" placeholder="" />
-      </el-form-item>
-      <el-form-item label="是否增值服务 1-是 0-不是 " prop="isAdd">
-        <el-input v-model="dataForm.isAdd" placeholder="是否增值服务 1-是 0-不是 " />
-      </el-form-item>
-      <el-form-item label="1-启用 0-不启用" prop="status">
-        <el-input v-model="dataForm.status" placeholder="1-启用 0-不启用" />
-      </el-form-item>
-      <el-form-item label="0-已删除 1未删除" prop="idDeleted">
-        <el-input v-model="dataForm.idDeleted" placeholder="0-已删除 1未删除" />
-      </el-form-item>
+    <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="120px"
+             @keyup.enter.native="dataFormSubmit()">
+      <el-row type="flex" justify="start" align="top">
+        <el-col :span="9">
+          <el-form-item label="护理内容名称:" prop="name">
+            <el-input v-model="dataForm.name" placeholder="请选择护理内容名称:">
+
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="价格(元/次):" prop="price">
+            <el-input v-model="dataForm.price" placeholder="请输入价格(元/次):" clearable :style="{width: '100%'}">
+            </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-form-item label="护理内容描述:" prop="desc">
+          <el-input v-model="dataForm.desc" type="textarea" placeholder="请输入护理内容描述:"
+                    :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
+        </el-form-item>
+      </el-row>
+      <el-row type="flex" justify="start" align="top">
+        <el-col :span="9">
+          <el-form-item label="是否为增值服务:" label-width="140px" prop="isAdd">
+            <el-select v-model="dataForm.isAdd" placeholder="请选择是否为增值服务:" clearable :style="{width: '100%'}">
+              <el-option v-for="(item, index) in isAddOptions" :key="index" :label="item.label"
+                         :value="item.value" :disabled="item.disabled"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="9">
+          <el-form-item label="状态" prop="status">
+            <el-select v-model="dataForm.status" placeholder="请选择状态" clearable :style="{width: '100%'}">
+              <el-option v-for="(item, index) in statusOptions" :key="index" :label="item.label"
+                         :value="item.value" :disabled="item.disabled"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -33,7 +55,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       visible: false,
       dataForm: {
@@ -46,40 +68,69 @@ export default {
         idDeleted: ''
       },
       dataRule: {
-        name: [
-          { required: true, message: '不能为空', trigger: 'blur' }
-        ],
-        price: [
-          { required: true, message: '不能为空', trigger: 'blur' }
-        ],
-        desc: [
-          { required: true, message: '不能为空', trigger: 'blur' }
-        ],
-        isAdd: [
-          { required: true, message: '是否增值服务 1-是 0-不是 不能为空', trigger: 'blur' }
-        ],
-        status: [
-          { required: true, message: '1-启用 0-不启用不能为空', trigger: 'blur' }
-        ],
-        idDeleted: [
-          { required: true, message: '0-已删除 1未删除不能为空', trigger: 'blur' }
-        ]
-      }
+        name: [{
+          required: true,
+          message: '请输入护理内容名称:',
+          trigger: 'blur'
+        }],
+        price: [{
+          required: true,
+          message: '请输入价格(元/次):',
+          trigger: 'blur'
+        }],
+        desc: [{
+          required: true,
+          message: '请输入护理内容描述:',
+          trigger: 'blur'
+        }],
+        isAdd: [{
+          required: true,
+          message: '请选择是否为增值服务:',
+          trigger: 'change'
+        }],
+        status: [{
+          required: true,
+          message: '请选择状态',
+          trigger: 'change'
+        }],
+      },
+      nameOptions: [{
+        'label': '早餐',
+        'value': 1
+      }, {
+        'label': '午餐',
+        'value': 2
+      }, {
+        'label': '晚餐',
+        'value': 3
+      }],
+      isAddOptions: [{
+        'label': '是',
+        'value': 1
+      }, {
+        'label': '否',
+        'value': 0
+      }],
+      statusOptions: [{
+        'label': '启用',
+        'value': 1
+      }, {
+        'label': '停用',
+        'value': 0
+      }],
+
     }
-  },
+  }
+  ,
   methods: {
-    init(id) {
+    init (id) {
       this.dataForm.id = id || 0
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
-          this.$http({
-            url: this.$http.adornUrl(`/generator/nursecontent/info/${this.dataForm.id}`),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then(({ data }) => {
-            if (data && data.code === 0) {
+          this.$axios.post(`nurse-content/get-by-id`, { id: this.dataForm.id },).then(({ data }) => {
+            if (data) {
               this.dataForm.name = data.nurseContent.name
               this.dataForm.price = data.nurseContent.price
               this.dataForm.desc = data.nurseContent.desc
@@ -90,15 +141,13 @@ export default {
           })
         }
       })
-    },
+    }
+    ,
     // 表单提交
-    dataFormSubmit() {
+    dataFormSubmit () {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.$http({
-            url: this.$http.adornUrl(`/generator/nursecontent/${!this.dataForm.id ? 'save' : 'update'}`),
-            method: 'post',
-            data: this.$http.adornData({
+          this.$axios.post(`nurse-content/${!this.dataForm.id ? 'add' : 'update'}`, {
               'id': this.dataForm.id || undefined,
               'name': this.dataForm.name,
               'price': this.dataForm.price,
@@ -106,12 +155,11 @@ export default {
               'isAdd': this.dataForm.isAdd,
               'status': this.dataForm.status,
               'idDeleted': this.dataForm.idDeleted
-            })
-          }).then(({ data }) => {
-            if (data && data.code === 0) {
-              this.$message({
+            }
+          ).then(({ data }) => {
+            if (data) {
+              this.$message.success({
                 message: '操作成功',
-                type: 'success',
                 duration: 500,
                 onClose: () => {
                   this.visible = false
