@@ -136,9 +136,9 @@ export const constantRoutes = [{
         icon: 'dashboard'
       }
     }, {
-      path: 'out-registration',
-      name: 'OutRegistration',
-      component: () => import('@/views/customer_management/OutRegistration'),
+      path: 'out-going',
+      name: 'OutGoing',
+      component: () => import('@/views/customer_management/OutGoing'),
       meta: {
         title: '外出登记',
         icon: 'dashboard'

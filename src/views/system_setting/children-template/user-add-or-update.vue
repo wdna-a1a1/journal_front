@@ -20,7 +20,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row v-if="!isUpdate">
+      <el-row v-if="!dataForm.id">
         <el-col :span="10">
           <el-form-item label="密码:" prop="password1">
             <el-input v-model="dataForm.password1" autocomplete="off" placeholder="请输入密码" type="password" clearable
@@ -47,7 +47,7 @@
           <el-form-item label="性别:" prop="sex">
             <el-select v-model="dataForm.sex" placeholder="请选择性别" clearable :style="{width: '100%'}">
               <el-option v-for="(item, index) in sexOptions" :key="index" :label="item.label"
-                         :value="item.value" :disabled="item.disabled"></el-option>
+                         :value="item.value"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -65,9 +65,46 @@
             </el-input>
           </el-form-item>
         </el-col>
+
+
       </el-row>
+      <!--修改密码Start-->
+
+      <el-dialog
+        width="40%"
+        title="修改密码"
+        :visible.sync="innerVisible"
+        @close="closeModifyPasswordHandle"
+        append-to-body>
+        <el-form-item label="原密码:">
+          <el-input v-model="originalPassword" autocomplete="off" placeholder="请输入密码" type="password" clearable
+                    show-password
+                    :style="{width: '80%'}"></el-input>
+        </el-form-item>
+
+        <el-form-item label="新密码:" prop="password1">
+          <el-input v-model="dataForm.password1" autocomplete="off" placeholder="请输入密码" type="password" clearable
+                    show-password
+                    :style="{width: '80%'}"></el-input>
+        </el-form-item>
+
+
+        <el-form-item label="再次输入新密码:" prop="password2">
+          <el-input v-model="dataForm.password2" autocomplete="off" placeholder="请输入再次输入密码" type="password"
+                    clearable
+                    show-password
+                    :style="{width: '80%'}"></el-input>
+        </el-form-item>
+        <span slot="footer" class="dialog-footer">
+      <el-button @click="closeModifyPasswordHandle">取消</el-button>
+      <el-button type="primary" @click="modifyPassword()">确定</el-button>
+    </span>
+
+      </el-dialog>
+      <!--修改密码End-->
     </el-form>
     <span slot="footer" class="dialog-footer">
+      <el-button v-if="dataForm.id" @click="beforeModifyPassword">修改密码</el-button>
       <el-button @click="visible = false">取消</el-button>
       <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
     </span>
@@ -99,9 +136,12 @@ export default {
       }
     }
     return {
-      isUpdate: false,
+      innerVisible: false,
       dialogWidth: '40%',
       visible: false,
+      originalPassword: '',
+      backupPass: '',
+      isModifyPass: false,
       dataForm: {
         id: 0,
         isDeleted: '',
@@ -137,7 +177,6 @@ export default {
     init (id) {
       this.dataForm.id = id || 0
       this.visible = true
-      this.isUpdate = false
       this.dataForm.password1 = ''
       this.dataForm.password2 = ''
       this.$nextTick(() => {
@@ -164,7 +203,9 @@ export default {
     dataFormSubmit () {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.dataForm.password2 = rsa.encrypt(this.dataForm.password2)
+          if (!this.dataForm.id) {
+            this.dataForm.password2 = rsa.encrypt(this.dataForm.password2)
+          }
           this.$axios.post(`/user/${!this.dataForm.id ? 'add' : 'update'}`, {
             'id': this.dataForm.id || undefined,
             'isDeleted': this.dataForm.isDeleted,
@@ -183,7 +224,6 @@ export default {
                 duration: 500,
                 onClose: () => {
                   this.visible = false
-                  this.isUpdate = false
                   this.$emit('refreshDataList')
                 }
               })
@@ -194,6 +234,56 @@ export default {
         }
 
       })
+    },
+    beforeModifyPassword () {
+      this.innerVisible = true
+      this.backupPass = this.dataForm.password1
+      this.dataForm.password1 = ''
+      this.dataForm.password2 = ''
+
+    },
+    modifyPassword () {
+      this.originalPassword = rsa.encrypt(this.originalPassword)
+      this.$axios.post('/user/modify-password', {
+        originalPassword: this.originalPassword,
+        id: this.dataForm.id
+      }).then(res => {
+        if (res.data) {
+          this.isModifyPass = true
+          this.dataForm.password1 = rsa.encrypt(this.dataForm.password1)
+          this.dataForm.password2 = this.dataForm.password1
+          this.$message.success({
+            message: '操作成功',
+            duration: 500,
+            onClose: () => {
+              this.$confirm('是否提交修改修改信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.dataFormSubmit()
+              }).catch(() => {
+                this.$message.info({
+                  message: '已取消自动提交修改操作'
+                })
+              })
+            }
+          })
+        } else {
+          this.$message.error({
+            message: '修改密码失败,请检查原密码是否正确!',
+          })
+        }
+        this.closeModifyPasswordHandle()
+        this.originalPassword = ''
+      })
+    },
+    closeModifyPasswordHandle () {
+      this.innerVisible = false
+      if (!this.isModifyPass) {
+        this.dataForm.password1 = this.backupPass
+        this.dataForm.password2 = this.backupPass
+      }
     }
   }
 }
