@@ -30,7 +30,6 @@
           type="selection"
           header-align="center"
           align="center"
-          :selectable="checkSelectable"
           width="50"
         />
         <el-table-column
@@ -59,69 +58,71 @@
           label="性别"
         />
         <el-table-column
-          prop="outgoingReason"
+          prop="recordId"
           header-align="center"
           align="center"
-          label="外出原因"
+          label="档案号"
+        />
+
+        <el-table-column
+          prop="checkinDate"
+          header-align="center"
+          align="center"
+          label="入住时间"
         />
         <el-table-column
-          prop="outgoingTime"
+          prop="retreatTime"
           header-align="center"
           align="center"
-          label="外出时间"
+          label="退住时间"
         />
         <el-table-column
-          prop="expectedReturnTime"
+          prop="retreatType"
           header-align="center"
           align="center"
-          label="预计回来时间"
+          label="退住类型"
+        />
+
+        <el-table-column
+          prop="retreatReason"
+          header-align="center"
+          align="center"
+          label="退住原因"
         />
         <el-table-column
-          prop="actualReturnTime"
+          prop="status"
           header-align="center"
           align="center"
-          label="实际回来时间"
-        />
-        <el-table-column
-          prop="escorted"
-          header-align="center"
-          align="center"
-          label="陪同人"
-        />
-        <el-table-column
-          prop="relation"
-          header-align="center"
-          align="center"
-          label="与客户关系"
-        />
-        <el-table-column
-          prop="escortedTel"
-          header-align="center"
-          align="center"
-          label="陪同人电话"
+          label="状态"
         />
         <el-table-column
           prop="auditStatus"
           header-align="center"
           align="center"
-          label="审批状态"
+          label="审核意见"
         />
         <el-table-column
           prop="auditPerson"
           header-align="center"
           align="center"
-          label="审批人"
+          label="审核人"
         />
         <el-table-column
           prop="auditTime"
           header-align="center"
           align="center"
-          label="审批时间"
+          label="审核时间"
+        />
+        <el-table-column
+          prop="remarks"
+          header-align="center"
+          align="center"
+          label="备注"
         />
         <el-table-column
           header-align="center"
           align="center"
-          width="310"
+          width="210"
           fixed="right"
           label="操作"
         >
@@ -134,10 +135,6 @@
             ><i class="el-icon-edit"></i> 修改
             </el-button>
             <el-button type="danger" size="small" @click="deleteHandle(scope.row.id)"><i class="el-icon-delete"></i> 删除
-            </el-button>
-            <el-button :disabled="timeButtomHandle(scope.row)" type="warning" size="small"
-                       @click="timeHandle(scope.row)"><i class="el-icon-edit"></i>
-              登记回来时间
             </el-button>
           </template>
         </el-table-column>
@@ -155,22 +152,38 @@
     <el-dialog
       ref="auditDialog"
       title="审批"
-      width="500px"
+      width="540px"
       :close-on-click-modal="false"
       :visible.sync="auditVisible"
     >
-      <div v-for="item in dataListSelections" style="margin-bottom: 20px">
-        <el-row>
-          <el-tag style="margin-right: 10px">客户姓名:{{ item.customerName }}</el-tag>
-          <el-tag style="margin-right: 10px">客户年龄:{{ item.customerAge }}</el-tag>
-          <el-tag style="margin-right: 10px">客户性别:{{ item.customerSex }}</el-tag>
-        </el-row>
-        <el-select v-model="item.auditStatus" placeholder="请选择审批结果"
-                   :style="{width: '100%'}">
-          <el-option v-for="(item, index) in auditStatusOptions" :key="index" :label="item.label"
-                     :value="item.value" :disabled="item.disabled"></el-option>
-        </el-select>
-      </div>
+      <el-container>
+        <el-main style="height: 500px">
+          <div v-for="(item,index) in dataListSelections" style="margin-top: -40px;margin-bottom: 80px;line-height: 36px">
+            <el-divider>{{ index + 1 }}</el-divider>
+            <el-row>
+              <el-tag style="margin-right: 10px">客户姓名:{{ item.customerName }}</el-tag>
+              <el-tag style="margin-right: 10px">客户年龄:{{ item.customerAge }}</el-tag>
+              <el-tag style="margin-right: 10px">客户性别:{{ item.customerSex }}</el-tag>
+            </el-row>
+            <el-row>
+              <el-tag style="margin-right: 10px">退住原因:{{ item.retreatReason }}</el-tag>
+            </el-row>
+            审批结果:
+            <el-select v-model="item.status" placeholder="请选择审批结果"
+                       :style="{width: '100%'}">
+              <el-option v-for="(item, index) in auditStatusOptions" :key="index" :label="item.label"
+                         :value="item.value" :disabled="item.disabled"></el-option>
+            </el-select>
+            审批意见:
+            <el-input v-model="item.auditStatus" type="textarea" placeholder="请输入审批意见"
+                      :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}"></el-input>
+
+          </div>
+
+        </el-main>
+
+      </el-container>
+
       <span slot="footer" class="dialog-footer">
       <el-button @click="auditVisible = false">取消</el-button>
       <el-button type="primary" @click="auditHandle">确定</el-button>
@@ -183,10 +196,10 @@
 </template>
 
 <script>
-import AddOrUpdate from './children-template/outgoing-add-or-update'
+import AddOrUpdate from './children-template/retreat-add-or-update'
 
 export default {
-  name: 'OutGoing',
+  name: 'Retreat',
   components: {
     AddOrUpdate
   },
@@ -204,8 +217,8 @@ export default {
         'label': '审批拒绝',
         'value': '审批拒绝'
       }, {
-        'label': '待商讨',
-        'value': '待商讨'
+        'label': '已申请',
+        'value': '已申请'
       }],
       pageIndex: 1,
       pageSize: 10,
@@ -220,7 +233,7 @@ export default {
   methods: {
     // 获取数据列表
     getDataList () {
-      this.$axios.post('/out-going/query', {
+      this.$axios.post('/retreat/query', {
         currentPage: this.pageIndex,
         pageSize: this.pageSize,
         username: this.dataForm.key
@@ -240,7 +253,7 @@ export default {
         this.dataListSelections[i].auditPerson = 'Nike'
         this.dataListSelections[i].auditTime = this.$moment(new Date()).format('yyyy-MM-DD HH:mm:ss').toString()
       }
-      this.$axios.post('/out-going/audit', this.dataListSelections, { headers: { stringify: false } }).then(res => {
+      this.$axios.post('/retreat/audit', this.dataListSelections, { headers: { stringify: false } }).then(res => {
         if (res.data === true) {
           this.$message.success({
             message: '操作成功',
@@ -256,9 +269,9 @@ export default {
 
       })
     },
-    checkSelectable (row) {
-      return row.actualReturnTime === undefined
-    },
+    /*checkSelectable (row) {
+      return row.auditTime === undefined
+    },*/
     auditVisibleHandle () {
       if (this.dataListSelections.length === 0) {
         this.$message.error('您还未选择需要审批的客户!')
@@ -285,18 +298,7 @@ export default {
     addOrUpdateHandle (row) {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
-        this.$refs.addOrUpdate.init(row, 1)
-      })
-    },
-    timeButtomHandle (row) {
-      return (row.auditStatus === '拒绝' || row.auditStatus === '待商讨' || row.auditStatus === '' || row.auditStatus.length === 0)
-
-    },
-
-    timeHandle (row) {
-      this.addOrUpdateVisible = true
-      this.$nextTick(() => {
-        this.$refs.addOrUpdate.init(row, 2)
+        this.$refs.addOrUpdate.init(row)
       })
     },
     // 删除
@@ -308,7 +310,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        this.$axios.post('/out-going/del', { id })
+        this.$axios.post('/retreat/del', { id })
           .then(({ data }) => {
             if (data === true) {
               this.$message.success({

@@ -17,7 +17,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="房间号:" prop="roomNumber">
-            <el-input v-model="dataForm.roomNumber" placeholder="" />
+            <el-input v-model="dataForm.roomNumber" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -36,7 +36,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="床位号:" prop="name">
-            <el-input v-model="dataForm.name" placeholder="" />
+            <el-input v-model="dataForm.name" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -76,7 +76,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       dialogWidth: '30%',
       visible: false,
@@ -112,13 +112,13 @@ export default {
       }
     }
   }, computed: {
-    dialogWidthCal() {
+    dialogWidthCal () {
       this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 30 + '%'
       return this.dialogWidth
     }
   },
   methods: {
-    init(info) {
+    init (info) {
       this.dataForm.id = info !== undefined ? info.id : ''
       this.visible = true
       this.$nextTick(() => {
@@ -137,7 +137,7 @@ export default {
       })
     },
     // 表单提交
-    dataFormSubmit() {
+    dataFormSubmit () {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$axios.post(`/bed/${!this.dataForm.id ? 'add' : 'update'}`, {
@@ -158,7 +158,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error('操作失败')
             }
           })
         }

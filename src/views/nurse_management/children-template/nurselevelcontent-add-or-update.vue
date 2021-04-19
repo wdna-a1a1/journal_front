@@ -171,7 +171,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error("操作失败")
             }
           })
         }

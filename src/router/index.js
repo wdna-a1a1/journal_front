@@ -128,9 +128,9 @@ export const constantRoutes = [{
         icon: 'dashboard'
       }
     }, {
-      path: 'unregistration',
-      name: 'unRegistration',
-      component: () => import('@/views/customer_management/unRegistration'),
+      path: 'retreat',
+      name: 'Retreat',
+      component: () => import('@/views/customer_management/Retreat'),
       meta: {
         title: '退住登记',
         icon: 'dashboard'

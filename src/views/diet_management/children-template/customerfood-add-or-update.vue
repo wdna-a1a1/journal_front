@@ -185,10 +185,8 @@ export default {
         let customerFoods = []
 
         for (let i = 0; i < this.checkList.length; i++) {
-          console.log(this.checkList[i])
           let temp = formData
           temp.foodid = this.checkList[i]
-          console.log(temp)
           customerFoods.push(JSON.parse(JSON.stringify(temp)))
         }
        /* let temp = formData
@@ -208,7 +206,7 @@ export default {
               })
               this.foodList = []
             } else {
-              this.$message.error(data.msg)
+              this.$message.error("操作失败")
             }
           })
         }
