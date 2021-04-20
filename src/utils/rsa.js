@@ -8,7 +8,7 @@ const publicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCEkh/gkEANgXmtP+vLsFkZc
 export default {
   /* JSEncrypt加密 */
   rsaPublicData(data) {
-    var jsencrypt = new JSEncrypt()
+    const jsencrypt = new JSEncrypt()
     jsencrypt.setPublicKey(publicKey)
     // 如果是对象/数组的话，需要先JSON.stringify转换成字符串
     return jsencrypt.encrypt(data)
@@ -16,7 +16,7 @@ export default {
   /* 加密 */
   encrypt(data) {
     const PUBLIC_KEY = publicKey
-    var encryptor = new Encrypt()
+    const encryptor = new Encrypt()
     encryptor.setPublicKey(PUBLIC_KEY)
     // 如果是对象/数组的话，需要先JSON.stringify转换成字符串
     return encryptor.encryptLong(data)

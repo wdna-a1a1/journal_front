@@ -36,6 +36,7 @@ ax.interceptors.request.use(
     if (config.headers.showLoading !== false) {
       showScreenLoading()
     }
+    //设置token
     if (store.state.user.token) {
       config.headers.token = store.state.user.token
     }

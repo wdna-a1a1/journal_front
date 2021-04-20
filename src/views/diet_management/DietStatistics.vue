@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import food from '@/generator_template/generator/food'
 
 export default {
   name: 'DietStatistics',

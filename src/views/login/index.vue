@@ -30,9 +30,11 @@
             <h2 style="font-size:28px;">欢迎使用</h2>
             <h2 style="font-family: Lexend-B,serif;font-size:32px;">上实颐养中心管理系统</h2>
           </div>
-          <el-form ref="loginForm" :model="loginForm" status-icon :rules="loginRules" label-width="80px" class="form-style">
+          <el-form ref="loginForm" :model="loginForm" status-icon :rules="loginRules" label-width="80px"
+                   class="form-style">
             <el-form-item label="用户名:" prop="username">
-              <el-input ref="username" v-model="loginForm.username" name="username" type="text" tabindex="1" auto-complete="on" />
+              <el-input ref="username" v-model="loginForm.username" name="username" type="text" tabindex="1"
+                        auto-complete="on"/>
             </el-form-item>
 
             <el-form-item label="密码:" prop="password">
@@ -59,7 +61,9 @@
           </el-form>
           <div style="text-align: center;">
             <el-row>
-              <el-col :span="24"><foot /></el-col>
+              <el-col :span="24">
+                <foot/>
+              </el-col>
             </el-row>
           </div>
         </div>
@@ -70,14 +74,15 @@
 
 <script>
 import Foot from '../Foot.vue'
-import { encrypt } from '../../utils/rsa.js'
+import rsa from '@/utils/rsa'
 import { validUsername } from '@/utils/validate'
+
 export default {
   name: 'Login',
   components: {
     Foot
   },
-  data() {
+  data () {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
         callback(new Error('请输入用户名！'))
@@ -119,20 +124,26 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
     }
   },
   methods: {
-    handleLogin() {
+    handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          const pass = encrypt(this.loginForm.password)
+          const pass = rsa.encrypt(this.loginForm.password)
           console.log(pass)
           this.loading = true
-          this.$router.push('/')
+
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
           this.loading = false
         } else {
           console.log('error submit!!')
@@ -140,10 +151,10 @@ export default {
         }
       })
     },
-    resetForm(formName) {
+    resetForm (formName) {
       this.$refs[formName].resetFields()
     },
-    handleRegister() {
+    handleRegister () {
       this.$router.push('/register')
     }
   }
@@ -156,15 +167,19 @@ export default {
   height: 100%;
   background-image: url('../../assets/logo.png');
 }
+
 .login-box {
 }
+
 .right-info {
   margin-top: 10%;
   margin-left: 10%;
 }
+
 .form-style .el-form-item {
   margin-bottom: 36px !important;
 }
+
 .form-style {
   margin-top: 100px;
   margin-right: 10%;
@@ -233,9 +248,10 @@ export default {
   color: #d1d1d1;
   margin-bottom: 4px;
 }
+
 .svg-container {
   padding: 6px 5px 6px 15px;
-  color: $dark_gray;
+  color: $ dark_gray;
   vertical-align: middle;
   width: 30px;
   display: inline-block;

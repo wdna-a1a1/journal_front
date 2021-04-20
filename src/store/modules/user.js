@@ -4,12 +4,10 @@ import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
-    token: '111',
+    token: '',
     name: '',
     avatar: '',
     userId: '',
-    deptId: ''
-
   }
 }
 
@@ -31,9 +29,6 @@ const mutations = {
   SET_ID: (state, id) => {
     state.id = id
   },
-  SET_DEPT_ID: (state, deptId) => {
-    state.deptId = deptId
-  }
 
 }
 
@@ -47,11 +42,9 @@ const actions = {
         commit('SET_NAME', data.name)
         commit('SET_AVATAR', data.avatar)
         commit('SET_ID', data.id)
-        commit('SET_DEPT_ID', data.deptId)
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         console.log(data)
-        console.log(response)
         resolve()
       }).catch(error => {
         reject(error)

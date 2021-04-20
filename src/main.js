@@ -20,7 +20,7 @@ import qs from 'qs'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
+import { getToken, setToken, removeToken } from '@/utils/auth'
 // ...
 
 /**
@@ -41,6 +41,7 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 moment.locale('zh-cn')
+Vue.prototype.$token = getToken
 Vue.prototype.$moment = moment
 Vue.config.productionTip = false
 Vue.prototype.$axios = ax
