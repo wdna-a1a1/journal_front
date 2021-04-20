@@ -118,6 +118,12 @@
           label="联系电话"
         />
         <el-table-column
+          prop="foodAttention"
+          header-align="center"
+          align="center"
+          label="饮食注意事项:"
+        />
+        <el-table-column
           prop="attention"
           header-align="center"
           align="center"

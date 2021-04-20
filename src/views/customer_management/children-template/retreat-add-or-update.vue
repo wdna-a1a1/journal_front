@@ -4,6 +4,7 @@
     :close-on-click-modal="false"
     :visible.sync="visible"
     :width="dialogWidthCal"
+      top="5vh"
   >
     <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="100px"
              @keyup.enter.native="dataFormSubmit()">
@@ -65,7 +66,7 @@ export default {
         retreatTime: '',
         retreatType: '',
         retreatReason: '',
-        status: '',
+        status: '已申请',
         auditStatus: '',
         auditPerson: '',
         auditTime: '',

@@ -158,8 +158,10 @@
       width="500px"
       :close-on-click-modal="false"
       :visible.sync="auditVisible"
+        top="5vh"
     >
-      <div v-for="item in dataListSelections" style="margin-bottom: 20px">
+      <div v-for="(item,index) in dataListSelections" style="margin-bottom: 20px">
+         <el-divider>{{ index + 1 }}</el-divider>
         <el-row>
           <el-tag style="margin-right: 10px">客户姓名:{{ item.customerName }}</el-tag>
           <el-tag style="margin-right: 10px">客户年龄:{{ item.customerAge }}</el-tag>
@@ -289,7 +291,7 @@ export default {
       })
     },
     timeButtomHandle (row) {
-      return (row.auditStatus === '拒绝' || row.auditStatus === '待商讨' || row.auditStatus === '' || row.auditStatus.length === 0)
+      return (row.auditStatus === '审批拒绝' || row.auditStatus === '待商讨' || row.auditStatus === '' || row.auditStatus.length === 0)
 
     },
 

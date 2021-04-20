@@ -29,6 +29,7 @@
         <el-table-column
           type="selection"
           header-align="center"
+          :selectable="checkSelectable"
           align="center"
           width="50"
         />
@@ -155,6 +156,7 @@
       width="540px"
       :close-on-click-modal="false"
       :visible.sync="auditVisible"
+        top="5vh"
     >
       <el-container>
         <el-main style="height: 500px">
@@ -247,6 +249,9 @@ export default {
           this.totalPage = 0
         }
       })
+    },
+    checkSelectable (row) {
+      return row.status !== '审批通过'
     },
     auditHandle () {
       for (let i = 0; i < this.dataListSelections.length; i++) {

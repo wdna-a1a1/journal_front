@@ -3,6 +3,7 @@
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
     :visible.sync="visible"
+      top="5vh"
     :width="dialogWidthCal"
   >
     <el-form ref="dataForm" :model="dataForm" :rules="dataRule" size="medium">

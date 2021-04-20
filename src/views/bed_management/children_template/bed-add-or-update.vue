@@ -5,6 +5,7 @@
     :close-on-click-modal="false"
     :visible.sync="visible"
     center
+      top="5vh"
     :width="dialogWidthCal"
   >
     <el-form

@@ -6,7 +6,7 @@
           <el-tag class="item_info" :type="setColor(index)">{{ setTitle(index) }}</el-tag>
         </el-aside>
         <el-main class="flex" style="margin-top: -24px">
-          <div v-for="item in i.val" >
+          <div v-for="item in i.val">
             <div class="item">
               <el-tag class="food_tag" size="mini">{{ item.foodlabel }}</el-tag>
               <el-image fit='cover' class="food_img" :src="item.foodpic" :preview-src-list="[item.foodpic]"/>
@@ -156,6 +156,8 @@ export default {
   width: 110px;
   height: 110px;
   position: relative;
+  border-radius: 4px;
+  box-shadow: 6px 4px 4px #aaaaaa;
   left: 45px;
   top: 20px;
 

@@ -6,6 +6,7 @@
       :close-on-click-modal="false"
       :visible.sync="visible"
       :width="dialogWidthCal"
+        top="5vh"
     >
       <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="120px"
                @keyup.enter.native="dataFormSubmit()">
@@ -82,6 +83,7 @@
       ref="actualReturnTimeDialog"
       title="登记回来时间"
       width="500px"
+        top="5vh"
       :close-on-click-modal="false"
       :visible.sync="timeVisible">
       <el-date-picker type="datetime" v-model="dataForm.actualReturnTime" format="yyyy-MM-dd HH:mm:ss"

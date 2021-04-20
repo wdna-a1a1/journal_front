@@ -5,19 +5,20 @@
     :visible.sync="visible"
     center
     :width="dialogWidthCal"
+    top="5vh"
   >
     <el-form ref="dataForm" :model="dataForm" :rules="dataRule" @keyup.enter.native="dataFormSubmit()">
       <el-row :gutter="15">
         <el-col :span="12">
           <el-form-item label="客户姓名:" prop="customerName">
-            <el-input v-model="dataForm.customerName" class="el-input-short" placeholder="" />
+            <el-input v-model="dataForm.customerName" class="el-input-short" placeholder=""/>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="10">
           <el-form-item label="年龄:" prop="customerAge">
-            <el-input v-model="dataForm.customerAge" class="el-input-short" placeholder="" />
+            <el-input v-model="dataForm.customerAge" class="el-input-short" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -36,7 +37,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="身份证号:" prop="idcard">
-            <el-input v-model="dataForm.idcard" style="width: 80%" placeholder="" />
+            <el-input v-model="dataForm.idcard" style="width: 80%" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -59,7 +60,7 @@
             <el-select
               v-model="dataForm.roomNumber"
               :loading="loading"
-              placeholder="请选择"
+              placeholder="请选择" filterable
               @visible-change="getBedOptions"
             >
               <el-option
@@ -89,7 +90,7 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="档案号:" prop="recordId">
-            <el-input v-model="dataForm.recordId" style="width: 80%" placeholder="" />
+            <el-input v-model="dataForm.recordId" style="width: 80%" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -134,15 +135,35 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="联系电话:" prop="contactTel">
-            <el-input v-model="dataForm.contactTel" style="width: 70%" placeholder="" />
+            <el-input v-model="dataForm.contactTel" style="width: 70%" placeholder=""/>
           </el-form-item>
         </el-col>
-
+        <el-col :span="12">
+          <el-form-item label="护理等级" prop="nurseLevel">
+            <el-select
+              v-model="dataForm.nurseLevel"
+              :loading="loading"
+              placeholder="请选择" filterable
+            >
+              <el-option
+                v-for="item in nurseLevelOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
-        <el-col :span="18">
+        <el-col :span="12">
+          <el-form-item label="饮食注意事项:" prop="foodAttention">
+            <el-input v-model="dataForm.foodAttention" type="textarea" placeholder=""/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
           <el-form-item label="注意事项:" prop="attention">
-            <el-input v-model="dataForm.attention" type="textarea" placeholder="" />
+            <el-input v-model="dataForm.attention" type="textarea" placeholder=""/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -157,7 +178,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       dialogWidth: '50%',
       loading: false,
@@ -172,6 +193,7 @@ export default {
       roomOptions: [],
       buildingOptions: [],
       bedOptions: [],
+      nurseLevelOptions: [],
       elderTypeOption: [
         { label: '活力老人', value: '活力老人' },
         { label: '自理老人', value: '自理老人' },
@@ -191,8 +213,13 @@ export default {
         expirationDate: '',
         contactTel: '',
         bedId: '',
+        nurseLevel: '',
+        doctorId: '',
+        nurseId: '',
+        nursingWorkersId: '',
         psychosomaticState: '',
         attention: '',
+        foodAttention: '',
         birthday: '',
         height: '',
         maritalStatus: '',
@@ -243,6 +270,9 @@ export default {
         psychosomaticState: [
           { required: true, message: '精神状况不能为空', trigger: 'blur' }
         ],
+        foodAttention: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ],
         attention: [
           { required: true, message: '不能为空', trigger: 'blur' }
         ],
@@ -267,7 +297,7 @@ export default {
       }
     }
   }, computed: {
-    dialogWidthCal() {
+    dialogWidthCal () {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 50 + '%'
       return this.dialogWidth
@@ -281,11 +311,12 @@ export default {
 
     }*/
   },
-  mounted() {
+  mounted () {
     this.getRoomOptions()
+    this.getNurseLevel()
   },
   methods: {
-    init(info) {
+    init (info) {
       this.dataForm.id = info !== undefined ? info.id : ''
       this.bedOptions = info !== undefined ? [{ label: info.bedIdName, value: info.bedId }] : []
       this.visible = true
@@ -307,8 +338,13 @@ export default {
               this.dataForm.expirationDate = data.customer.expirationDate
               this.dataForm.contactTel = data.customer.contactTel
               this.dataForm.bedId = data.customer.bedId
+              this.dataForm.nurseLevel = data.customer.nurseLevel
+              this.dataForm.doctorId = data.customer.doctorId
+              this.dataForm.nurseId = data.customer.nurseId
+              this.dataForm.nursingWorkersId = data.customer.nursingWorkersId
               this.dataForm.psychosomaticState = data.customer.psychosomaticState
               this.dataForm.attention = data.customer.attention
+              this.dataForm.foodAttention = data.customer.foodAttention
               this.dataForm.birthday = data.customer.birthday
               this.dataForm.height = data.customer.height
               this.dataForm.maritalStatus = data.customer.maritalStatus
@@ -323,7 +359,7 @@ export default {
       })
     },
     // 表单提交
-    dataFormSubmit() {
+    dataFormSubmit () {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$axios.post(`/customer/${!this.dataForm.id ? 'add' : 'update'}`,
@@ -342,8 +378,13 @@ export default {
               'expirationDate': this.dataForm.expirationDate,
               'contactTel': this.dataForm.contactTel,
               'bedId': this.dataForm.bedId,
+              'nurseLevel': this.dataForm.nurseLevel,
+              'doctorId': this.dataForm.doctorId,
+              'nurseId': this.dataForm.nurseId,
+              'nursingWorkersId': this.dataForm.nursingWorkersId,
               'psychosomaticState': this.dataForm.psychosomaticState,
               'attention': this.dataForm.attention,
+              'foodAttention': this.dataForm.foodAttention,
               'birthday': this.dataForm.birthday,
               'height': this.dataForm.height,
               'maritalStatus': this.dataForm.maritalStatus,
@@ -361,23 +402,29 @@ export default {
                 }
               })
             } else {
-              this.$message.error("操作失败")
+              this.$message.error('操作失败')
             }
           })
         }
       })
     },
-    getRecordId() {
+    getNurseLevel () {
+      if (!this.dataForm.id) {
+        this.$axios.post('/nurse-level/get-nurse-level').then(res => {
+          this.nurseLevelOptions = res.data
+        }).catch()
+      }
+    }, getRecordId () {
       if (!this.dataForm.id) {
         this.$axios.post('/customer/get-record-id').then(res => {
           this.dataForm.recordId = res.data
         }).catch()
       }
     },
-    getRoomOptions() {
+    getRoomOptions () {
       if (!this.roomOptions.length > 0) {
         this.loading = true
-        this.$axios.post('/bed/get-room-number', '', { headers: { 'showLoading': false, 'noRetry': false }}).then(
+        this.$axios.post('/bed/get-room-number', '', { headers: { 'showLoading': false, 'noRetry': false } }).then(
           res => {
             this.loading = false
             this.roomOptions = res.data
@@ -388,7 +435,7 @@ export default {
         })
       }
     },
-    getBedOptions() {
+    getBedOptions () {
       if (this.dataForm.roomNumber > 0) {
         this.loading = true
         this.$axios.post('/bed/get-bed-number', { roomNumber: this.dataForm.roomNumber }, {

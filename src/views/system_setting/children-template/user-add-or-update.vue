@@ -3,6 +3,7 @@
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
     :visible.sync="visible"
+      top="5vh"
   >
     <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="120px"
              @keyup.enter.native="dataFormSubmit()">
@@ -75,9 +76,10 @@
         title="修改密码"
         :visible.sync="innerVisible"
         @close="closeModifyPasswordHandle"
+          top="5vh"
         append-to-body>
-        <el-form-item label="原密码:">
-          <el-input v-model="originalPassword" autocomplete="off" placeholder="请输入密码" type="password" clearable
+        <el-form-item label="原密码:" prop="originalPassword">
+          <el-input v-model="dataForm.originalPassword" autocomplete="off" placeholder="请输入密码" type="password" clearable
                     show-password
                     :style="{width: '80%'}"></el-input>
         </el-form-item>
@@ -139,7 +141,6 @@ export default {
       innerVisible: false,
       dialogWidth: '40%',
       visible: false,
-      originalPassword: '',
       backupPass: '',
       isModifyPass: false,
       dataForm: {
@@ -153,6 +154,7 @@ export default {
         sex: '',
         email: '',
         phoneNumber: '',
+        originalPassword: ''
       },
       dataRule: {
         nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
@@ -162,7 +164,8 @@ export default {
         userCode: [{ required: true, message: '请输入员工编号', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         email: [{ required: true, message: '请输入电子邮件', trigger: 'blur' }],
-        phoneNumber: [{ required: true, message: '电话号码', trigger: 'blur' }],
+        phoneNumber: [{ required: true, message: '请输入电话号码', trigger: 'blur' }],
+        originalPassword: [{ required: true, message: '请输入原密码', trigger: 'blur' }],
       },
       sexOptions: [{
         'label': '男',
@@ -228,7 +231,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error("操作失败")
+              this.$message.error('操作失败')
             }
           })
         }
@@ -243,39 +246,44 @@ export default {
 
     },
     modifyPassword () {
-      this.originalPassword = rsa.encrypt(this.originalPassword)
-      this.$axios.post('/user/modify-password', {
-        originalPassword: this.originalPassword,
-        id: this.dataForm.id
-      }).then(res => {
-        if (res.data) {
-          this.isModifyPass = true
-          this.dataForm.password1 = rsa.encrypt(this.dataForm.password1)
-          this.dataForm.password2 = this.dataForm.password1
-          this.$message.success({
-            message: '操作成功',
-            duration: 500,
-            onClose: () => {
-              this.$confirm('是否提交修改修改信息?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                this.dataFormSubmit()
-              }).catch(() => {
-                this.$message.info({
-                  message: '已取消自动提交修改操作'
-                })
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          this.originalPassword = rsa.encrypt(this.originalPassword)
+          this.$axios.post('/user/modify-password', {
+            originalPassword: this.dataForm.originalPassword,
+            id: this.dataForm.id
+          }).then(res => {
+            if (res.data) {
+              this.isModifyPass = true
+              this.dataForm.password1 = rsa.encrypt(this.dataForm.password1)
+              this.dataForm.password2 = this.dataForm.password1
+              this.$message.success({
+                message: '操作成功',
+                duration: 500,
+                onClose: () => {
+                  this.$confirm('是否提交修改修改信息?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    this.dataFormSubmit()
+                  }).catch(() => {
+                    this.$message.info({
+                      message: '已取消自动提交修改操作'
+                    })
+                  })
+                }
+              })
+            } else {
+              this.$message.error({
+                message: '修改密码失败,请检查原密码是否正确!',
               })
             }
           })
-        } else {
-          this.$message.error({
-            message: '修改密码失败,请检查原密码是否正确!',
-          })
+          this.closeModifyPasswordHandle()
+          this.dataForm.originalPassword = ''
+
         }
-        this.closeModifyPasswordHandle()
-        this.originalPassword = ''
       })
     },
     closeModifyPasswordHandle () {
