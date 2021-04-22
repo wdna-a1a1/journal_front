@@ -1,17 +1,18 @@
 import axios from 'axios'
-import { MessageBox } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 import { showScreenLoading, hideScreenLoading } from './loading'
 import msg from './message'
 import qs from 'qs'
 import store from '@/store'
+import { getToken } from '@/utils/auth'
 // 声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 const pending = []
 const cancelToken = axios.CancelToken
 const removePending = (config, type) => {
   for (let i = 0; i < pending.length; i++) {
-  /*  console.log(pending[i].url, config.url + '&' + config.method)
-    console.log((config.url + '&' + config.method).indexOf(pending[i].url) !== -1)
-    console.log(pending, type, config)*/
+    /*  console.log(pending[i].url, config.url + '&' + config.method)
+      console.log((config.url + '&' + config.method).indexOf(pending[i].url) !== -1)
+      console.log(pending, type, config)*/
     if ((config.url + '&' + config.method).indexOf(pending[i].url) !== -1) { // 当当前请求在数组中存在时执行函数体
       pending[i].fun() // 执行取消操作
       pending.splice(i, 1) // 把这条记录从数组中移除
@@ -36,15 +37,18 @@ ax.interceptors.request.use(
     if (config.headers.showLoading !== false) {
       showScreenLoading()
     }
+
     //设置token
-    if (store.state.user.token) {
-      config.headers.token = store.state.user.token
+    if (getToken()) {
+      config.headers.token = getToken()
     }
+
     if (config.headers.stringify !== false) {
       config.data = qs.stringify(config.data)
     }
 
     removePending(config, 'req') // 在一个ajax发送前执行一下取消操作
+
     config.cancelToken = new cancelToken((cancel) => {
       // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
       pending.push({ url: config.url + '&' + config.method, fun: cancel })
@@ -53,6 +57,8 @@ ax.interceptors.request.use(
     return config
   },
   err => {
+    const config = err.config
+
     // 判断当前请求是否设置了不显示Loading
     if (config.headers.showLoading !== false) {
       hideScreenLoading()
@@ -60,20 +66,36 @@ ax.interceptors.request.use(
     // 在一个ajax响应后再执行一下取消操作，把已经完成的请求从pending中移除
     removePending(err.config, 'req-e')
     msg.error('向服务器请求超时,请检查网络或联系管理员!')
-    return Promise.resolve(err)
+    return Promise.reject(err)
   })
 
 ax.interceptors.response.use(
   response => {
+
+    const res = response.data
     if (response.config.headers.showLoading !== false) {
       hideScreenLoading()
     }
     // 在一个ajax响应后再执行一下取消操作，把已经完成的请求从pending中移除
     removePending(response.config, 'resp')
+    // if the custom code is not 20000, it is judged as an error.
+
+    // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+    if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      // to re-login
+      MessageBox.confirm('您已登出，可以取消停留在此页面上，或者再次登录', '确认登出', {
+        confirmButtonText: '重新登陆',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
+        })
+      })
+    }
 
     return response
-  },
-  err => {
+  }, err => {
     hideScreenLoading()
     const config = err.config
 
@@ -89,18 +111,17 @@ ax.interceptors.response.use(
     // Check if we've maxed out the total number of retries
     if (config.__retryCount >= config.retry) {
       // Reject with the error
-      // msg.error("重试次数已达上限,请检查网络或联系管理员!")
+
       MessageBox.alert('重试次数已达上限,请检查网络或联系管理员!', '提示', {
         center: true,
         type: 'error',
         f: hideScreenLoading()
-      }).then(r => {
-        return r
-      })
+      }).then()
       return Promise.reject(err)
     }
     // Increase the retry count
     config.__retryCount += 1
+
     if (config.headers.noRetry !== false) {
       MessageBox.confirm('请求超时是否重试?', '提示', {
         confirmButtonText: '确定',
@@ -108,28 +129,29 @@ ax.interceptors.response.use(
         center: true,
         type: 'error',
         f: hideScreenLoading()
-      }).then(() => {
-        const backoff = new Promise(function(resolve) {
-          setTimeout(function() {
-            resolve()
-          }, config.retryDelay)
-        })
-        // Return the promise in which recalls axios to retry the request
-        return backoff.then(function() {
-          if (config.headers.showLoading !== false) {
-            showScreenLoading({ text: '正在重试......' })
-          }
-          return ax(config)
-        }).catch(() => {
-
-        })
-      }).catch(() => {
-
       })
+        .then(() => {
+
+          return new Promise(resolve => {
+            setTimeout(function () {
+              resolve()
+            }, config.retryDelay)
+          })
+            // Return the promise in which recalls axios to retry the request
+            .then(() => {
+              if (config.headers.showLoading !== false) {
+                showScreenLoading({ text: '正在重试......' })
+              }
+              return ax(config)
+            })
+
+        })
       // Create new promise to handle exponential backoff
     } else {
       msg.error('服务器响应超时,请检查网络或联系管理员!')
+      return Promise.reject('服务器响应超时,请检查网络或联系管理员!')
     }
+    return Promise.reject(err)
   })
 
 export default ax

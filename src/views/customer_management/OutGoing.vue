@@ -158,10 +158,10 @@
       width="500px"
       :close-on-click-modal="false"
       :visible.sync="auditVisible"
-        top="5vh"
+      top="5vh"
     >
       <div v-for="(item,index) in dataListSelections" style="margin-bottom: 20px">
-         <el-divider>{{ index + 1 }}</el-divider>
+        <el-divider>{{ index + 1 }}</el-divider>
         <el-row>
           <el-tag style="margin-right: 10px">客户姓名:{{ item.customerName }}</el-tag>
           <el-tag style="margin-right: 10px">客户年龄:{{ item.customerAge }}</el-tag>
@@ -239,7 +239,7 @@ export default {
     },
     auditHandle () {
       for (let i = 0; i < this.dataListSelections.length; i++) {
-        this.dataListSelections[i].auditPerson = 'Nike'
+        this.dataListSelections[i].auditPerson = this.$store.getters.name
         this.dataListSelections[i].auditTime = this.$moment(new Date()).format('yyyy-MM-DD HH:mm:ss').toString()
       }
       this.$axios.post('/out-going/audit', this.dataListSelections, { headers: { stringify: false } }).then(res => {

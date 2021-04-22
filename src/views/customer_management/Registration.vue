@@ -206,6 +206,8 @@ export default {
           this.dataList = []
           this.totalPage = 0
         }
+      }).catch(err=>{
+        console.log(err)
       })
     },
     // 每页数

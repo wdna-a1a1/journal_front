@@ -36,7 +36,7 @@
             <el-main class="flex" style="margin-top: -24px">
               <div v-for="(item,index) in dataList" @dblclick="clickBedInfoHandle(index)">
                 <div class="item">
-                  <el-image fit='cover' class="bedInfo_img" src="http://localhost:8181/bed.jpg"/>
+                  <el-image fit='cover' class="bedInfo_img" src="http://localhost:8181/images/bed.jpg"/>
 
                   <div class="bedInfo_info">
                     <el-tag size="small">信息:</el-tag>

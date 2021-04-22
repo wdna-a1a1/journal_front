@@ -241,15 +241,15 @@ export const constantRoutes = [{
         title: '工作人员管理',
         icon: 'dashboard'
       }
-    }, /*{
-      path: 'dailylife-care-program',
-      name: 'DailyLifeCareProgram',
-      component: () => import('@/views/system_setting/DailyLifeCareProgram'),
+    }, {
+      path: 'error-log',
+      name: 'ErrorLog',
+      component: () => import('@/views/ErrorLog'),
       meta: {
-        title: '日常生活照料方案',
+        title: '错误日志',
         icon: 'dashboard'
       }
-    }*/]
+    }]
   },
   {
     path: 'Hwwwww',

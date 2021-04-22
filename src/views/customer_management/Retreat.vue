@@ -255,7 +255,7 @@ export default {
     },
     auditHandle () {
       for (let i = 0; i < this.dataListSelections.length; i++) {
-        this.dataListSelections[i].auditPerson = 'Nike'
+        this.dataListSelections[i].auditPerson = this.$store.getters.name
         this.dataListSelections[i].auditTime = this.$moment(new Date()).format('yyyy-MM-DD HH:mm:ss').toString()
       }
       this.$axios.post('/retreat/audit', this.dataListSelections, { headers: { stringify: false } }).then(res => {

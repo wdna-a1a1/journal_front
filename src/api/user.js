@@ -1,24 +1,33 @@
 import request from '@/utils/axios'
 
-export function login(data) {
+export function login (data) {
   return request({
-    url: '/user?type=login',
+    url: '/user/login',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
+export function getInfo (token) {
   return request({
-    url: 'user?type=info',
-    method: 'get',
-    params: { token }
+    url: 'user/info',
+    method: 'post',
+    data: { token }
   })
 }
 
-export function logout() {
+export function logout () {
   return request({
-    url: '/user?type=logout',
+    url: '/user/logout',
     method: 'post'
+  })
+}
+
+export function refreshToken (data) {
+  return request({
+    url: '/user/refresh-token',
+    method: 'post',
+    data,
+    headers: { 'showLoading': false, 'noRetry': false }
   })
 }

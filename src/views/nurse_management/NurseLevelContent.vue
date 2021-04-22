@@ -2,16 +2,19 @@
   <div id="app">
     <div class="main">
       <div class="left">
-        <el-form :inline="true" :model="dataForm"  @submit.native.prevent>
+        <el-form :inline="true" :model="dataForm" @submit.native.prevent>
           <el-form-item>
-            <el-button type="success" @click="getDataList()" @keyup.enter.native="getDataList()"><i class="el-icon-refresh"></i> 刷新
+            <el-button type="success" @click="getDataList()" @keyup.enter.native="getDataList()"><i
+              class="el-icon-refresh"></i> 刷新
             </el-button>
             <el-button type="primary" @click="addOrUpdateHandle()"><i class="el-icon-circle-plus"></i> 新增
             </el-button>
           </el-form-item>
         </el-form>
-        <div >
-          <el-tag v-if="nurseLevelName.length>0" type="danger" style="height: 60px;font-size: 36px;line-height: 54px">正在配置 <i class="el-icon-right"></i> 护理级别名称:{{ nurseLevelName }}</el-tag>
+        <div>
+          <el-tag v-if="nurseLevelName.length>0" type="danger" style="height: 60px;font-size: 36px;line-height: 54px">
+            正在配置 <i class="el-icon-right"></i> 护理级别名称:{{ nurseLevelName }}
+          </el-tag>
 
         </div>
 
@@ -161,6 +164,8 @@ export default {
           this.dataList = []
           this.totalPage = 0
         }
+      }).catch(err => {
+        console.log(err)
       })
     },
     // 每页数
@@ -205,7 +210,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error("操作失败")
+              this.$message.error('操作失败')
             }
           })
       })

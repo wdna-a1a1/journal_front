@@ -233,7 +233,9 @@ export default {
             } else {
               this.$message.error('操作失败')
             }
-          })
+          }).catch(err=>{
+        console.log(err)
+      })
         }
 
       })

@@ -155,6 +155,8 @@ export default {
           this.dataList = []
           this.totalPage = 0
         }
+      }).catch(err=>{
+        console.log(err)
       })
     },
     // 每页数
@@ -201,7 +203,9 @@ export default {
             } else {
               this.$message.error("操作失败")
             }
-          })
+          }).catch(err=>{
+        console.log(err)
+      })
       })
     }
 

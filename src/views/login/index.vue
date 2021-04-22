@@ -134,17 +134,15 @@ export default {
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          const pass = rsa.encrypt(this.loginForm.password)
-          console.log(pass)
-          this.loading = true
+          this.loginForm.password = rsa.encrypt(this.loginForm.password)
 
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
+
           }).catch(() => {
-            this.loading = false
+
           })
-          this.loading = false
+
         } else {
           console.log('error submit!!')
           return false
