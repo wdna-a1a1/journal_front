@@ -285,6 +285,10 @@ export default {
   methods: {
     // 获取数据列表
     getDataList () {
+      if (this.dataForm.searchType.length <= 0) {
+        this.$message.error('请输入搜索内容')
+        return
+      }
       this.$axios.post('/bed-info/get-bed-info', {
         key: this.dataForm.key,
         searchType: this.dataForm.searchType
