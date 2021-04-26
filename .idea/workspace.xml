@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41357dcc-6186-44bc-a3ed-ba6331ad4d91" name="Default Changelist" comment="修复在门诊确诊刷新后病历首页无法输入的bug">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/customer_management/CustomerInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customer_management/CustomerInfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/customer_management/children-template/customer-add-or-update.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customer_management/children-template/customer-add-or-update.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +49,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../siic" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -92,8 +94,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JavaScript Debug.JS Debug" />
-      <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="JavaScript 调试.Debug Application" />
+      <item itemvalue="JavaScript 调试.JS Debug" />
       <item itemvalue="npm.npm serve" />
     </list>
   </component>
@@ -146,6 +148,7 @@
       <workItem from="1617791559158" duration="228000" />
       <workItem from="1617791854968" duration="149000" />
       <workItem from="1617931075673" duration="652000" />
+      <workItem from="1619415420095" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1607052559341</created>
