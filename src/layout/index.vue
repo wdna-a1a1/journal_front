@@ -9,7 +9,7 @@
           <tags-view v-if="needTagsView"/>
         </div>
         <app-main/>
-        <foot ></foot>
+
       </div>
 
     </div>
@@ -20,13 +20,11 @@
 <script>
 import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
-import Foot from '@/views/Foot'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
-    Foot,
     AppMain,
     Navbar,
     Sidebar,
@@ -59,8 +57,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.scss";
+@import "../styles/mixin.scss";
+@import "../styles/variables.scss";
 
 .app-wrapper {
   @include clearfix;

@@ -105,7 +105,7 @@ export default {
         address: 'The Great Wall',
         author: 'xxxx',
         link: 'xxxxx',
-        picPath: require('../../assets/gw-bg.jpg')
+        picPath: require('../../assets/zf-bg.jpeg')
       },
       userToken: '',
       loginForm: {

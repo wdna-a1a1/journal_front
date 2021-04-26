@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+
   data: () => {
     return {
       screen: {
@@ -18,7 +19,7 @@ export default {
   },
   watch: {
     screen: {
-      handler() {
+      handler () {
         const self = this
         if (!this.timer) {
           // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
@@ -34,7 +35,7 @@ export default {
       deep: true
     }
   },
-  mounted() {
+  mounted () {
     const self = this
     window.screenWidth = window.innerWidth
     window.screenHeight = window.innerHeight
