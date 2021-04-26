@@ -11,19 +11,19 @@
       <el-row :gutter="15">
         <el-col :span="12">
           <el-form-item label="客户姓名:" prop="customerName">
-            <el-input v-model="dataForm.customerName" class="el-input-short" placeholder=""/>
+            <el-input v-model="dataForm.customerName" :readonly="readOnly" class="el-input-short" placeholder=""/>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="10">
           <el-form-item label="年龄:" prop="customerAge">
-            <el-input v-model="dataForm.customerAge" class="el-input-short" placeholder=""/>
+            <el-input v-model="dataForm.customerAge" :readonly="readOnly" class="el-input-short" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="性别:" prop="customerSex">
-            <el-select v-model="dataForm.customerSex" placeholder="请选择">
+            <el-select v-model="dataForm.customerSex" :readonly="readOnly" placeholder="请选择">
               <el-option
                 v-for="item in sexOptions"
                 :key="item.value"
@@ -37,12 +37,12 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="14">
           <el-form-item label="身份证号:" prop="idcard">
-            <el-input v-model="dataForm.idcard" style="width: 80%" placeholder=""/>
+            <el-input v-model="dataForm.idcard" :readonly="readOnly" placeholder="" style="width: 80%"/>
           </el-form-item>
         </el-col>
         <el-col :span="10">
           <el-form-item label="所属楼房:" prop="buildingId">
-            <el-select v-model="dataForm.buildingId" placeholder="请选择">
+            <el-select v-model="dataForm.buildingId" :readonly="readOnly" placeholder="请选择">
               <el-option
                 v-for="item in buildingOptions"
                 :key="item.value"
@@ -57,11 +57,11 @@
 
         <el-col :span="12">
           <el-form-item label="房间号:" prop="roomNumber">
-            <el-select
-              v-model="dataForm.roomNumber"
-              :loading="loading"
-              placeholder="请选择" filterable
-              @visible-change="getBedOptions"
+            <el-select v-model="dataForm.roomNumber"
+                       :disabled="readOnly"
+                       :loading="loading"
+                       filterable placeholder="请选择"
+                       @visible-change="getBedOptions"
             >
               <el-option
                 v-for="item in roomOptions"
@@ -75,7 +75,7 @@
 
         <el-col :span="12">
           <el-form-item label="床位号:" prop="buildingId">
-            <el-select v-model="dataForm.bedId" :loading="loading" placeholder="请选择">
+            <el-select v-model="dataForm.bedId" :disabled="readOnly" :loading="loading" placeholder="请选择">
               <el-option
                 v-for="item in bedOptions"
                 :key="item.value"
@@ -90,12 +90,12 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="档案号:" prop="recordId">
-            <el-input v-model="dataForm.recordId" style="width: 80%" placeholder=""/>
+            <el-input v-model="dataForm.recordId" :readonly="readOnly" placeholder="" style="width: 80%"/>
           </el-form-item>
         </el-col>
         <el-col :span="10">
           <el-form-item label="老人类型:" prop="elderType">
-            <el-select v-model="dataForm.elderType" placeholder="请选择">
+            <el-select v-model="dataForm.elderType" :disabled="readOnly" placeholder="请选择">
               <el-option
                 v-for="item in elderTypeOption"
                 :key="item.value"
@@ -110,11 +110,11 @@
         <el-col :span="10">
           <el-form-item label="入住时间:" prop="checkinDate">
             <template slot-scope="scope">
-              <el-date-picker
-                v-model="dataForm.checkinDate"
-                type="datetime"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                placeholder="选择日期"
+              <el-date-picker v-model="dataForm.checkinDate"
+                              :readonly="readOnly"
+                              placeholder="选择日期"
+                              type="datetime"
+                              value-format="yyyy-MM-dd HH:mm:ss"
               />
             </template>
           </el-form-item>
@@ -122,11 +122,11 @@
         <el-col :span="12">
           <el-form-item label="合同到期时间:" prop="expirationDate">
             <template slot-scope="scope">
-              <el-date-picker
-                v-model="dataForm.expirationDate"
-                type="datetime"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                placeholder="选择日期"
+              <el-date-picker v-model="dataForm.expirationDate"
+                              :readonly="readOnly"
+                              placeholder="选择日期"
+                              type="datetime"
+                              value-format="yyyy-MM-dd HH:mm:ss"
               />
             </template>
           </el-form-item>
@@ -135,13 +135,13 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="联系电话:" prop="contactTel">
-            <el-input v-model="dataForm.contactTel" style="width: 70%" placeholder=""/>
+            <el-input v-model="dataForm.contactTel" :readonly="readOnly" placeholder="" style="width: 70%"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="护理等级" prop="nurseLevel">
             <el-select
-              v-model="dataForm.nurseLevel"
+              v-model="dataForm.nurseLevel" :disabled="readOnly"
               :loading="loading"
               placeholder="请选择" filterable
             >
@@ -158,12 +158,12 @@
       <el-row :gutter="15" style="flex-wrap: wrap;display: flex">
         <el-col :span="12">
           <el-form-item label="饮食注意事项:" prop="foodAttention">
-            <el-input v-model="dataForm.foodAttention" type="textarea" placeholder=""/>
+            <el-input v-model="dataForm.foodAttention" :readonly="readOnly" placeholder="" type="textarea"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="注意事项:" prop="attention">
-            <el-input v-model="dataForm.attention" type="textarea" placeholder=""/>
+            <el-input v-model="dataForm.attention" :readonly="readOnly" placeholder="" type="textarea"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -171,7 +171,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
+      <el-button :disabled="hid" type="primary" @click="dataFormSubmit()">确定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -180,9 +180,11 @@
 export default {
   data () {
     return {
+      hid: false,
       dialogWidth: '50%',
       loading: false,
       visible: false,
+      readOnly: false,
       sexOptions: [{
         value: '男',
         label: '男'
@@ -316,14 +318,18 @@ export default {
     this.getNurseLevel()
   },
   methods: {
-    init (info) {
+    init(info, edit) {
+      if (edit == false) {
+        this.readOnly = true;
+        this.hid = true;
+      }
       this.dataForm.id = info !== undefined ? info.id : ''
-      this.bedOptions = info !== undefined ? [{ label: info.bedIdName, value: info.bedId }] : []
+      this.bedOptions = info !== undefined ? [{label: info.bedIdName, value: info.bedId}] : []
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
-          this.$axios.post('/customer/get-by-id', { id: this.dataForm.id }).then(({ data }) => {
+          this.$axios.post('/customer/get-by-id', {id: this.dataForm.id}).then(({data}) => {
             if (data) {
               this.dataForm.isDeleted = data.customer.isDeleted
               this.dataForm.customerName = data.customer.customerName
