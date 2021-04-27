@@ -18,7 +18,7 @@ const refresh = setInterval(() => {
   } else {
     removeToken()
   }
-}, 540000)
+}, 300000)
 
 const state = getDefaultState()
 

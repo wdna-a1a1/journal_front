@@ -3,7 +3,8 @@
     <div class="left">
       <el-form :inline="true" :model="dataForm" @submit.native.prevent>
         <el-form-item>
-          <el-input v-model="dataForm.key" @keyup.enter.native="getDataList" class="el-input-long" placeholder="输入关键搜索" />
+          <el-input v-model="dataForm.key" @keyup.enter.native="getDataList" class="el-input-long"
+                    placeholder="输入关键搜索"/>
         </el-form-item>
         <el-form-item>
           <el-button @click="getDataList()"><i class="el-icon-search"></i> 查询</el-button>
@@ -144,7 +145,8 @@
               @click="addOrUpdateHandle(scope.row)"
             ><i class="el-icon-edit"></i> 修改
             </el-button>
-            <el-button type="warning" size="mini" @click="deleteHandle(scope.row.id)"><i class="el-icon-delete"></i> 删除</el-button>
+            <el-button type="warning" size="mini" @click="deleteHandle(scope.row.id)"><i class="el-icon-delete"></i> 删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -159,7 +161,7 @@
       />
     </div>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" />
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"/>
   </div>
 </template>
 
@@ -171,7 +173,7 @@ export default {
   components: {
     AddOrUpdate
   },
-  data() {
+  data () {
     return {
       dataForm: {
         key: ''
@@ -184,15 +186,15 @@ export default {
       addOrUpdateVisible: false
     }
   },
-  mounted() {
+  mounted () {
     this.getDataList()
   },
   methods: {
-    filter(value, row) {
+    filter (value, row) {
       return row.elder_type === value
     },
     // 获取数据列表
-    getDataList() {
+    getDataList () {
       this.$axios.post('/customer/query', {
         currentPage: this.pageIndex,
         pageSize: this.pageSize,
@@ -206,34 +208,34 @@ export default {
           this.dataList = []
           this.totalPage = 0
         }
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err)
       })
     },
     // 每页数
-    sizeChangeHandle(val) {
+    sizeChangeHandle (val) {
       this.pageSize = val
       this.pageIndex = 1
       this.getDataList()
     },
     // 当前页
-    currentChangeHandle(val) {
+    currentChangeHandle (val) {
       this.pageIndex = val
       this.getDataList()
     },
     // 多选
-    selectionChangeHandle(val) {
+    selectionChangeHandle (val) {
       this.dataListSelections = val
     },
     // 新增 / 修改
-    addOrUpdateHandle(row) {
+    addOrUpdateHandle (row) {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(row)
       })
     },
     // 删除
-    deleteHandle(id) {
+    deleteHandle (id) {
       var ids = id ? [id] : this.dataListSelections.map(item => {
         return item.id
       })
@@ -252,7 +254,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error("操作失败")
+              this.$message.error('操作失败')
             }
           })
       })

@@ -203,6 +203,14 @@ export const constantRoutes = [{
         title: '护理内容',
         icon: 'dashboard'
       }
+    }, {
+      path: 'nurse-record',
+      name: 'NurseRecord',
+      component: () => import('@/views/nurse_management/NurseRecord'),
+      meta: {
+        title: '护理记录',
+        icon: 'dashboard'
+      }
     },
       {
         path: 'nurse-configuration',
