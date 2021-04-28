@@ -9,7 +9,7 @@ const getDefaultState = () => {
     name: '',
     username:'',
     avatar: '',
-    userId: '',
+    id: '',
   }
 }
 const refresh = setInterval(() => {

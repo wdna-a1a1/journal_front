@@ -21,7 +21,7 @@
 
           <el-form-item style="float: right">
             <div>
-              <el-button type="primary" @click=""><i class="el-icon-circle-plus"></i> 导出清单
+              <el-button type="primary" @click="exportRecord2Excel"><i class="el-icon-circle-plus"></i> 导出清单
               </el-button>
             </div>
           </el-form-item>
@@ -228,6 +228,9 @@
 </template>
 
 <script>
+import { parseTime } from '@/utils'
+import fileDownload from 'js-file-download'
+
 export default {
   name: 'NurseRecord',
   data () {
@@ -264,9 +267,7 @@ export default {
       } else if (this.dataListSelections.length > 1) {
         this.$message.error('只允许选择一个客户!')
       } else {
-        this.$axios.post('/customer/query2', {
-          name: this.dataListSelections[0].customerName
-        }).then(({ data }) => {})
+        this.todayPlan()
       }
     },
 
@@ -286,6 +287,58 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    exportRecord2Excel () {
+      let nameList = []
+      this.dataListSelections.forEach((value, index, array) => nameList.push(value.customerName))
+
+      this.$axios.post('/nurse-record/get-person-data-excel', {
+        currentPage: 1,
+        pageSize: 10000,
+        nurseTime: this.dataForm.nurseTime,
+        name: nameList.toString()
+      }, {
+        responseType: 'blob' //服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'，默认是'json'
+      }).then(({ data }) => {
+        if (data) {
+          fileDownload(data, 'record.xlsx')
+        }
+
+      }).catch(err => {
+        console.log(err)
+      })
+
+      /* this.pageSizeNurse = 10000
+       this.getDataListNurse()
+       import('@/utils/Export2Excel').then(excel => {
+         const tHeader = ['客户Id', '护理时间', '客户姓名', '护理描述', '护理名称', '护理人员', '护理Id']
+         const filterVal = ['cid', 'createtime', 'customerName', 'description', 'name', 'nickname', 'nrid']
+         const list = this.dataListNurse
+         const data = this.formatJson(filterVal, list)
+
+         console.log(data)
+         excel.export_json_to_excel({
+           header: tHeader, //表头 必填
+           data, //具体数据 必填
+           filename: 'excel-list', //非必填
+           autoWidth: true, //非必填
+           bookType: 'xlsx' //非必填
+         })
+       })
+       let self = this
+       setTimeout(() => {
+         self.pageSizeNurse = 5
+         self.getDataListNurse()
+       },2000)
+ */
+    }, formatJson (filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
     },
     // 每页数
     sizeChangeHandleCustomer (val) {
@@ -335,6 +388,15 @@ export default {
     selectionChangeHandleCustomer (val) {
       this.dataListSelections = val
     },
+    todayPlan () {
+      this.$router.push({
+        name: 'TodayPlan',
+        params: {
+          id: this.dataListSelections[0].id,
+          levelId: this.dataListSelections[0].nurseLevel,
+        }
+      })
+    }
   },
 }
 </script>

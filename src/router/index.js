@@ -222,6 +222,16 @@ export const constantRoutes = [{
           icon: 'dashboard',
 
         }
+      },{
+        path: 'plan',
+        name: 'TodayPlan',
+        component: () => import('@/views/nurse_management/TodayPlan'),
+        hidden: true,
+        meta: {
+          title: '今日护理安排',
+          icon: 'dashboard',
+
+        }
       }]
   }, {
     path: '/system-setting',
