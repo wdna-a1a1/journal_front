@@ -10,18 +10,18 @@
 
 
           <el-form-item>
-            <el-button @click="getDataListCustomer"><i class="el-icon-search"></i> 查询</el-button>
+            <el-button @click="getDataListCustomer"><i class="el-icon-search"></i>查询</el-button>
           </el-form-item>
 
 
           <el-form-item>
-            <el-button type="success" @click="todayNursePlan"><i class="el-icon-search"></i> 今日护理安排
+            <el-button type="success" @click="todayNursePlan"><i class="el-icon-search"></i>今日护理安排
             </el-button>
           </el-form-item>
 
           <el-form-item style="float: right">
             <div>
-              <el-button type="primary" @click="exportRecord2Excel"><i class="el-icon-circle-plus"></i> 导出清单
+              <el-button type="primary" @click="visible=selectLimit()"><i class="el-icon-circle-plus"></i> 导出清单
               </el-button>
             </div>
           </el-form-item>
@@ -221,7 +221,32 @@
             </el-card>
           </el-main>
         </el-container>
+        <el-dialog
+          title="导出清单"
+          :close-on-click-modal="false"
+          :visible.sync="visible"
+          width="380px"
+          top="15vh"
+        >
+          <el-form label-width="80px" inline
+                   @keyup.enter.native="exportRecord2Excel">
+            <el-form-item label="开始时间:">
+              <el-date-picker type="date" v-model="dataForm.startTime" format="yyyy-MM-dd"
+                              value-format="yyyy-MM-dd" :style="{width: '100%'}" placeholder="请选择护理日期"
+                              clearable></el-date-picker>
+            </el-form-item>
+            <el-form-item label="结束时间:">
+              <el-date-picker type="date" v-model="dataForm.endTime" format="yyyy-MM-dd"
+                              value-format="yyyy-MM-dd" :style="{width: '100%'}" placeholder="请选择护理日期"
+                              clearable></el-date-picker>
+            </el-form-item>
 
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+      <el-button @click="visible = false">取消</el-button>
+      <el-button type="primary" @click="exportRecord2Excel">确定</el-button>
+    </span>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -235,12 +260,14 @@ export default {
   name: 'NurseRecord',
   data () {
     return {
+      visible: false,
       dataForm: {
         key: '',
-        nurseTime: ''
+        nurseTime: '',
+        startTime: '',
+        endTime: ''
       },
       todayNurseList: [],
-
       dataListCustomer: [],
       pageIndexCustomer: 1,
       pageSizeCustomer: 5,
@@ -260,13 +287,19 @@ export default {
     this.getDataListCustomer()
   },
   methods: {
-    todayNursePlan () {
-      this.todayNurseList = []
+    selectLimit () {
       if (this.dataListSelections.length === 0) {
         this.$message.error('请选择一个客户!')
       } else if (this.dataListSelections.length > 1) {
         this.$message.error('只允许选择一个客户!')
       } else {
+        return true
+      }
+      return false
+    },
+    todayNursePlan () {
+      this.todayNurseList = []
+      if (this.selectLimit()) {
         this.todayPlan()
       }
     },
@@ -291,54 +324,26 @@ export default {
     exportRecord2Excel () {
       let nameList = []
       this.dataListSelections.forEach((value, index, array) => nameList.push(value.customerName))
+      if (this.selectLimit()) {
+        this.$axios.post('/nurse-record/get-person-data-excel', {
+            startTime: this.dataForm.startTime,
+            endTime: this.dataForm.endTime,
+            name: nameList.toString()
+          },
+          {
+            responseType: 'blob' //服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'，默认是'json'
+          }
+        ).then(({ data }) => {
+          if (data) {
+            fileDownload(data, 'record.xlsx')
+          }
 
-      this.$axios.post('/nurse-record/get-person-data-excel', {
-        currentPage: 1,
-        pageSize: 10000,
-        nurseTime: this.dataForm.nurseTime,
-        name: nameList.toString()
-      }, {
-        responseType: 'blob' //服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'，默认是'json'
-      }).then(({ data }) => {
-        if (data) {
-          fileDownload(data, 'record.xlsx')
-        }
+        }).catch(err => {
+          console.log(err)
+        })
 
-      }).catch(err => {
-        console.log(err)
-      })
+      }
 
-      /* this.pageSizeNurse = 10000
-       this.getDataListNurse()
-       import('@/utils/Export2Excel').then(excel => {
-         const tHeader = ['客户Id', '护理时间', '客户姓名', '护理描述', '护理名称', '护理人员', '护理Id']
-         const filterVal = ['cid', 'createtime', 'customerName', 'description', 'name', 'nickname', 'nrid']
-         const list = this.dataListNurse
-         const data = this.formatJson(filterVal, list)
-
-         console.log(data)
-         excel.export_json_to_excel({
-           header: tHeader, //表头 必填
-           data, //具体数据 必填
-           filename: 'excel-list', //非必填
-           autoWidth: true, //非必填
-           bookType: 'xlsx' //非必填
-         })
-       })
-       let self = this
-       setTimeout(() => {
-         self.pageSizeNurse = 5
-         self.getDataListNurse()
-       },2000)
- */
-    }, formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
     },
     // 每页数
     sizeChangeHandleCustomer (val) {

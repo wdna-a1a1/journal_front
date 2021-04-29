@@ -3,7 +3,7 @@
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
     :visible.sync="visible"
-      top="5vh"
+    top="5vh"
   >
     <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="120px"
              @keyup.enter.native="dataFormSubmit()">

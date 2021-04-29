@@ -137,19 +137,30 @@ export default {
     this.getDataList()
   }, methods: {
     getDataList () {
-      this.$axios.post('/nurse-record/query-plan', {
-        id: this.customerId,
-        contentName: this.dataForm.key
-      }).then(({ data }) => {
-        if (data) {
-          this.dataList = data
-        } else {
-          this.dataList = []
+      if (this.customerId !== undefined) {
+        this.$axios.post('/nurse-record/query-plan', {
+          id: this.customerId,
+          contentName: this.dataForm.key
+        }).then(({ data }) => {
+          if (data) {
+            this.dataList = data
+          } else {
+            this.dataList = []
 
-        }
-      }).catch(err => {
-        console.log(err)
-      })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        this.$message.error({
+          message: '查询失败,即将返回护理记录页面!',
+          duration: 1500,
+          onClose: () => {
+            this.closeThis()
+          }
+        })
+      }
+
     },
     addRecord (row) {
       this.$axios.post('/nurse-record/add', {
