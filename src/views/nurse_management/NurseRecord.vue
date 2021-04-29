@@ -21,13 +21,13 @@
 
           <el-form-item style="float: right">
             <div>
-              <el-button type="primary" @click="visible=selectLimit()"><i class="el-icon-circle-plus"></i> 导出清单
+              <el-button type="primary" @click="handleVisible(1)"><i class="el-icon-circle-plus"></i> 导出清单
               </el-button>
             </div>
           </el-form-item>
           <el-form-item style="float: right">
             <div>
-              <el-button type="primary" @click=""><i class="el-icon-circle-plus"></i> 导出汇总表
+              <el-button type="primary" @click="handleVisible(2)"><i class="el-icon-circle-plus"></i> 导出汇总表
               </el-button>
             </div>
           </el-form-item>
@@ -277,7 +277,9 @@ export default {
       pageIndexNurse: 1,
       pageSizeNurse: 5,
       totalPageNurse: 0,
-
+      nameList: [],
+      getExcelUrl: ['/nurse-record/get-person-data-excel', '/nurse-record/get-all-person-data-excel'],
+      urlIndex: -1,
       dataListLoading: false,
       dataListSelections: [],
       addOrUpdateVisible: false
@@ -287,6 +289,26 @@ export default {
     this.getDataListCustomer()
   },
   methods: {
+    handleVisible (key) {
+      this.nameList = []
+      switch (key) {
+        case 1:
+          if (this.selectLimit()) {
+            this.visible = true
+            this.urlIndex = 0
+            this.dataListSelections.forEach((value, index, array) => this.nameList.push(value.customerName))
+            this.exportRecord2Excel()
+          }
+          return
+        case 2:
+          this.visible = true
+          this.urlIndex = 1
+          this.exportRecord2Excel()
+          return
+        default:
+          this.$message.error('')
+      }
+    },
     selectLimit () {
       if (this.dataListSelections.length === 0) {
         this.$message.error('请选择一个客户!')
@@ -322,13 +344,12 @@ export default {
       })
     },
     exportRecord2Excel () {
-      let nameList = []
-      this.dataListSelections.forEach((value, index, array) => nameList.push(value.customerName))
+
       if (this.selectLimit()) {
-        this.$axios.post('/nurse-record/get-person-data-excel', {
+        this.$axios.post(this.getExcelUrl[this.urlIndex], {
             startTime: this.dataForm.startTime,
             endTime: this.dataForm.endTime,
-            name: nameList.toString()
+            name: this.nameList.toString()
           },
           {
             responseType: 'blob' //服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'，默认是'json'
@@ -337,7 +358,6 @@ export default {
           if (data) {
             fileDownload(data, 'record.xlsx')
           }
-
         }).catch(err => {
           console.log(err)
         })
