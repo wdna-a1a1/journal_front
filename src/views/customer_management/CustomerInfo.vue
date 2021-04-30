@@ -155,6 +155,7 @@
       :close-on-click-modal="false"
       :visible.sync="visible"
       center
+      :width="dialogWidthCal"
       top="5vh"
     >
       <el-card>
@@ -281,6 +282,7 @@ export default {
   },
   data () {
     return {
+      dialogWidth: '40%',
       dataForm: {
         key: '',
         nurseTime: '',
@@ -404,6 +406,12 @@ export default {
       this.pageIndexNurse = val
       this.getDataListNurse(this.dataForm.customerName)
     },
+  }, computed: {
+    dialogWidthCal () {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.dialogWidth = (1 - this.$store.state.innerWH.innerWidth / 1920) * 70 + 50 + '%'
+      return this.dialogWidth
+    }
   }
 }
 </script>
