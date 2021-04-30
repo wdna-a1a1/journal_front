@@ -22,39 +22,53 @@
           <el-form-item>
             <el-button @click="getData()"><i class="el-icon-search"></i> 查询</el-button>
           </el-form-item>
-
+          <el-form-item>
+            <el-button @click="triggerType('bar')">柱状图</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="triggerType('line')">折线图</el-button>
+          </el-form-item>
         </el-form>
 
         <div v-if="foodQuantityList.tags.length<=0" style="text-align: center;margin-top: 220px">
           <span style="font-family: Lexend-B,sans-serif;font-size: 160px;color: rgba(231,231,231,0.66)">No Data!</span>
 
         </div>
-        <el-row v-for="item in tags" style="margin-bottom: 40px">
-          <el-table
-            :data="foodQuantityList[item]"
-            border
-            stripe
-            fit
-            tooltip-effect="dark"
-            :header-cell-style="{'text-align':'center','height':'80px','background-color':'#e3e3e3','font-size':'22px','color':'#6f6f6f'}"
-            :cell-style="{'text-align':'center','height':'60px','font-size':'18px'}"
-          >
-            <el-table-column
-              prop="foodname"
-              header-align="center"
-              align="center"
-              :label="item">
-            </el-table-column>
-            <el-table-column
-              prop="quantity"
-              header-align="center"
-              align="center"
-              label="数量">
-            </el-table-column>
+        <div class="flex">
+          <div v-for="item in tags" style="margin:0 2% 40px 2% ;width:45%;">
+            <!--          <el-table
+                        :data="foodQuantityList[item]"
+                        border
+                        stripe
+                        fit
+                        tooltip-effect="dark"
+                        :header-cell-style="{'text-align':'center','height':'80px','background-color':'#e3e3e3','font-size':'22px','color':'#6f6f6f'}"
+                        :cell-style="{'text-align':'center','height':'60px','font-size':'18px'}"
+                      >
+                        <el-table-column
+                          prop="foodname"
+                          header-align="center"
+                          align="center"
+                          :label="item">
+                        </el-table-column>
+                        <el-table-column
+                          prop="quantity"
+                          header-align="center"
+                          align="center"
+                          label="数量">
+                        </el-table-column>
 
-          </el-table>
-        </el-row>
+                      </el-table>-->
+            <el-tag
+              style="height: 60px;line-height: 50px;padding: 6px;text-align: center;font-size: 40px; margin:25px;">
+              {{ item + '图表' }}
+            </el-tag>
+            <food-statistics-charts :charts-type="chartsType" :chart-data="handleData(foodQuantityList[item])"
+                                    ref="foodStatisticsCharts"></food-statistics-charts>
+          </div>
 
+
+        </div>
 
       </div>
     </div>
@@ -62,15 +76,18 @@
 </template>
 
 <script>
+import FoodStatisticsCharts from '@/components/Charts/FoodStatisticsCharts'
 
 export default {
   name: 'DietStatistics',
+  components: { FoodStatisticsCharts },
   data: () => {
     return {
       dataForm: {
         date: '',
         type: '',
       },
+      chartsType: 'bar',
       supplyTypeOptions: [{
         'label': '早餐',
         'value': 1,
@@ -95,10 +112,30 @@ export default {
     getData () {
       this.$axios.post('/food/get-quantity', this.dataForm).then(res => {
         if (res.data) {
-          console.log(res.data)
           this.foodQuantityList = res.data
           this.tags = res.data['tags']
+          this.flush()
         }
+      })
+    },
+    handleData (val) {
+      let data = [[], []]
+      for (let i = 0; i < val.length; i++) {
+        data[0].push(val[i].foodname)
+        data[1].push(val[i].quantity)
+      }
+      return data
+    },
+    triggerType (val) {
+      this.chartsType = val
+      this.flush()
+    },
+    flush () {
+      this.$nextTick(() => {
+        for (var i = 0; i < this.tags.length; i++) {
+          this.$refs.foodStatisticsCharts[i].initChart()
+        }
+
       })
     }
   }

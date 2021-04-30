@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="getDataList()"><i class="el-icon-search"></i> 查询</el-button>
-          <el-button type="primary" @click="addOrUpdateHandle()"><i class="el-icon-circle-plus"></i> 同步信息
+          <el-button type="primary" @click="getDataList"><i class="el-icon-circle-plus"></i> 同步信息
           </el-button>
         </el-form-item>
       </el-form>
@@ -126,7 +126,8 @@
         >
           <template slot-scope="scope">
 
-            <el-button size="mini" type="warning" @click="deleteHandle(scope.row.id)"><i class="el-icon-delete"></i>
+            <el-button size="mini" type="warning" @click="getDataListNurse(scope.row.customerName)"><i
+              class="el-icon-delete"></i>
               查看护理记录
             </el-button>
             <el-button
@@ -149,6 +150,122 @@
         @current-change="currentChangeHandle"
       />
     </div>
+    <el-dialog
+      title="护理记录"
+      :close-on-click-modal="false"
+      :visible.sync="visible"
+      center
+      top="5vh"
+    >
+      <el-card>
+        <div slot="header">
+
+          <el-form inline>
+            <el-form-item>
+              <span class="title">护理记录</span>
+
+            </el-form-item>
+            <el-form-item style="float: right;margin-top: 4px">
+              <el-button size="mini" type="success" style="float: right"
+                         @click="getDataListNurse(dataForm.customerName)"><i
+                class="el-icon-refresh"></i></el-button>
+            </el-form-item>
+            <el-form-item style="float: right">
+              <el-date-picker type="date" v-model="dataForm.nurseTime" format="yyyy-MM-dd"
+                              value-format="yyyy-MM-dd" :style="{width: '100%'}" placeholder="请选择护理日期"
+                              clearable></el-date-picker>
+            </el-form-item>
+
+
+          </el-form>
+
+        </div>
+        <el-table
+          :data="dataListNurse"
+          border
+          stripe
+          fit
+          max-height="500px"
+          tooltip-effect="dark"
+          :header-cell-style="{'text-align':'center'}"
+          :cell-style="{'text-align':'center','height':'60px'}"
+          style="margin-bottom: 20px"
+
+        >
+          <el-table-column
+            type="index"
+            header-align="center"
+            align="center"
+            width="60px"
+            label="序号"
+          />
+          <el-table-column
+            prop="customerName"
+            header-align="center"
+            align="center"
+            width="80px"
+            label="客户姓名"
+          />
+          <el-table-column
+            prop="name"
+            header-align="center"
+            align="center"
+            label="护理项目"
+          >
+
+          </el-table-column>
+          <el-table-column
+            prop="createtime"
+            header-align="center"
+            align="center"
+            label="护理时间"
+          />
+          <el-table-column
+            prop="description"
+            header-align="center"
+            align="center"
+            label="护理内容"
+          />
+          <el-table-column
+            prop="nickname"
+            header-align="center"
+            align="center"
+            width="80px"
+            label="护理人员"
+          />
+          <el-table-column
+            fixed="right"
+            header-align="center"
+            align="center"
+            width=""
+            label="操作"
+          >
+            <template slot-scope="scope">
+              <el-button
+                type="primary"
+                size="mini"
+                style="position: relative;left: 5px"
+                @click=""
+              ><i class="el-icon-edit"></i> 修改
+              </el-button>
+              <el-button type="warning" size="mini" @click=""><i
+                class="el-icon-delete"></i> 删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-pagination
+          :current-page="pageIndexNurse"
+          :page-sizes="[5, 10, 20, 50]"
+          :page-size="pageSizeNurse"
+          :total="totalPageNurse"
+          layout="total,  prev, pager, next,sizes"
+          @size-change="sizeChangeHandleNurse"
+          @current-change="currentChangeHandleNurse"
+        />
+      </el-card>
+
+    </el-dialog>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"/>
   </div>
@@ -162,33 +279,40 @@ export default {
   components: {
     AddOrUpdate
   },
-  data() {
+  data () {
     return {
       dataForm: {
-        key: ''
+        key: '',
+        nurseTime: '',
+        customerName: '',
       },
       dataList: [],
       pageIndex: 1,
       pageSize: 10,
       totalPage: 0,
       dataListSelections: [],
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      visible: false,
+      dataListNurse: [],
+      pageIndexNurse: 1,
+      pageSizeNurse: 5,
+      totalPageNurse: 0,
     }
   },
-  mounted() {
+  mounted () {
     this.getDataList()
   },
   methods: {
-    filter(value, row) {
+    filter (value, row) {
       return row.elder_type === value
     },
     // 获取数据列表
-    getDataList() {
+    getDataList () {
       this.$axios.post('/customer/query', {
         currentPage: this.pageIndex,
         pageSize: this.pageSize,
         name: this.dataForm.key
-      }).then(({data}) => {
+      }).then(({ data }) => {
         if (data) {
           console.log(data)
           this.dataList = data.list
@@ -202,29 +326,29 @@ export default {
       })
     },
     // 每页数
-    sizeChangeHandle(val) {
+    sizeChangeHandle (val) {
       this.pageSize = val
       this.pageIndex = 1
       this.getDataList()
     },
     // 当前页
-    currentChangeHandle(val) {
+    currentChangeHandle (val) {
       this.pageIndex = val
       this.getDataList()
     },
     // 多选
-    selectionChangeHandle(val) {
+    selectionChangeHandle (val) {
       this.dataListSelections = val
     },
     // 新增 / 修改
-    addOrUpdateHandle(row) {
+    addOrUpdateHandle (row) {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(row, false)
       })
     },
     // 删除
-    deleteHandle(id) {
+    deleteHandle (id) {
       var ids = id ? [id] : this.dataListSelections.map(item => {
         return item.id
       })
@@ -232,8 +356,8 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        this.$axios.post('/customer/del', {id})
-          .then(({data}) => {
+        this.$axios.post('/customer/del', { id })
+          .then(({ data }) => {
             if (data) {
               this.$message.success({
                 message: '操作成功',
@@ -243,11 +367,43 @@ export default {
                 }
               })
             } else {
-              this.$message.error("操作失败")
+              this.$message.error('操作失败')
             }
           })
       })
-    }
+    },
+    getDataListNurse (val) {
+      this.visible = true
+      this.dataForm.customerName = val
+      this.$axios.post('/nurse-record/query', {
+        currentPage: this.pageIndexNurse,
+        pageSize: this.pageSizeNurse,
+        nurseTime: this.dataForm.nurseTime,
+        name: this.dataForm.customerName
+      }).then(({ data }) => {
+        if (data) {
+          this.dataListNurse = data.list
+          this.totalPageNurse = data.totalCount
+          this.dataForm.nurseTime = ''
+        } else {
+          this.dataListNurse = []
+          this.totalPageNurse = 0
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 每页数
+    sizeChangeHandleNurse (val) {
+      this.pageSizeNurse = val
+      this.pageIndexNurse = 1
+      this.getDataListNurse(this.dataForm.customerName)
+    },
+    // 当前页
+    currentChangeHandleNurse (val) {
+      this.pageIndexNurse = val
+      this.getDataListNurse(this.dataForm.customerName)
+    },
   }
 }
 </script>
