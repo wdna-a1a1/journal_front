@@ -31,6 +31,8 @@ const ax = axios.create({
 
 ax.defaults.retry = 3
 ax.defaults.retryDelay = 500
+let reConfig = ''
+let reData = ''
 // 添加请求拦截器
 ax.interceptors.request.use(
   config => {
@@ -53,7 +55,6 @@ ax.interceptors.request.use(
       // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
       pending.push({ url: config.url + '&' + config.method, fun: cancel })
     })
-
     return config
   },
   err => {
@@ -80,8 +81,8 @@ ax.interceptors.response.use(
     removePending(response.config, 'resp')
     // if the custom code is not 20000, it is judged as an error.
 
-    // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-    if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+    // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;50020:需要重新登录
+    if (res.code === 50008 || res.code === 50012) {
       // to re-login
       MessageBox.confirm('您已登出，可以取消停留在此页面上，或者再次登录', '确认登出', {
         confirmButtonText: '重新登陆',
@@ -92,8 +93,15 @@ ax.interceptors.response.use(
           location.reload()
         })
       })
-    }
+    } else if (res.code === 50014) {
+      store.dispatch('user/refreshToken').then(res => {
+          console.log(response.config)
+          if (response.config.url !== 'user/check')
+            msg.warning('请求失败,请再次尝试上一步操作!')
+        }
+      ).catch(err => new Promise.reject(err))
 
+    }
     return response
   }, err => {
     hideScreenLoading()
@@ -109,49 +117,47 @@ ax.interceptors.response.use(
     config.__retryCount = config.__retryCount || 0
 
     // Check if we've maxed out the total number of retries
-    if (config.__retryCount >= config.retry) {
-      // Reject with the error
+    /* if (config.__retryCount >= config.retry) {
+       // Reject with the error
 
-      MessageBox.alert('重试次数已达上限,请检查网络或联系管理员!', '提示', {
-        center: true,
-        type: 'error',
-        f: hideScreenLoading()
-      }).then()
-      return Promise.reject(err)
-    }
+       MessageBox.alert('重试次数已达上限,请检查网络或联系管理员!', '提示', {
+         center: true,
+         type: 'error',
+         f: hideScreenLoading()
+       }).then()
+       return Promise.reject(err)
+     }*/
     // Increase the retry count
     config.__retryCount += 1
 
-    if (config.headers.noRetry !== false) {
-      MessageBox.confirm('请求超时是否重试?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        center: true,
-        type: 'error',
-        f: hideScreenLoading()
-      })
-        .then(() => {
+    /* if (config.headers.noRetry !== false) {
+       MessageBox.confirm('请求超时是否重试?', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         center: true,
+         type: 'error',
+         f: hideScreenLoading()
+       })
+         .then(() => {
+           return new Promise(resolve => {
+             setTimeout(function () {
+               resolve()
+             }, config.retryDelay)
+           })
+             // Return the promise in which recalls axios to retry the request
+             .then(() => {
+               if (config.headers.showLoading !== false) {
+                 showScreenLoading({ text: '正在重试......' })
+               }
+               return ax(config)
+             })
 
-          return new Promise(resolve => {
-            setTimeout(function () {
-              resolve()
-            }, config.retryDelay)
-          })
-            // Return the promise in which recalls axios to retry the request
-            .then(() => {
-              if (config.headers.showLoading !== false) {
-                showScreenLoading({ text: '正在重试......' })
-              }
-              return ax(config)
-            })
+         })
+       // Create new promise to handle exponential backoff
+     } else {*/
+    msg.error('服务器响应超时,请检查网络或联系管理员!')
+    return Promise.reject('服务器响应超时,请检查网络或联系管理员!')
 
-        })
-      // Create new promise to handle exponential backoff
-    } else {
-      msg.error('服务器响应超时,请检查网络或联系管理员!')
-      return Promise.reject('服务器响应超时,请检查网络或联系管理员!')
-    }
-    return Promise.reject(err)
   })
 
 export default ax
