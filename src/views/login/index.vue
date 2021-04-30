@@ -84,7 +84,7 @@ export default {
   },
   data () {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
+      if (value.length<=0) {
         callback(new Error('请输入用户名！'))
       } else {
         callback()

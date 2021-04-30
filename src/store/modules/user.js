@@ -16,7 +16,10 @@ const getDefaultState = () => {
 }
 
 const refresh = setInterval(() => {
-  ax.post('user/alive-status', {}, { headers: { showLoading: false } }).then().catch()
+  if (getRefreshToken() !== null) {
+    ax.post('user/alive-status', {}, { headers: { showLoading: false } }).then().catch()
+  }
+
 }, 240000)
 
 const state = getDefaultState()
