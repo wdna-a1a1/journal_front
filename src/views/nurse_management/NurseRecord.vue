@@ -297,13 +297,11 @@ export default {
             this.visible = true
             this.urlIndex = 0
             this.dataListSelections.forEach((value, index, array) => this.nameList.push(value.customerName))
-            this.exportRecord2Excel()
           }
           return
         case 2:
           this.visible = true
           this.urlIndex = 1
-          this.exportRecord2Excel()
           return
         default:
           this.$message.error('')
@@ -344,7 +342,6 @@ export default {
       })
     },
     exportRecord2Excel () {
-
       if (this.selectLimit()) {
         this.$axios.post(this.getExcelUrl[this.urlIndex], {
             startTime: this.dataForm.startTime,
@@ -357,6 +354,7 @@ export default {
         ).then(({ data }) => {
           if (data) {
             fileDownload(data, 'record.xlsx')
+            this.visible = false
           }
         }).catch(err => {
           console.log(err)

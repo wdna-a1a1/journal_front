@@ -256,7 +256,7 @@ export function debounce(func, wait, immediate) {
 
   const later = function() {
     // 据上一次触发时间间隔
-    const last = +new Date() - timestamp
+    const last = + new Date() - timestamp
 
     // 上次被包装函数被调用时间间隔 last 小于设定时间间隔 wait
     if (last < wait && last > 0) {

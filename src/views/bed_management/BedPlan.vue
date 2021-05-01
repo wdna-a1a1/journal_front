@@ -38,7 +38,7 @@
                 <div class="item">
                   <el-image fit='cover' class="bedInfo_img" src="http://localhost:8181/images/bed.jpg"/>
 
-                  <div class="bedInfo_info">
+                  <div class="bedInfo_info" @click="clickBedInfoHandle(index)">
                     <el-tag size="small">信息:</el-tag>
                     <span class="bedInfo_content">{{ item.roomNumber + '-' + item.name }}</span>
                   </div>
@@ -57,7 +57,6 @@
         </el-row>
         <el-dialog
           title="客户信息"
-          :close-on-click-modal="false"
           :visible.sync="visible"
           top="5vh"
           center
@@ -156,7 +155,7 @@
                 style="margin-top:40px;margin-bottom: 20px"
               >
                 <el-table-column
-                  prop="id"
+                  type="index"
                   header-align="center"
                   align="center"
                   width="80px"
@@ -172,6 +171,7 @@
                   prop="cycle"
                   header-align="center"
                   align="center"
+                  width="120px"
                   label="周期"
                 >
                 </el-table-column>
@@ -179,19 +179,33 @@
                   prop="times"
                   header-align="center"
                   align="center"
+                  width="80px"
                   label="执行次数"
                 />
                 <el-table-column
-                  prop="price"
+                  prop="desc"
                   header-align="center"
                   align="center"
-                  label="价格(元/次)"
+                  label="护理描述"
                 />
                 <el-table-column
                   prop="remarks"
                   header-align="center"
                   align="center"
                   label="备注"
+                />
+                <el-table-column
+                  prop="createtime"
+                  header-align="center"
+                  align="center"
+                  label="最后一次护理时间"
+                />
+                <el-table-column
+                  prop="doneTimes"
+                  header-align="center"
+                  align="center"
+                  width="80px"
+                  label="完成次数"
                 />
               </el-table>
 
@@ -317,7 +331,6 @@ export default {
       }).then(({ data }) => {
         if (data) {
           this.customer = data.customer
-          console.log(this.customer)
           this.nurseContentList = data.nurseContent
 
         } else {
