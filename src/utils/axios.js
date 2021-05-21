@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
-import { showScreenLoading, hideScreenLoading } from './loading'
+import { MessageBox } from 'element-ui'
+import { hideScreenLoading, showScreenLoading } from './loading'
 import msg from './message'
 import qs from 'qs'
 import store from '@/store'
@@ -46,6 +46,7 @@ ax.interceptors.request.use(
     }
 
     if (config.headers.stringify !== false) {
+      console.log(qs.stringify(config.data))
       config.data = qs.stringify(config.data)
     }
 

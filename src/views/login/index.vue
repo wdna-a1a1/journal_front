@@ -75,7 +75,6 @@
 <script>
 import Foot from '../Foot.vue'
 import rsa from '@/utils/rsa'
-import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
@@ -134,9 +133,10 @@ export default {
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loginForm.password = rsa.encrypt(this.loginForm.password)
-
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          let pwd = rsa.encrypt(this.loginForm.password)
+          let temp = JSON.parse(JSON.stringify(this.loginForm))
+          temp.password = pwd
+          this.$store.dispatch('user/login', temp).then(() => {
             this.$router.push({ path: this.redirect || '/' })
 
           }).catch(() => {
