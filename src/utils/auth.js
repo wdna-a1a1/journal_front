@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'siic_token'
+const TokenKey = 'journal_front_token'
 
 export function getToken() {
   return Cookies.get(TokenKey)

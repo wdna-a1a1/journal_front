@@ -1,4 +1,4 @@
-# SIIC
+# journal_front
 
 ###author : Hwwwww
 

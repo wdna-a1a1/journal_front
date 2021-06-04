@@ -28,7 +28,7 @@
           <div class="right-info">
             <img width="150px" height="150px" src="../../assets/logo.png" style="border-radius: 50%;">
             <h2 style="font-size:28px;">欢迎使用</h2>
-            <h2 style="font-family: Lexend-B,serif;font-size:32px;">上实颐养中心管理系统</h2>
+            <h2 style="font-family: Lexend-B,serif;font-size:32px;">期刊稿件管理系统</h2>
           </div>
           <el-form ref="loginForm" :model="loginForm" status-icon :rules="loginRules" label-width="80px"
                    class="form-style">
@@ -97,7 +97,7 @@ export default {
       }
     }
     return {
-      copyright: 'Copyright © 2021 Hwwwww',
+      copyright: 'Copyright © 2021 wdna',
       thanks: '',
       pic: {
         country: 'China',
@@ -133,11 +133,12 @@ export default {
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          let pwd = rsa.encrypt(this.loginForm.password)
+          /*  let pwd = rsa.encrypt(this.loginForm.password)
+
+            temp.password = pwd*/
           let temp = JSON.parse(JSON.stringify(this.loginForm))
-          temp.password = pwd
           this.$store.dispatch('user/login', temp).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({path: this.redirect || '/'})
 
           }).catch(() => {
 

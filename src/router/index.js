@@ -77,34 +77,34 @@ export const constantRoutes = [{
   }, {
     path: '/bed-management',
     component: Layout,
-    name: '床位管理',
+    name: '作者',
     redirect: '/bed-management/bed-plan',
     meta: {
-      title: '床位管理',
+      title: '作者',
       icon: 'el-icon-notebook-2'
     },
     children: [{
       path: 'bed-plan',
       name: 'BedPlan',
-      component: () => import('@/views/bed_management/BedPlan'),
+      component: () => import('@/views/author/author'),
       meta: {
-        title: '床位示意图',
+        title: '作者信息',
         icon: 'dashboard'
       }
     }, {
       path: 'bed-management',
       name: 'BedManagement',
-      component: () => import('@/views/bed_management/BedManagement'),
+      component: () => import('@/views/author/author'),
       meta: {
-        title: '床位管理',
+        title: '提交稿件',
         icon: 'dashboard'
       }
     }]
   },
-  {
+  /*{
     path: '/customer_management',
     component: Layout,
-    name: '客户管理',
+    name: '处理稿件',
     redirect: '/customer_management/registration',
     meta: {
       title: '客户管理',
@@ -242,7 +242,7 @@ export const constantRoutes = [{
       title: '系统信息',
       icon: 'el-icon-notebook-2'
     },
-    children: [/*{
+    children: [/!*{
       path: 'basic-data-maintenance',
       name: 'BasicDataMaintenance',
       component: () => import('@/views/system_setting/BasicDataMaintenance'),
@@ -250,7 +250,7 @@ export const constantRoutes = [{
         title: '基本数据维护',
         icon: 'dashboard'
       }
-    },*/ {
+    },*!/ {
       path: 'staff-management',
       name: 'StaffManagement',
       component: () => import('@/views/system_setting/StaffManagement'),
@@ -276,17 +276,7 @@ export const constantRoutes = [{
       }
     }]
   },
-  {
-    path: 'Hwwwww',
-    component: Layout,
-    children: [{
-      path: '',
-      meta: {
-        title: 'Hwwwww',
-        icon: 'link'
-      }
-    }]
-  },
+ */
 
 // 404 page must be placed at the end !!!
   {

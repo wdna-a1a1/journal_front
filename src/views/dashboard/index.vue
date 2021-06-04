@@ -44,7 +44,7 @@
 <!--}-->
 <!--</style>-->
 <template>
-  <div class="dashboard-text">上实瑞慈颐养中心
+  <div class="dashboard-text">期刊稿件管理系统
     <el-carousel :interval="4000" height="600px" type="card">
 
       <el-carousel-item v-for="item in ima" :key="item" autoplay>
@@ -62,11 +62,11 @@ export default {
   data() {
     return {
       ima: [
-        require('../../image/yyzx.jpg'),
         require('../../image/1.jpg'),
-        require('../../image/2.jpg'),
-        require('../../image/3.jpg'),
-        require('../../image/4.jpg'),
+        require('../../image/1.jpg'),
+        require('../../image/1.jpg'),
+        require('../../image/1.jpg'),
+        require('../../image/1.jpg'),
       ]
     }
   }

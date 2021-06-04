@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '上实瑞慈颐养中心',
+  title: '期刊稿件管理系统',
 
   /**
    * @type {boolean} true | false

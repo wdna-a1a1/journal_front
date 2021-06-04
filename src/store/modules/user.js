@@ -53,12 +53,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_NAME', data.name)
-        commit('SET_USERNAME', data.username)
-        commit('SET_AVATAR', data.avatar)
-        commit('SET_ID', data.id)
-        commit('SET_TOKEN', data.token)
-        setRefreshToken(data.refresh_token)
         setToken(data.token)
         resolve()
       }).catch(error => {
