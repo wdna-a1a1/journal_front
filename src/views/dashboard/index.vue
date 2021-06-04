@@ -1,48 +1,4 @@
-<!--<template>-->
 
-<!--  <div class="dashboard-container" >-->
-<!--    <div class="dashboard-text">上实瑞慈颐养中心</div>-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script>-->
-
-<!--export default {-->
-<!--  name: 'Dashboard',-->
-<!--  mounted() {-->
-<!--    console.log(this.$store.state.user)-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style lang="scss" scoped>-->
-<!--.dashboard-container{-->
-<!--  background: url('../../image/yyzx.jpg') center;-->
-<!--  height: 100%;-->
-<!--  width: 100%;-->
-<!--  background-size: cover;-->
-<!--  position: fixed;-->
-<!--}-->
-<!--img{-->
-<!--  width: 100%;-->
-<!--  height: 100vh;-->
-
-<!--  background-size: 100% 100%;-->
-<!--  position: fixed;//固定定位-->
-<!--}-->
-
-<!--.dashboard {-->
-
-<!--  &-container {-->
-<!--  }-->
-
-<!--  &-text {-->
-<!--    font-size: 30px;-->
-<!--    line-height: 80px;-->
-<!--    text-align: center;-->
-<!--  }-->
-<!--}-->
-<!--</style>-->
 <template>
   <div class="dashboard-text">期刊稿件管理系统
     <el-carousel :interval="4000" height="600px" type="card">
@@ -82,13 +38,7 @@ export default {
   align-content: center;
 }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
 
-.el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
-}
 
 .dashboard-text {
   font-size: 30px;

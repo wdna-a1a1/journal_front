@@ -6,10 +6,10 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('generator:author:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+<!--        <el-button v-if="isAuth('generator:author:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
         <el-button v-if="isAuth('generator:author:delete')" :disabled="dataListSelections.length <= 0" type="danger"
                    @click="deleteHandle()">批量删除
-        </el-button>
+        </el-button>-->
       </el-form-item>
     </el-form>
     <el-table
@@ -114,24 +114,17 @@ export default {
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true
-      this.$http({
-        url: this.$http.adornUrl('/generator/author/list'),
-        method: 'get',
-        params: this.$http.adornParams({
-          'page': this.pageIndex,
-          'limit': this.pageSize,
-          'key': this.dataForm.key
-        })
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.dataList = data.page.list
-          this.totalPage = data.page.totalCount
-        } else {
-          this.dataList = []
-          this.totalPage = 0
+      this.$axios.get('author/getlist').then(
+        (res) => {
+          this.dataList = res
         }
-        this.dataListLoading = false
+      ).catch(error => {
+
       })
+
+      console.log(res)
+      this.dataListLoading = false
+
     },
     // 每页数
     sizeChangeHandle(val) {
@@ -185,6 +178,10 @@ export default {
         })
       })
     }
+  },
+  created() {
+    this.getDataList();
+
   }
 }
 </script>

@@ -75,10 +75,10 @@ export const constantRoutes = [{
       }
     }]
   }, {
-    path: '/bed-management',
+    path: '/anthor',
     component: Layout,
     name: '作者',
-    redirect: '/bed-management/bed-plan',
+    redirect: '/views/author/author',
     meta: {
       title: '作者',
       icon: 'el-icon-notebook-2'
