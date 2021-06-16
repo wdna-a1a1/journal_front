@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: '',
-      logo: require('../../../assets/logo.png')
+      logo: require('../../../assets/indexsiderber.jpg')
     }
   }
 }

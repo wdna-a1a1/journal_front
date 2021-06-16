@@ -75,6 +75,33 @@ export const constantRoutes = [{
       }
     }]
   }, {
+    path: '/expert',
+    component: Layout,
+    name: '专家',
+    redirect: '/views/expert/expert',
+    meta: {
+      title: '专家',
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'expert',
+      name: 'expert',
+      component: () => import('@/views/expert/expert'),
+      meta: {
+        title: '专家信息',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'bed-management',
+      name: 'BedManagement',
+      component: () => import('@/views/expert/expert'),
+      meta: {
+        title: '审核稿件',
+        icon: 'dashboard'
+      }
+    }
+    ]
+  }, {
     path: '/anthor',
     component: Layout,
     name: '作者',
@@ -84,8 +111,8 @@ export const constantRoutes = [{
       icon: 'el-icon-notebook-2'
     },
     children: [{
-      path: 'bed-plan',
-      name: 'BedPlan',
+      path: 'author',
+      name: 'author',
       component: () => import('@/views/author/author'),
       meta: {
         title: '作者信息',
@@ -242,7 +269,7 @@ export const constantRoutes = [{
       title: '系统信息',
       icon: 'el-icon-notebook-2'
     },
-    children: [/!*{
+    children: [{
       path: 'basic-data-maintenance',
       name: 'BasicDataMaintenance',
       component: () => import('@/views/system_setting/BasicDataMaintenance'),

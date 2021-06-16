@@ -1,5 +1,5 @@
 <template>
-  <div id="app">Copyright © 2020-2021 Hwwwww</div>
+  <div id="app">Copyright © 2020-2021 Wdna</div>
 </template>
 
 <script>

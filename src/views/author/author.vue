@@ -6,10 +6,6 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-<!--        <el-button v-if="isAuth('generator:author:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('generator:author:delete')" :disabled="dataListSelections.length <= 0" type="danger"
-                   @click="deleteHandle()">批量删除
-        </el-button>-->
       </el-form-item>
     </el-form>
     <el-table
@@ -115,14 +111,14 @@ export default {
     getDataList() {
       this.dataListLoading = true
       this.$axios.get('author/getlist').then(
-        (res) => {
-          this.dataList = res
+        ({data}) => {
+          console.log(data)
+          this.dataList = data
+          console.log(this.dataList)
         }
       ).catch(error => {
 
       })
-
-      console.log(res)
       this.dataListLoading = false
 
     },

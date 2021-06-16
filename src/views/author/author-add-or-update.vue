@@ -67,11 +67,8 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
-          this.$http({
-            url: this.$http.adornUrl(`/generator/author/info/${this.dataForm.id}`),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then(({data}) => {
+          this.$axios.get('/author/info', {id: id}).then(({data}) => {
+            console.log(data);
             if (data && data.code === 0) {
               this.dataForm.name = data.author.name
               this.dataForm.sex = data.author.sex
