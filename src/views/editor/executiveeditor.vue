@@ -4,80 +4,82 @@
       <div class="mod-config">
         <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
           <el-form-item>
-            <el-input v-model="dataForm.key" clearable placeholder="参数名"></el-input>
+            <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="getDataList()">查询</el-button>
-          </el-form-item>
+            <!--        <el-button @click="getDataList()">查询</el-button>
+                    <el-button v-if="isAuth('generator:executiveeditor:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+                    <el-button v-if="isAuth('generator:executiveeditor:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+                -->  </el-form-item>
         </el-form>
         <el-table
-          v-loading="dataListLoading"
           :data="dataList"
           border
-          style="width: 100%;"
-          @selection-change="selectionChangeHandle">
+          v-loading="dataListLoading"
+          @selection-change="selectionChangeHandle"
+          style="width: 100%;">
           <el-table-column
-            align="center"
-            header-align="center"
             type="selection"
+            header-align="center"
+            align="center"
             width="50">
           </el-table-column>
           <el-table-column
-            align="center"
+            prop="id"
             header-align="center"
-            label="作者id"
-            prop="id">
+            align="center"
+            label="责编ID">
           </el-table-column>
           <el-table-column
-            align="center"
+            prop="name"
             header-align="center"
-            label="姓名"
-            prop="name">
+            align="center"
+            label="姓名">
           </el-table-column>
           <el-table-column
-            align="center"
+            prop="sex"
             header-align="center"
-            label="性别"
-            prop="sex">
+            align="center"
+            label="性别">
           </el-table-column>
           <el-table-column
-            align="center"
+            prop="birth"
             header-align="center"
-            label="出生日期"
-            prop="birth">
+            align="center"
+            label="出生日期">
           </el-table-column>
           <el-table-column
-            align="center"
+            prop="phoneNum"
             header-align="center"
-            label="电话号码"
-            prop="phonenum">
+            align="center"
+            label="电话号码">
           </el-table-column>
           <el-table-column
-            align="center"
+            prop="email"
             header-align="center"
-            label="邮箱"
-            prop="email">
+            align="center"
+            label="邮箱">
           </el-table-column>
           <el-table-column
-            align="center"
             fixed="right"
             header-align="center"
-            label="操作"
-            width="150">
+            align="center"
+            width="150"
+            label="操作">
             <template slot-scope="scope">
-              <el-button size="small" type="text" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-              <el-button size="small" type="text" @click="deleteHandle(scope.row.id)">删除</el-button>
+              <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+              <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
         <el-pagination
-          :current-page="pageIndex"
-          :page-size="pageSize"
-          :page-sizes="[10, 20, 50, 100]"
-          :total="totalPage"
-          layout="total, sizes, prev, pager, next, jumper"
           @size-change="sizeChangeHandle"
-          @current-change="currentChangeHandle">
+          @current-change="currentChangeHandle"
+          :current-page="pageIndex"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageSize"
+          :total="totalPage"
+          layout="total, sizes, prev, pager, next, jumper">
         </el-pagination>
         <!-- 弹窗, 新增 / 修改 -->
         <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
@@ -87,7 +89,7 @@
 </template>
 
 <script>
-import AddOrUpdate from './author-add-or-update'
+import AddOrUpdate from './executiveeditor-add-or-update'
 
 export default {
   data() {
@@ -107,14 +109,14 @@ export default {
   components: {
     AddOrUpdate
   },
-  activated() {
+  created() {
     this.getDataList()
   },
   methods: {
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true
-      this.$axios.get('author/getlist').then(
+      this.$axios.get('editor/getlist').then(
         ({data}) => {
           console.log(data)
           this.dataList = data
@@ -159,7 +161,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/generator/author/delete'),
+          url: this.$http.adornUrl('/generator/executiveeditor/delete'),
           method: 'post',
           data: this.$http.adornData(ids, false)
         }).then(({data}) => {
@@ -178,10 +180,10 @@ export default {
         })
       })
     }
-  },
-  created() {
-    this.getDataList();
-
   }
 }
 </script>
+<style scoped>
+@import "../../styles/mix.scss";
+</style>
+

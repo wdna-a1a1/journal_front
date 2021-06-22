@@ -119,14 +119,58 @@ export const constantRoutes = [{
         icon: 'dashboard'
       }
     }, {
-      path: 'bed-management',
-      name: 'BedManagement',
-      component: () => import('@/views/author/author'),
+      path: 'sub-journal',
+      name: 'sub-journal',
+      component: () => import('@/views/author/sub'),
       meta: {
         title: '提交稿件',
         icon: 'dashboard'
       }
-    }]
+    }, {
+      path: 'bed-management',
+      name: 'BedManagement',
+      component: () => import('@/views/author/sub'),
+      meta: {
+        title: '提交作者稿件',
+        icon: 'dashboard'
+      }
+    }
+    ]
+  }, {
+    path: '/editor',
+    component: Layout,
+    name: '责编',
+    redirect: '/views/author/author',
+    meta: {
+      title: '责编',
+      icon: 'el-icon-notebook-2'
+    },
+    children: [{
+      path: 'author',
+      name: 'author',
+      component: () => import('@/views/author/author'),
+      meta: {
+        title: '责编信息',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'editor',
+      name: 'editor',
+      component: () => import('@/views/editor/executiveeditor'),
+      meta: {
+        title: '责编信息',
+        icon: 'dashboard'
+      }
+    }, {
+      path: 'bed-management',
+      name: 'BedManagement',
+      component: () => import('@/views/author/sub'),
+      meta: {
+        title: '提交作者稿件',
+        icon: 'dashboard'
+      }
+    }
+    ]
   },
   /*{
     path: '/customer_management',
