@@ -18,11 +18,11 @@ export default {
   data() {
     return {
       ima: [
-        require('../../image/1.jpg'),
-        require('../../image/1.jpg'),
-        require('../../image/1.jpg'),
-        require('../../image/1.jpg'),
-        require('../../image/1.jpg'),
+        require('../../image/qk1.jpg'),
+        require('../../image/qk2l.jpg'),
+        require('../../image/qk3.jpg'),
+        /*   require('../../image/1.jpg'),
+           require('../../image/1.jpg'),*/
       ]
     }
   }
